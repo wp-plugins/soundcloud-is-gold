@@ -227,7 +227,7 @@ function soundcloud_is_gold_options(){
             <ul id="soundcloudMMExtras" class="lightGreyGradient">
                 <li><a href="http://soundcloud.com/t-m" title="TM's music on SoundCloud" class="soundcloudMMBt blue soundcloudMMRounder">TM on SoundCloud</a></li>
                 <li><a href="http://www.mightymess.com" title="Thomas Michalak's Website" class="soundcloudMMBt blue soundcloudMMRounder">More Mighty Mess</a></li>
-                <li><a href="" title="" class="soundcloudMMBt blue soundcloudMMRounder">Forum</a></li>
+                <li><a href="http://wordpress.org/tags/soundcloud-is-gold?forum_id=10" title="Soundcloud is Gold Forum" class="soundcloudMMBt blue soundcloudMMRounder">Forum</a></li>
                 <li>
                 <form class="soundcloudMMBtForm" action="https://www.paypal.com/cgi-bin/webscr" method="post">
                         <input type="hidden" name="cmd" value="_s-xclick">
