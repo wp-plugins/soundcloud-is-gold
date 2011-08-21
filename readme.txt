@@ -35,6 +35,13 @@ Check out my [TM soundcloud profile](http://www.soundcloud.com/t-m), more [might
 * Plugin construct shortode for you, no need to remember any syntax.
 * Follow WP developpers guidelines (enqueue scripts and styles just for the plugin, clean code, commented, secure and leave no trace when uninstall )
 
+= Advantages against pasting embed code from soundcloud =
+
+* By changing the main settings in the options, all players on your site using the default settings will change. If green isn't trendy anymore and black is the new white, it won't be a problem and you keep your street credibility safe.
+* If Soundcloud update their player or release a even cooler new player that let you scratch your track while streaming to google+, I will most defenetly update the plugin to use those new features.
+
+That's just my opinion of course...
+
 
 = How to use the shortcode manually =
 
