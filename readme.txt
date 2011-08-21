@@ -62,6 +62,8 @@ If you wish to have more control here is an example:
 * Possibility to set a different user in the 'Soundcloud is Gold tab' to add tracks from different people.
 * Add Soundcloud default Width to the options
 * Style sortcode in TinyMCE (editor) because it would be cool and neat;
+* Trigger live preview when changing Soundcloud user name
+* Live search while typing a name in the user name field. So if you're looking for someone it's kind of easier.
 * pagination in tab (is it really needed?)
 
 
