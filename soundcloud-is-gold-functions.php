@@ -228,7 +228,7 @@ function soundcloud_is_gold_shortcode($attr){
 	-->
 	<?php
 	//no js
-	echo soundcloud_is_gold_player($attr['id'], $attr['autoPlay'], $attr['comments'], $attr['width'], $attr['classes'], $attr['type'], $attr['color']);
+	return soundcloud_is_gold_player($attr['id'], $attr['autoPlay'], $attr['comments'], $attr['width'], $attr['classes'], $attr['type'], $attr['color']);
 }
 
 
