@@ -4,7 +4,7 @@ Donate link: http://www.mightymess.com/soundcloud-is-gold-wordpress-plugin
 Tags: soundcloud, integrated, media, shortcode, browse, design, easy, simple, music, sound, js, live preview
 Requires at least: 3.2
 Tested up to: 3.2.1
-Stable tag: 1.0
+Stable tag: 1.0.1
 
 Browse through your soundcloud tracks from a tab in the post's 'upload media'. Select, add a track to your post. Live preview, easy.
 
@@ -65,6 +65,7 @@ If you wish to have more control here is an example:
 * Trigger live preview when changing Soundcloud user name
 * Live search while typing a name in the user name field. So if you're looking for someone it's kind of easier.
 * pagination in tab (is it really needed?)
+* change background color and comments color
 
 
 == Installation ==
@@ -101,6 +102,9 @@ This is the first version
 
 
 == Changelog ==
+
+= 1.0.1 =
+* Fixed shortode using echo instead of return (silly I know). This caused the shortcode to be outputted at the top of the post instead of it's position in the post. Thanks raceyblood for spotting it.
 
 = 1.0 =
 * Hello world! Listen to me.
