@@ -16,7 +16,7 @@ You'll also be able to set players to different settings before adding to your p
 
 **Soundcloud is Gold** use a shortcode but the "Soundcloud is Gold" tab will write it for you dynamicly as you select parameters, and on top of this it will provide a nice live preview of your player so you know what does what. When done just press the 'insert soundcloud player' and it will added to your post just like when you're adding a photo or gallery.
 
-Check out my [TM soundcloud profile](http://www.soundcloud.com/t-m), more [mighty mess](http://www.mightymess.com) and if you love it say it on the [Soundcloud is Gold wordpress plugin page](http://www.wordpress.org/plugins/soundcloud-is-gold), if you use it [donations are always welcomed](http://www.mightymess.com/soundcloud-is-gold-wordpress-plugin) or you just drop a line on [Soundcloud is Gold](http://www.mightymess.com/soundcloud-is-gold-wordpress-plugin) and show some love :)
+Check out my [TM soundcloud profile](http://www.soundcloud.com/t-m), more [mighty mess](http://www.mightymess.com) and if you love it rate it on the [Soundcloud is Gold wordpress plugin page](http://wordpress.org/extend/plugins/soundcloud-is-gold/). If you use it and want to help, [donations are always welcomed](http://www.mightymess.com/soundcloud-is-gold-wordpress-plugin) or you could just drop a line on [Soundcloud is Gold](http://www.mightymess.com/soundcloud-is-gold-wordpress-plugin) and show some love :)
 
 = Features =
 
@@ -64,8 +64,8 @@ If you wish to have more control here is an example:
 * Style sortcode in TinyMCE (editor) because it would be cool and neat;
 * Trigger live preview when changing Soundcloud user name
 * Live search while typing a name in the user name field. So if you're looking for someone it's kind of easier.
-* pagination in tab (is it really needed?)
-* change background color and comments color
+* Pagination in tab (is it really needed?)
+* Change background color and comments color
 
 
 == Installation ==
@@ -75,6 +75,10 @@ Just follow the usual procedure. Log on to your wordpress, go to plugin -> add n
 
 
 == Frequently Asked Questions ==
+
+= I can't see my tracks? =
+
+That could be several things but one thing to bare in mind is that all tracks that are set as private on soundcloud won't appear.
 
 = Can I request features? =
 
