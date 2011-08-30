@@ -16,7 +16,7 @@ You'll also be able to set players to different settings before adding to your p
 
 **Soundcloud is Gold** use a shortcode but the "Soundcloud is Gold" tab will write it for you dynamicly as you select parameters, and on top of this it will provide a nice live preview of your player so you know what does what. When done just press the 'insert soundcloud player' and it will added to your post just like when you're adding a photo or gallery.
 
-Check out my [TM soundcloud profile](http://www.soundcloud.com/t-m), more [mighty mess](http://www.mightymess.com) and if you love it say it on the [Soundcloud is Gold wordpress plugin page](http://www.wordpress.org/plugins/soundcloud-is-gold), if you use it [donations are always welcomed](http://www.mightymess.com/soundcloud-is-gold-wordpress-plugin) or you just drop a line on [Soundcloud is Gold](http://www.mightymess.com/soundcloud-is-gold-wordpress-plugin) and show some love :)
+Check out my [TM soundcloud profile](http://www.soundcloud.com/t-m), more [mighty mess](http://www.mightymess.com) and if you love it rate it on the [Soundcloud is Gold wordpress plugin page](http://wordpress.org/extend/plugins/soundcloud-is-gold/). If you use it and want to help, [donations are always welcomed](http://www.mightymess.com/soundcloud-is-gold-wordpress-plugin) or you could just drop a line on [Soundcloud is Gold](http://www.mightymess.com/soundcloud-is-gold-wordpress-plugin) and show some love :)
 
 = Features =
 
