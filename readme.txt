@@ -76,6 +76,10 @@ Just follow the usual procedure. Log on to your wordpress, go to plugin -> add n
 
 == Frequently Asked Questions ==
 
+= I can't see my tracks? =
+
+That could be several things but one thing to bare in mind is that all tracks that are set as private on soundcloud won't appear.
+
 = Can I request features? =
 
 Yes, you can. If asked nicely and the requests are sensibles, I almost always integrate them to new releases.
