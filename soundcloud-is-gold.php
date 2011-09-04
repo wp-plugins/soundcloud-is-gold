@@ -6,7 +6,7 @@ Description: <strong><a href="http://www.mightymess.com/soundcloud-is-gold-wordp
 Version: 1.0.1
 Author: Thomas Michalak at Mighty Mess
 Author URI: http://www.mightymess.com/thomas-michalak
-License: A "Slug" license name e.g. GPL2
+License: GPL2 or Later
 */
 
 /*
@@ -89,44 +89,44 @@ function get_soundcloud_is_gold_default_width($settings){
     return $settings[$settings['type']];
 }
 function get_soundcloud_is_gold_default_settings_for_js(){
-	echo 'soundcloudIsGoldUser_default = "'.get_option(soundcloud_is_gold_user).'"; ';
-	echo 'soundcloudIsGoldPlayerType_default = "'.get_option(soundcloud_is_gold_playerType).'"; ';
-        $soundcloudIsGoldSettings = get_option(soundcloud_is_gold_settings);
-	echo 'soundcloudIsGoldAutoPlay_default = '.(($soundcloudIsGoldSettings[0] == '') ? 'false' : 'true') .'; ';
-	echo 'soundcloudIsGoldComments_default = '.(($soundcloudIsGoldSettings[1] == '') ? 'false' : 'true') .'; ';
-	echo 'soundcloudIsGoldWidth_default = "'.get_soundcloud_is_gold_default_width(get_option(soundcloud_is_gold_width_settings)).'"; ';
-	echo 'soundcloudIsGoldClasses_default = "'.get_option(soundcloud_is_gold_classes).'"; ';
-	echo 'soundcloudIsGoldColor_default = "'.get_option(soundcloud_is_gold_color).'"; ';	
+	echo 'soundcloudIsGoldUser_default = "'.get_option('soundcloud_is_gold_user').'"; ';
+	echo 'soundcloudIsGoldPlayerType_default = "'.get_option('soundcloud_is_gold_playerType').'"; ';
+        $soundcloudIsGoldSettings = get_option('soundcloud_is_gold_settings');
+	echo 'soundcloudIsGoldAutoPlay_default = '.((!isset($soundcloudIsGoldSettings[0]) || $soundcloudIsGoldSettings[0] == '') ? 'false' : 'true') .'; ';
+	echo 'soundcloudIsGoldComments_default = '.((!isset($soundcloudIsGoldSettings[1]) || $soundcloudIsGoldSettings[1] == '') ? 'false' : 'true') .'; ';
+	echo 'soundcloudIsGoldWidth_default = "'.get_soundcloud_is_gold_default_width(get_option('soundcloud_is_gold_width_settings')).'"; ';
+	echo 'soundcloudIsGoldClasses_default = "'.get_option('soundcloud_is_gold_classes').'"; ';
+	echo 'soundcloudIsGoldColor_default = "'.get_option('soundcloud_is_gold_color').'"; ';	
 }
 
-add_option(soundcloud_is_gold_user, 't-m');
+add_option('soundcloud_is_gold_user', 't-m');
 $soundcloudIsGoldDefaultSettings = array(
                                         false,
                                         true
 );
-add_option(soundcloud_is_gold_settings, $soundcloudIsGoldDefaultSettings);
-add_option(soundcloud_is_gold_playerType, 'Standard');
+add_option('soundcloud_is_gold_settings', $soundcloudIsGoldDefaultSettings);
+add_option('soundcloud_is_gold_playerType', 'Standard');
 $soundcloudIsGoldWitdhDefaultSettings = array(
                                        "type" => "custom",
                                        "wp" => "medium",
                                        "custom" => "100%"
                                     
 );
-add_option(soundcloud_is_gold_width_settings, $soundcloudIsGoldWitdhDefaultSettings);
-add_option(soundcloud_is_gold_classes, '');
-add_option(soundcloud_is_gold_color, 'ff7700');
+add_option('soundcloud_is_gold_width_settings', $soundcloudIsGoldWitdhDefaultSettings);
+add_option('soundcloud_is_gold_classes', '');
+add_option('soundcloud_is_gold_color', 'ff7700');
 
 //delete_option(soundcloud_is_gold_width_settings);
 
 /*** Options Output ***/
 function soundcloud_is_gold_options(){
-    $soundcloudIsGoldUser = get_option(soundcloud_is_gold_user);
-    $soundcloudIsGoldSettings = get_option(soundcloud_is_gold_settings);
-    $soundcloudIsGoldPlayerType = get_option(soundcloud_is_gold_playerType);
+    $soundcloudIsGoldUser = get_option('soundcloud_is_gold_user');
+    $soundcloudIsGoldSettings = get_option('soundcloud_is_gold_settings');
+    $soundcloudIsGoldPlayerType = get_option('soundcloud_is_gold_playerType');
     $soundcloudIsGoldPlayerTypeDefault = empty($soundcloudIsGoldPlayerType) ? TRUE : FALSE;
-    $soundcloudIsGoldWidthSettings = get_option(soundcloud_is_gold_width_settings);
-    $soundcloudIsGoldClasses = get_option(soundcloud_is_gold_classes);
-    $soundcloudIsGoldColor = get_option(soundcloud_is_gold_color);
+    $soundcloudIsGoldWidthSettings = get_option('soundcloud_is_gold_width_settings');
+    $soundcloudIsGoldClasses = get_option('soundcloud_is_gold_classes');
+    $soundcloudIsGoldColor = get_option('soundcloud_is_gold_color');
     $soundcouldMMapiCall = 'http://api.soundcloud.com/users/'.$soundcloudIsGoldUser.'/tracks.xml?limit=1&client_id=9rD2GrGrajkmkw5eYFDp2g';
     //$soundcouldMMapiCall = PLUGIN_DIR.'tracks.xml';
     $soundcouldMMresp = simplexml_load_file($soundcouldMMapiCall);

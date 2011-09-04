@@ -20,7 +20,7 @@ add_action('admin_print_styles-media-upload-popup', 'soundcloud_is_gold_option_s
 function media_soundcloud_is_gold_process() {
 	media_upload_header();
        // $soundcloudXML = PLUGIN_DIR.'tracks.xml';
-	$soundcloudIsGoldXML = 'http://api.soundcloud.com/users/'.get_option(soundcloud_is_gold_user).'/tracks.xml?client_id=9rD2GrGrajkmkw5eYFDp2g';
+	$soundcloudIsGoldXML = 'http://api.soundcloud.com/users/'.get_option('soundcloud_is_gold_user').'/tracks.xml?client_id=9rD2GrGrajkmkw5eYFDp2g';
         get_soundcloud_is_gold_user_tracks($soundcloudIsGoldXML, $_REQUEST['post_id']);
 	//testMedia(TRUE);
 }
@@ -42,14 +42,14 @@ add_filter('media_buttons_context', 'plugin_media_button');
 /** Populate the new Soundcloud is Gold Tab **/
 function get_soundcloud_is_gold_user_tracks($soundcloudIsGoldApiCall, $post_id){
 	
-	$soundcloudIsGoldUser = get_option(soundcloud_is_gold_user);
-	$soundcloudIsGoldSettings = get_option(soundcloud_is_gold_settings);
-	$soundcloudIsGoldPlayerType = get_option(soundcloud_is_gold_playerType);
+	$soundcloudIsGoldUser = get_option('soundcloud_is_gold_user');
+	$soundcloudIsGoldSettings = get_option('soundcloud_is_gold_settings');
+	$soundcloudIsGoldPlayerType = get_option('soundcloud_is_gold_playerType');
 	$soundcloudIsGoldPlayerTypeDefault = empty($soundcloudIsGoldPlayerType) ? TRUE : FALSE;
-	$soundcloudIsGoldWidthSettings = get_option(soundcloud_is_gold_width_settings);
+	$soundcloudIsGoldWidthSettings = get_option('soundcloud_is_gold_width_settings');
 	$soundcloudIsGoldWidth = get_soundcloud_is_gold_default_width($soundcloudIsGoldWidthSettings);
-	$soundcloudIsGoldClasses = get_option(soundcloud_is_gold_classes);
-	$soundcloudIsGoldColor = get_option(soundcloud_is_gold_color);
+	$soundcloudIsGoldClasses = get_option('soundcloud_is_gold_classes');
+	$soundcloudIsGoldColor = get_option('soundcloud_is_gold_color');
     
 	//Sorting Menu
 	echo '<form id="library-form" class="media-upload-form validate" action="" method="post" enctype="multipart/form-data"><div id="media-items" class="media-items-'.$post_id.'">';
@@ -214,21 +214,33 @@ function get_soundcloud_is_gold_user_tracks($soundcloudIsGoldApiCall, $post_id){
 /**                                                  **/
 /******************************************************/
 add_shortcode('soundcloud', 'soundcloud_is_gold_shortcode');
-function soundcloud_is_gold_shortcode($attr){
+function soundcloud_is_gold_shortcode($atts){
+	$soundcloudIsGoldSettings = get_option('soundcloud_is_gold_settings');
+	extract( shortcode_atts( array(
+					'id' => '1',
+					'autoPlay' => ((!isset($soundcloudIsGoldSettings[0]) || $soundcloudIsGoldSettings[0] == '') ? 'false' : 'true'),
+					'comments' => ((!isset($soundcloudIsGoldSettings[1]) || $soundcloudIsGoldSettings[1] == '') ? 'false' : 'true'),
+					'width' => get_soundcloud_is_gold_default_width(get_option('soundcloud_is_gold_width_settings')),
+					'classes' => get_option('soundcloud_is_gold_classes'),
+					'type' => get_option('soundcloud_is_gold_playerType'),
+					'color' => get_option('soundcloud_is_gold_color')
+				), $atts )
+		);
 	//Ajax
 	?>
 	<!-- 
-	<div id="soundcloud-<?php echo $attr['id'] ?>" style="width:<?php echo $attr['width'] ?>" class="soundcloud">
+	<div id="soundcloud-<?php echo $id ?>" style="width:<?php echo $width ?>" class="soundcloud">
 		<script type="text/javascript">
 			jQuery(document).ready(function(){
-				loadSoundcloud(<?php //echo implode(',', $attr)?>);	
+				loadSoundcloud(<?php //echo implode(',', $atts)?>);	
 			});
 		</script>
 	</div>
 	-->
 	<?php
 	//no js
-	return soundcloud_is_gold_player($attr['id'], $attr['autoPlay'], $attr['comments'], $attr['width'], $attr['classes'], $attr['type'], $attr['color']);
+	
+	return soundcloud_is_gold_player($id, $autoPlay, $comments, $width, $classes, $type, $color);
 }
 
 
@@ -251,14 +263,15 @@ function soundcloud_is_gold_player_preview(){
 /** The Player **/
 function soundcloud_is_gold_player($id, $autoPlay, $comments, $width, $classes, $playerTypes, $color){
 	
-
-	$soundcloudIsGoldSettings = get_option(soundcloud_is_gold_settings);
-	if($autoPlay == NULL) $autoPlay = $soundcloudIsGoldSettings[0];
-	if($comments == NULL) $comments = $soundcloudIsGoldSettings[1];
-	if($width == NULL) $width = get_soundcloud_is_gold_default_width(get_option(soundcloud_is_gold_width_settings));
-	if($classes == NULL) $classes = get_option(soundcloud_is_gold_classes);
-	if($playerTypes == NULL) $playerTypes = get_option(soundcloud_is_gold_playerType);
-	if($color == NULL) $color = get_option(soundcloud_is_gold_color);
+	//Default values: Needed when not called trough shortode (like in the ajax preview)
+	$soundcloudIsGoldSettings = get_option('soundcloud_is_gold_settings');
+	if(!isset($autoPlay)) $autoPlay = ((!isset($soundcloudIsGoldSettings[0]) || $soundcloudIsGoldSettings[0] == '') ? 'false' : 'true');
+	if(!isset($comments)) $comments = ((!isset($soundcloudIsGoldSettings[1]) || $soundcloudIsGoldSettings[1] == '') ? 'false' : 'true');
+	if(!isset($width)) $width = get_soundcloud_is_gold_default_width(get_option('soundcloud_is_gold_width_settings'));
+	if(!isset($classes)) $classes = get_option('soundcloud_is_gold_classes');
+	if(!isset($playerTypes)) $playerTypes = get_option('soundcloud_is_gold_playerType');
+	if(!isset($color)) $color = get_option('soundcloud_is_gold_color');
+	
 	$color = str_replace('#', '', $color);
 	
 	switch($playerTypes){
@@ -280,8 +293,8 @@ function soundcloud_is_gold_player($id, $autoPlay, $comments, $width, $classes, 
 	$player .= '<object height="'.$height.'" width="'.$width.'">';
 	$player .= '<param name="movie" value="http://player.soundcloud.com/player.swf?url=http%3A%2F%2Fapi.soundcloud.com%2Ftracks%2F'.$id.'&amp;auto_play='.$autoPlay.'&amp;player_type='.$playerType.'&amp;show_comments='.$comments.'&amp;color='.$color.'"></param>';
 	$player .= '<param name="allowscriptaccess" value="always"></param>';
-	$player .= '<param name="wmode" value="window"></param>';
-	$player .= '<embed wmode="window" allowscriptaccess="always" height="'.$height.'" src="http://player.soundcloud.com/player.swf?url=http%3A%2F%2Fapi.soundcloud.com%2Ftracks%2F'.$id.'&amp;auto_play='.$autoPlay.'&amp;player_type='.$playerType.'&amp;show_comments='.$comments.'&amp;color='.$color.'" type="application/x-shockwave-flash" width="'.$width.'"></embed>';
+	$player .= '<param name="wmode" value="transparent"></param>';
+	$player .= '<embed wmode="transparent" allowscriptaccess="always" height="'.$height.'" src="http://player.soundcloud.com/player.swf?url=http%3A%2F%2Fapi.soundcloud.com%2Ftracks%2F'.$id.'&amp;auto_play='.$autoPlay.'&amp;player_type='.$playerType.'&amp;show_comments='.$comments.'&amp;color='.$color.'" type="application/x-shockwave-flash" width="'.$width.'"></embed>';
 	$player .= '</object>';
 	$player .= '</div>';
         
