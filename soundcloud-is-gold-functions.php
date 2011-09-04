@@ -216,31 +216,18 @@ function get_soundcloud_is_gold_user_tracks($soundcloudIsGoldApiCall, $post_id){
 add_shortcode('soundcloud', 'soundcloud_is_gold_shortcode');
 function soundcloud_is_gold_shortcode($atts){
 	$soundcloudIsGoldSettings = get_option('soundcloud_is_gold_settings');
+	//Only use lowercase as atts!
 	extract( shortcode_atts( array(
 					'id' => '1',
-					'autoPlay' => ((!isset($soundcloudIsGoldSettings[0]) || $soundcloudIsGoldSettings[0] == '') ? 'false' : 'true'),
+					'autoplay' => ((!isset($soundcloudIsGoldSettings[0]) || $soundcloudIsGoldSettings[0] == '') ? 'false' : 'true'),
 					'comments' => ((!isset($soundcloudIsGoldSettings[1]) || $soundcloudIsGoldSettings[1] == '') ? 'false' : 'true'),
 					'width' => get_soundcloud_is_gold_default_width(get_option('soundcloud_is_gold_width_settings')),
 					'classes' => get_option('soundcloud_is_gold_classes'),
-					'type' => get_option('soundcloud_is_gold_playerType'),
+					'playertype' => get_option('soundcloud_is_gold_playerType'),
 					'color' => get_option('soundcloud_is_gold_color')
 				), $atts )
 		);
-	//Ajax
-	?>
-	<!-- 
-	<div id="soundcloud-<?php echo $id ?>" style="width:<?php echo $width ?>" class="soundcloud">
-		<script type="text/javascript">
-			jQuery(document).ready(function(){
-				loadSoundcloud(<?php //echo implode(',', $atts)?>);	
-			});
-		</script>
-	</div>
-	-->
-	<?php
-	//no js
-	
-	return soundcloud_is_gold_player($id, $autoPlay, $comments, $width, $classes, $type, $color);
+	return soundcloud_is_gold_player($id, $autoplay, $comments, $width, $classes, $playertype, $color);
 }
 
 

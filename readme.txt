@@ -53,7 +53,7 @@ This will use your default setting of with, classes, colors, autoplay, comments.
 
 If you wish to have more control here is an example:
 
-**[soundcloud id='10450254' comments='true' autoPlay='false' playerType='Standard' width='100%' color='#005bff']**
+**[soundcloud id='10450254' comments='true' autoplay='false' playertype='Standard' width='100%' color='#005bff']**
 
 
 = To Do List =
@@ -92,7 +92,7 @@ Sometimes, I generaly keep a eye on my plugin's forums and website's comments. B
 
 == Upgrade Notice ==
 
-This is the first version
+When upgrading from 1.0.1 and earlier: All shortcode attributes are now lowercase (autoPlay is now autoplay, playerType is now playertype). Sorry about that but it's needed, so if you have some custom ones in your posts you will have to change those manually. 
 
 
 
@@ -110,7 +110,8 @@ This is the first version
 = 1.0.2 =
 * Fixed minor warnings
 * Made shortcode stronger/safer with shortcode_atts()
-* Set object mode to transparent until V1.1 is ready with all advance settings
+* Set object mode to transparent until V1.1 is ready with new advance settings.
+* Made all shortcode attributes lowercase (autoPlay is now autoplay, playerType is now playertype). sorry about that but it's needed.
 
 = 1.0.1 =
 * Fixed shortode using echo instead of return (silly I know). This caused the shortcode to be outputted at the top of the post instead of it's position in the post. Thanks raceyblood for spotting it.
