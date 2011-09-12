@@ -4,7 +4,7 @@ Donate link: http://www.mightymess.com/soundcloud-is-gold-wordpress-plugin
 Tags: soundcloud, integrated, media, shortcode, browse, design, easy, simple, music, sound, js, live preview
 Requires at least: 3.2
 Tested up to: 3.2.1
-Stable tag: 1.0.2
+Stable tag: 1.0.3.1
 
 Browse through your soundcloud tracks from a tab in the post's 'upload media'. Select, add a track to your post. Live preview, easy.
 
@@ -107,7 +107,7 @@ When upgrading from 1.0.1 and earlier: All shortcode attributes are now lowercas
 
 == Changelog ==
 
-= 1.0.3 =
+= 1.0.3 and 1.0.3.1 =
 * Fixed warning message related to xml not loading when allow_url_fopen is disable: Now using cURL as a first choice for getting xml, and then simplexml_load_file as a last desperate option. Thanks a million to Karl Rixon (http://www.karlrixon.co.uk/).
 
 = 1.0.2 =
