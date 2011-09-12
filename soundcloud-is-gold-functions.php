@@ -20,8 +20,8 @@ add_action('admin_print_styles-media-upload-popup', 'soundcloud_is_gold_option_s
 function media_soundcloud_is_gold_process() {
 	media_upload_header();
        // $soundcloudXML = PLUGIN_DIR.'tracks.xml';
-	$soundcloudIsGoldXML = 'http://api.soundcloud.com/users/'.get_option('soundcloud_is_gold_user').'/tracks.xml?client_id=9rD2GrGrajkmkw5eYFDp2g';
-        get_soundcloud_is_gold_user_tracks($soundcloudIsGoldXML, $_REQUEST['post_id']);
+	$soundcloudIsGoldApiCall = 'http://api.soundcloud.com/users/'.get_option('soundcloud_is_gold_user').'/tracks.xml?client_id=9rD2GrGrajkmkw5eYFDp2g';
+        get_soundcloud_is_gold_user_tracks($soundcloudIsGoldApiCall, $_REQUEST['post_id']);
 	//testMedia(TRUE);
 }
 /* load Iframe in the tab page */
@@ -73,12 +73,33 @@ function get_soundcloud_is_gold_user_tracks($soundcloudIsGoldApiCall, $post_id){
 		
 	</script>
 	
-	<?php // Load the call and capture the document returned by the API
-		$soundcloudIsGoldResp = simplexml_load_file($soundcloudIsGoldApiCall);
-		//printl($resp);
-		//echo htmlentities($resp->asXML());
-		// Check to see if the response was loaded, else print an error
-		if ($soundcloudIsGoldResp) {
+	<?php
+	//Set Error default message && default XML state
+	$soundcloudIsGoldRespError = false;
+	$soundcloudIsGoldResp = false;
+	//Check is cURL extension is loaded
+	if(extension_loaded("curl")){
+		// create a new cURL resource
+		$soundcloudIsGoldCURL = curl_init();
+		//Set cURL Options
+		curl_setopt($soundcloudIsGoldCURL, CURLOPT_URL, $soundcloudIsGoldApiCall);
+		curl_setopt($soundcloudIsGoldCURL, CURLOPT_RETURNTRANSFER, true);//return a string
+		// Get XML as a string
+		$soundcloudIsGoldXmlString = curl_exec($soundcloudIsGoldCURL);
+		//Check for cURL errors
+		if($soundcloudIsGoldXmlString === false) $soundcloudIsGoldRespError = 'Curl error: ' . curl_error($soundcloudIsGoldCURL);
+		//No cURL Errors: Load the call and captured xml returned by the API
+		else $soundcloudIsGoldResp = simplexml_load_string($soundcloudIsGoldXmlString);
+		// close cURL resource, and free up system resources
+		curl_close($soundcloudIsGoldCURL);
+	}
+	//No cURL: Try loading the XML directly with simple_xml_load_file
+	else $soundcloudIsGoldResp = simplexml_load_file($soundcloudIsGoldApiCall);
+	
+	//printl($resp);
+	//echo htmlentities($soundcloudIsGoldResp->asXML());
+	// Check to see if the response was loaded, else print an error
+	if ($soundcloudIsGoldResp) {
 			foreach($soundcloudIsGoldResp as $soundcloudIsGoldtrack): ?>
 			
 				<div class="media-item preloaded" id="media-item-<?php echo $soundcloudIsGoldtrack->id ?>">
@@ -198,7 +219,8 @@ function get_soundcloud_is_gold_user_tracks($soundcloudIsGoldApiCall, $post_id){
 		}
 		//Error getting XML
 		else{
-			echo '<div class="soundcloudMMXmlError"><p>Oups! There\'s been a error while getting the tracks from soundcloud. Please reload the page.</p></div>';
+			if($soundcloudIsGoldRespError === false) $soundcloudIsGoldRespError = 'XML error';
+			echo '<div class="soundcloudMMXmlError"><p>Oups! There\'s been a error while getting the tracks from soundcloud. Please reload the page.</p><p class="error">'.$soundcloudIsGoldRespError.'</p></div>';
 		}
 	echo '<div id="colorpicker"></div>';
 	echo '</div></form>';

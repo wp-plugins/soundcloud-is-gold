@@ -58,7 +58,7 @@ If you wish to have more control here is an example:
 
 = To Do List =
 
-* V1.1: Advance Settings (change background color and comments color, playcounts, buy link, font, etc…)
+* V1.1: Advance Settings (change background color and comments color, playcounts, buy link, font, wmode, etc…)
 * Possibility to add multiple users for thoses with multiple soundcloud account.
 * Possibility to set a different user in the 'Soundcloud is Gold tab' to add tracks from different people.
 * Add Soundcloud default Width to the options
@@ -106,6 +106,9 @@ When upgrading from 1.0.1 and earlier: All shortcode attributes are now lowercas
 
 
 == Changelog ==
+
+= 1.0.3 =
+* Fixed warning message related to xml not loading when allow_url_fopen is disable: Now using cURL as a first choice for getting xml, and then simplexml_load_file as a last desperate option. Thanks a million to Karl Rixon (http://www.karlrixon.co.uk/).
 
 = 1.0.2 =
 * Fixed minor warnings
