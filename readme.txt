@@ -107,7 +107,7 @@ When upgrading from 1.0.1 and earlier: All shortcode attributes are now lowercas
 
 == Changelog ==
 
-= 1.0.3 and 1.0.3.1=
+= 1.0.3 and 1.0.3.1 =
 * Fixed warning message related to xml not loading when allow_url_fopen is disable: Now using cURL as a first choice for getting xml, and then simplexml_load_file as a last desperate option. Thanks a million to Karl Rixon (http://www.karlrixon.co.uk/).
 
 = 1.0.2 =
