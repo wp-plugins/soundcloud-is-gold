@@ -78,7 +78,8 @@ Just follow the usual procedure. Log on to your wordpress, go to plugin -> add n
 
 = I can't see my tracks? =
 
-That could be several things but one thing to bare in mind is that all tracks that are set as private on soundcloud won't appear.
+*Have you entered your real username? Your username is what you see in your soundcloud url when you click your name in soundcloud or view public profile (e.g http://soundcloud.com/anna-chocola).
+*Bare in mind is that all tracks that are set as private on soundcloud won't appear.
 
 = Can I request features? =
 
