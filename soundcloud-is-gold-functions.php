@@ -84,6 +84,7 @@ function get_soundcloud_is_gold_user_tracks($soundcloudIsGoldApiCall, $post_id){
 		//Set cURL Options
 		curl_setopt($soundcloudIsGoldCURL, CURLOPT_URL, $soundcloudIsGoldApiCall);
 		curl_setopt($soundcloudIsGoldCURL, CURLOPT_RETURNTRANSFER, true);//return a string
+		curl_setopt($soundcloudIsGoldCURL, CURLOPT_USERAGENT, "user_agent : FOOBAR");
 		// Get XML as a string
 		$soundcloudIsGoldXmlString = curl_exec($soundcloudIsGoldCURL);
 		//Check for cURL errors
