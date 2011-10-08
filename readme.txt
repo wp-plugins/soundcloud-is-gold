@@ -43,19 +43,6 @@ Check out my [TM soundcloud profile](http://www.soundcloud.com/t-m), more [might
 That's just my opinion of course...
 
 
-= How to use the shortcode manually =
-
-If for some reason you wish to use the shortcode manually, like for embeding someone else tracks, you can use:
-
-**[soundcloud id='10450254']**
-
-This will use your default setting of with, classes, colors, autoplay, comments. (Replace *10450254* with the track id you want to show)
-
-If you wish to have more control here is an example:
-
-**[soundcloud id='10450254' comments='true' autoplay='false' playertype='Standard' width='100%' color='#005bff']**
-
-
 = To Do List =
 
 * V1.1: Advance Settings (change background color and comments color, playcounts, buy link, font, wmode, etc…)
@@ -90,7 +77,24 @@ Yes, you can. If asked nicely and the requests are sensibles, I almost always in
 
 Sometimes, I generaly keep a eye on my plugin's forums and website's comments. Bear in mind that I've got a full time job and a life, so I can't always help straight away.
 
+= How can I use the shortcode manually? =
 
+If for some reason you wish to use the shortcode manually, like for embeding someone else tracks, you can use:
+
+**[soundcloud id='10450254']**
+
+This will use your default setting of with, classes, colors, autoplay, comments. (Replace *10450254* with the track id you want to show)
+
+If you wish to have more control here is an example:
+
+**[soundcloud id='10450254' comments='true' autoplay='false' playertype='Standard' width='100%' color='#005bff']**
+
+
+= Can't play my tracks on my iphone, ipad or ipod? =
+
+Soundcloud doesn't currently give the possibility to developers to fall back to soundcloud html5 player if flash isn't installed or supported by the device. There are solutions but they are lengthy to implement and still  not very user friendly. But as soon as it's possible it will be implemented.
+
+ 
 
 == Upgrade Notice ==
 
