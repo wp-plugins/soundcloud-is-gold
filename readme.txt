@@ -48,7 +48,7 @@ That's just my opinion of course...
 * V1.1: Advance Settings (change background color and comments color, playcounts, buy link, font, wmode, etc…)
 * Add Widget
 * if no id is specified in the shortcode (e.g [soundcloud]), display the latest track.
-* Posibility to access and add 'favorites' to post.
+* Posibility to access and add 'favorites' to post (thanks Bernd for the idea).
 * Possibility to add multiple users for thoses with multiple soundcloud account.
 * Possibility to set a different user in the 'Soundcloud is Gold tab' to add tracks from different people.
 * Add Soundcloud default Width to the options
