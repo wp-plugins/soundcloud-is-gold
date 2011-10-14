@@ -46,14 +46,17 @@ That's just my opinion of course...
 = To Do List =
 
 * V1.1: Advance Settings (change background color and comments color, playcounts, buy link, font, wmode, etcÉ)
+* Add Widget
+* if no id is specified in the shortcode (e.g [soundcloud]), display the latest track.
+* Posibility to access and add 'favorites' to post.
 * Possibility to add multiple users for thoses with multiple soundcloud account.
 * Possibility to set a different user in the 'Soundcloud is Gold tab' to add tracks from different people.
 * Add Soundcloud default Width to the options
 * Style sortcode in TinyMCE (editor) because it would be cool and neat;
 * Trigger live preview when changing Soundcloud user name
 * Live search while typing a name in the user name field. So if you're looking for someone it's kind of easier.
-* if no id is specified in the shortcode (e.g [soundcloud]), display the latest track.
-* Add Widget
+* Add 'activities' to a widget
+* Iphone fall back with default browser html5 player.
 
 
 == Installation ==
@@ -66,16 +69,24 @@ Just follow the usual procedure. Log on to your wordpress, go to plugin -> add n
 
 = I can't see my tracks? =
 
-*Have you entered your real username? Your username is what you see in your soundcloud url when you click your name in soundcloud or view public profile (e.g http://soundcloud.com/anna-chocola).
-*Bare in mind is that all tracks that are set as private on soundcloud won't appear.
+* Have you entered your real username? Your username is what you see in your soundcloud url when you click your name in soundcloud or view public profile (e.g http://soundcloud.com/anna-chocola).
+* Bare in mind is that all tracks that are set as private on soundcloud won't appear.
+* Have you got other soundcloud plugin installed? That generally happen as you've been 'shopping around', disable them or even delete them and this if it works.
 
-= Can I request features? =
+= It's behaving strangely or working partially or I've check everything but it still doesn't work =
 
-Yes, you can. If asked nicely and the requests are sensibles, I almost always integrate them to new releases.
+Here's a simple method to track down incompatibilities with plugins and themes:
 
-= Can you help me? =
+* Disable all plugins
+* Enable 'soundcloud is gold' and check if it works (add a track to a post to be sure)
+* If it worked: enable the other plugins one by one and check if it breaks
+* If it didn't worked: enable the default Worpress theme and check if it works (add a track to a post to be sure).
 
-Sometimes, I generaly keep a eye on my plugin's forums and website's comments. Bear in mind that I've got a full time job and a life, so I can't always help straight away.
+Remenber that even if a plugin is popular, most of the plugins are badly coded or the developer didn't follow Wordpress guidelines on plugin development. Therefor conflict happens. The method is useful not just for this plugin. 
+
+= Can't play my tracks on my iphone, ipad or ipod? =
+
+Soundcloud doesn't currently give the possibility to developers to fall back to soundcloud html5 player if flash isn't installed or supported by the device. There are solutions but they are lengthy to implement and still  not very user friendly. But as soon as it's possible it will be implemented.
 
 = How can I use the shortcode manually? =
 
@@ -90,11 +101,13 @@ If you wish to have more control here is an example:
 **[soundcloud id='10450254' comments='true' autoplay='false' playertype='Standard' width='100%' color='#005bff']**
 
 
-= Can't play my tracks on my iphone, ipad or ipod? =
+= Can I request features? =
 
-Soundcloud doesn't currently give the possibility to developers to fall back to soundcloud html5 player if flash isn't installed or supported by the device. There are solutions but they are lengthy to implement and still  not very user friendly. But as soon as it's possible it will be implemented.
+Yes, you can. If asked nicely and the requests are sensibles, I almost always integrate them to new releases.
 
- 
+= Can you help me? =
+
+Sometimes, I generaly keep a eye on my plugin's forums and website's comments. Bear in mind that I've got a full time job and a life, so I can't always help straight away.
 
 == Upgrade Notice ==
 
@@ -115,7 +128,7 @@ When upgrading from 1.0.1 and earlier: All shortcode attributes are now lowercas
 
 = 1.0.3.2 =
 
-*Emergency fix linked to soundcloud server been attacked (DDoS): Added user-agent header to request.
+* Emergency fix linked to soundcloud server been attacked (DDoS): Added user-agent header to request.
 
 = 1.0.3 and 1.0.3.1 =
 * Fixed warning message related to xml not loading when allow_url_fopen is disable: Now using cURL as a first choice for getting xml, and then simplexml_load_file as a last desperate option. Thanks a million to Karl Rixon (http://www.karlrixon.co.uk/).
