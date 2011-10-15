@@ -38,7 +38,6 @@ function get_soundcloud_is_gold_default_settings_for_js(){
 	echo 'soundcloudIsGoldWidth_default = "'.get_soundcloud_is_gold_default_width(get_option('soundcloud_is_gold_width_settings')).'"; ';
 	echo 'soundcloudIsGoldClasses_default = "'.get_option('soundcloud_is_gold_classes').'"; ';
 	echo 'soundcloudIsGoldColor_default = "'.get_option('soundcloud_is_gold_color').'"; ';
-	echo 'soundcloudIsGoldUserTrackNumber = '.get_soundcloudIsGoldUserTrackNumber().'; ';
 }
 function get_soundcloudIsGoldUserTrackNumber(){
 	$soundcloudIsGoldApiCall = 'http://api.soundcloud.com/users/'.get_option('soundcloud_is_gold_user').'.xml?client_id=9rD2GrGrajkmkw5eYFDp2g';
@@ -73,6 +72,38 @@ function get_soundcloud_is_gold_api_response($soundcloudIsGoldApiCall){
 	$soundCloudIsGoldResponseArray = array('response' => $soundcloudIsGoldResp, 'error' => $soundcloudIsGoldRespError);
 	return $soundCloudIsGoldResponseArray;
 }
+/*Pagination
+soundcloud_is_gold_pagination($totalItems, $currentPage, $perPage)
+*/
+function soundcloud_is_gold_pagination($totalItems, $currentPage, $perPage, $post_ID){
+	
+	// The items on the current page.
+	$offset = ($currentPage - 1) * $perPage;
+	$firstItem = $offset + 1;
+	$lastItem = $offset + $perPage < $totalItems ? $offset + $perPage : $totalItems;
+	
+	// Some useful variables for making links.
+	$firstPage = 1;
+	$lastPage = ceil($totalItems / $perPage);
+	$prevPage = $currentPage - 1 > 0 ? $currentPage - 1 : 1;
+	$nextPage = $currentPage + 1 > $lastPage ? $lastPage : $currentPage + 1;
+	
+	$disableFirst = ($currentPage == $firstPage) ? ' disabled' : '';
+	$disableLast = ($currentPage == $lastPage) ? ' disabled' : '';
+	
+	$output = '<div id="soundcloudMMPagination">';
+	$output .= '<div class="tablenav">';
+	$output .= '<div class="tablenav-pages"><span class="displaying-num">'.$totalItems.' tracks</span>';
+	$output .= '<span class="pagination-links"><a href="?post_id='.$post_ID.'&tab=soundcloud_is_gold&paged='.$firstPage.'&TB_iframe=1&width=640&height=584" title="Go to the first page" class="first-page'.$disableFirst.'">&laquo;</a>';
+	$output .= '<a href="?post_id='.$post_ID.'&tab=soundcloud_is_gold&paged='.$prevPage.'&TB_iframe=1&width=640&height=584" title="Go to the previous page" class="prev-page'.$disableFirst.'">&lsaquo;</a>';
+	$output .= '<span class="paging-input">page '.$currentPage.' of <span class="total-pages">'.$lastPage.'</span></span>';
+	$output .= '<a href="?post_id='.$post_ID.'&tab=soundcloud_is_gold&paged='.$nextPage.'&TB_iframe=1&width=640&height=584" title="Go to the next page" class="next-page'.$disableLast.'">&rsaquo;</a>';
+	$output .= '<a href="?post_id='.$post_ID.'&tab=soundcloud_is_gold&paged='.$lastPage.'&TB_iframe=1&width=640&height=584" title="Go to the last page" class="last-page'.$disableLast.'">&raquo;</a></span></div>';
+	$output .= '</div>';
+	$output .= '</div>';
+	
+	return $output;
+}
 function printl($val){
 	printf("<pre>%s</pre>", print_r($val, true));
 }
@@ -97,10 +128,7 @@ add_action('admin_print_styles-media-upload-popup', 'soundcloud_is_gold_option_s
 /* Soundcloud is Gold Tab (Iframe) content*/
 function media_soundcloud_is_gold_process() {
 	media_upload_header();
-       // $soundcloudXML = PLUGIN_DIR.'tracks.xml';
-	$soundcloudIsGoldApiCall = 'http://api.soundcloud.com/users/'.get_option('soundcloud_is_gold_user').'/tracks.xml?client_id=9rD2GrGrajkmkw5eYFDp2g';
-        get_soundcloud_is_gold_user_tracks($soundcloudIsGoldApiCall, $_REQUEST['post_id']);
-	//testMedia(TRUE);
+	get_soundcloud_is_gold_user_tracks();
 }
 /* load Iframe in the tab page */
 function soundcloud_is_gold_media_menu_handle() {
@@ -112,14 +140,22 @@ add_action('media_upload_soundcloud_is_gold', 'soundcloud_is_gold_media_menu_han
 /*Add Soundcloud Button to Upload/Insert*/
 function plugin_media_button($context) {
 	global $post_ID;
-	$plugin_media_button = ' %s' . '<a id="add_soundcloud_is_gold" title="Insert Soundcloud Player" href="media-upload.php?post_id='.$post_ID.'&tab=soundcloud_is_gold&TB_iframe=1&width=640&height=584" class="thickbox"><img alt="Insert Soundcloud Player" src="'.PLUGIN_DIR.'soundcloud-is-gold-icon.png"></a>';
+	$plugin_media_button = ' %s' . '<a id="add_soundcloud_is_gold" title="Insert Soundcloud Player" href="media-upload.php?post_id='.$post_ID.'&tab=soundcloud_is_gold&paged=1&TB_iframe=1&width=640&height=584" class="thickbox"><img alt="Insert Soundcloud Player" src="'.PLUGIN_DIR.'soundcloud-is-gold-icon.png"></a>';
 	return sprintf($context, $plugin_media_button);
   }
 add_filter('media_buttons_context', 'plugin_media_button');
   
 /** Populate the new Soundcloud is Gold Tab **/
-function get_soundcloud_is_gold_user_tracks($soundcloudIsGoldApiCall, $post_id){
+function get_soundcloud_is_gold_user_tracks(){
 	
+	$soundcloudIsGoldPage = isset($_REQUEST['paged']) ? $_REQUEST['paged'] : '1';
+	$post_id = $_REQUEST['post_id'];
+	$soundcloudIsGoldTracksPerPage = 25;
+	$soundcloudIsGoldApiOffset = $soundcloudIsGoldTracksPerPage*($soundcloudIsGoldPage-1);
+	$soundcloudIsGoldPagination = soundcloud_is_gold_pagination(get_soundcloudIsGoldUserTrackNumber(), $soundcloudIsGoldPage, $soundcloudIsGoldTracksPerPage, $post_id);
+	
+	$soundcloudIsGoldApiCall = 'http://api.soundcloud.com/users/'.get_option('soundcloud_is_gold_user').'/tracks.xml?limit='.$soundcloudIsGoldTracksPerPage.'&offset='.$soundcloudIsGoldApiOffset.'&client_id=9rD2GrGrajkmkw5eYFDp2g';
+       
 	$soundcloudIsGoldUser = get_option('soundcloud_is_gold_user');
 	$soundcloudIsGoldSettings = get_option('soundcloud_is_gold_settings');
 	$soundcloudIsGoldPlayerType = get_option('soundcloud_is_gold_playerType');
@@ -128,6 +164,9 @@ function get_soundcloud_is_gold_user_tracks($soundcloudIsGoldApiCall, $post_id){
 	$soundcloudIsGoldWidth = get_soundcloud_is_gold_default_width($soundcloudIsGoldWidthSettings);
 	$soundcloudIsGoldClasses = get_option('soundcloud_is_gold_classes');
 	$soundcloudIsGoldColor = get_option('soundcloud_is_gold_color');
+    
+	//Pagination
+	echo (isset($soundcloudIsGoldPagination)) ? $soundcloudIsGoldPagination : '';
     
 	//Sorting Menu
 	echo '<form id="library-form" class="media-upload-form validate" action="" method="post" enctype="multipart/form-data"><div id="media-items" class="media-items-'.$post_id.'">';
