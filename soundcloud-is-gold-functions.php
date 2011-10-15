@@ -1,6 +1,84 @@
 <?php
 /*********************************************************************/
 /***                                                               ***/
+/***                     SOUNDCLOUD UTILITIES                      ***/
+/***                                                               ***/
+/*********************************************************************/
+function get_soundcloud_is_gold_player_types(){
+    $m = array('Mini', 'Standard', 'Artwork');
+    return $m;
+}
+function get_soundcloud_is_gold_wordpress_sizes(){
+    $px = "px";
+    $soundcloudIsGoldWordpressSizes = array(
+                                                "thumbnail" => array(
+                                                                    get_option( 'thumbnail_size_w' ).$px,
+                                                                    get_option( 'thumbnail_size_h' ).$px
+                                                                    ),
+                                                "medium" => array(
+                                                                get_option( 'medium_size_w' ).$px,
+                                                                get_option( 'medium_size_w' ).$px
+                                                                ),
+                                                "large" => array(
+                                                                get_option( 'large_size_w' ).$px,
+                                                                get_option( 'large_size_w' ).$px
+                                                                )
+                                              );
+    return $soundcloudIsGoldWordpressSizes;
+}
+function get_soundcloud_is_gold_default_width($settings){
+    return $settings[$settings['type']];
+}
+function get_soundcloud_is_gold_default_settings_for_js(){
+	echo 'soundcloudIsGoldUser_default = "'.get_option('soundcloud_is_gold_user').'"; ';
+	echo 'soundcloudIsGoldPlayerType_default = "'.get_option('soundcloud_is_gold_playerType').'"; ';
+        $soundcloudIsGoldSettings = get_option('soundcloud_is_gold_settings');
+	echo 'soundcloudIsGoldAutoPlay_default = '.((!isset($soundcloudIsGoldSettings[0]) || $soundcloudIsGoldSettings[0] == '') ? 'false' : 'true') .'; ';
+	echo 'soundcloudIsGoldComments_default = '.((!isset($soundcloudIsGoldSettings[1]) || $soundcloudIsGoldSettings[1] == '') ? 'false' : 'true') .'; ';
+	echo 'soundcloudIsGoldWidth_default = "'.get_soundcloud_is_gold_default_width(get_option('soundcloud_is_gold_width_settings')).'"; ';
+	echo 'soundcloudIsGoldClasses_default = "'.get_option('soundcloud_is_gold_classes').'"; ';
+	echo 'soundcloudIsGoldColor_default = "'.get_option('soundcloud_is_gold_color').'"; ';
+	echo 'soundcloudIsGoldUserTrackNumber = '.get_soundcloudIsGoldUserTrackNumber().'; ';
+}
+function get_soundcloudIsGoldUserTrackNumber(){
+	$soundcloudIsGoldApiCall = 'http://api.soundcloud.com/users/'.get_option('soundcloud_is_gold_user').'.xml?client_id=9rD2GrGrajkmkw5eYFDp2g';
+	$soundcloudIsGoldApiResponse = get_soundcloud_is_gold_api_response($soundcloudIsGoldApiCall);
+	return $soundcloudIsGoldApiResponse['response']->{'track-count'};
+}
+function get_soundcloud_is_gold_api_response($soundcloudIsGoldApiCall){
+	//Set Error default message && default XML state
+	$soundcloudIsGoldRespError = false;
+	$soundcloudIsGoldResp = false;
+	//Check is cURL extension is loaded
+	if(extension_loaded("curl")){
+		// create a new cURL resource
+		$soundcloudIsGoldCURL = curl_init();
+		//Set cURL Options
+		curl_setopt($soundcloudIsGoldCURL, CURLOPT_URL, $soundcloudIsGoldApiCall);
+		curl_setopt($soundcloudIsGoldCURL, CURLOPT_RETURNTRANSFER, true);//return a string
+		curl_setopt($soundcloudIsGoldCURL, CURLOPT_USERAGENT, "user_agent : FOOBAR");
+		// Get XML as a string
+		$soundcloudIsGoldXmlString = curl_exec($soundcloudIsGoldCURL);
+		//Check for cURL errors
+		if($soundcloudIsGoldXmlString === false) $soundcloudIsGoldRespError = 'Curl error: ' . curl_error($soundcloudIsGoldCURL);
+		//No cURL Errors: Load the call and captured xml returned by the API
+		else $soundcloudIsGoldResp = simplexml_load_string($soundcloudIsGoldXmlString);
+		// close cURL resource, and free up system resources
+		curl_close($soundcloudIsGoldCURL);
+	}
+	//No cURL: Try loading the XML directly with simple_xml_load_file
+	else $soundcloudIsGoldResp = simplexml_load_file($soundcloudIsGoldApiCall);
+
+	//Add response and error to array
+	$soundCloudIsGoldResponseArray = array('response' => $soundcloudIsGoldResp, 'error' => $soundcloudIsGoldRespError);
+	return $soundCloudIsGoldResponseArray;
+}
+function printl($val){
+	printf("<pre>%s</pre>", print_r($val, true));
+}
+
+/*********************************************************************/
+/***                                                               ***/
 /***                   SOUNDCLOUD MEDIA UPLOAD TAB                 ***/
 /***                                                               ***/
 /*********************************************************************/
@@ -74,34 +152,9 @@ function get_soundcloud_is_gold_user_tracks($soundcloudIsGoldApiCall, $post_id){
 	</script>
 	
 	<?php
-	//Set Error default message && default XML state
-	$soundcloudIsGoldRespError = false;
-	$soundcloudIsGoldResp = false;
-	//Check is cURL extension is loaded
-	if(extension_loaded("curl")){
-		// create a new cURL resource
-		$soundcloudIsGoldCURL = curl_init();
-		//Set cURL Options
-		curl_setopt($soundcloudIsGoldCURL, CURLOPT_URL, $soundcloudIsGoldApiCall);
-		curl_setopt($soundcloudIsGoldCURL, CURLOPT_RETURNTRANSFER, true);//return a string
-		curl_setopt($soundcloudIsGoldCURL, CURLOPT_USERAGENT, "user_agent : FOOBAR");
-		// Get XML as a string
-		$soundcloudIsGoldXmlString = curl_exec($soundcloudIsGoldCURL);
-		//Check for cURL errors
-		if($soundcloudIsGoldXmlString === false) $soundcloudIsGoldRespError = 'Curl error: ' . curl_error($soundcloudIsGoldCURL);
-		//No cURL Errors: Load the call and captured xml returned by the API
-		else $soundcloudIsGoldResp = simplexml_load_string($soundcloudIsGoldXmlString);
-		// close cURL resource, and free up system resources
-		curl_close($soundcloudIsGoldCURL);
-	}
-	//No cURL: Try loading the XML directly with simple_xml_load_file
-	else $soundcloudIsGoldResp = simplexml_load_file($soundcloudIsGoldApiCall);
-	
-	//printl($resp);
-	//echo htmlentities($soundcloudIsGoldResp->asXML());
-	// Check to see if the response was loaded, else print an error
-	if ($soundcloudIsGoldResp) {
-			foreach($soundcloudIsGoldResp as $soundcloudIsGoldtrack): ?>
+	$soundcloudIsGoldApiResponse = get_soundcloud_is_gold_api_response($soundcloudIsGoldApiCall);
+	if (isset($soundcloudIsGoldApiResponse['response']) && $soundcloudIsGoldApiResponse['response']) {
+			foreach($soundcloudIsGoldApiResponse['response'] as $soundcloudIsGoldtrack): ?>
 			
 				<div class="media-item preloaded" id="media-item-<?php echo $soundcloudIsGoldtrack->id ?>">
 					<a href="#" class="toggle describe-toggle-on soundcloud" id="show-<?php echo $soundcloudIsGoldtrack->id ?>">Show</a>
@@ -111,7 +164,7 @@ function get_soundcloud_is_gold_user_tracks($soundcloudIsGoldApiCall, $post_id){
 						<thead id="media-head-<?php echo $soundcloudIsGoldtrack->id ?>" class="media-item-info">
 							<tr valign="top">
 								<td id="thumbnail-head-<?php echo $soundcloudIsGoldtrack->id ?>" class="A1B1">
-									<p><a href="<?php echo $soundcloudIsGoldtrack->{'permalink-url'}?>" title="Go to the Soundcloud page" target="_blank"><img id="soundcloudMMThumb-<?php echo $soundcloudIsGoldtrack->id ?>" style="margin-top: 3px;" alt="" src="<?php echo $soundcloudIsGoldtrack->{'artwork-url'} ?>" class="thumbnail"></a></p>
+									<p><a href="<?php echo $soundcloudIsGoldtrack->{'permalink-url'}?>" title="Go to the Soundcloud page" target="_blank"><img id="soundcloudMMThumb-<?php echo $soundcloudIsGoldtrack->id ?>" style="margin-top: 3px;" alt="" src="<?php echo ($soundcloudIsGoldtrack->{'artwork-url'} != '') ? $soundcloudIsGoldtrack->{'artwork-url'} : PLUGIN_DIR."/noThumbnail.gif" ?>" class="thumbnail"></a></p>
 								</td>
 								<td>
 								<p><strong>Title:</strong> <?php echo $soundcloudIsGoldtrack->title ?></p>
@@ -220,8 +273,8 @@ function get_soundcloud_is_gold_user_tracks($soundcloudIsGoldApiCall, $post_id){
 		}
 		//Error getting XML
 		else{
-			if($soundcloudIsGoldRespError === false) $soundcloudIsGoldRespError = 'XML error';
-			echo '<div class="soundcloudMMXmlError"><p>Oups! There\'s been a error while getting the tracks from soundcloud. Please reload the page.</p><p class="error">'.$soundcloudIsGoldRespError.'</p></div>';
+			if($soundcloudIsGoldApiResponse['error'] === false) $soundcloudIsGoldApiResponse['error'] = 'XML error';
+			echo '<div class="soundcloudMMXmlError"><p>Oups! There\'s been a error while getting the tracks from soundcloud. Please reload the page.</p><p class="error">'.$soundcloudIsGoldApiResponse['error'].'</p></div>';
 		}
 	echo '<div id="colorpicker"></div>';
 	echo '</div></form>';

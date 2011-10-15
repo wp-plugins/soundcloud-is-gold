@@ -3,7 +3,7 @@
 Plugin Name: Soundcloud is Gold
 Plugin URI: http://www.mightymess.com/soundcloud-is-gold-wordpress-plugin
 Description: <strong><a href="http://www.mightymess.com/soundcloud-is-gold-wordpress-plugin">Soundcloud is gold</a></strong> integrates perfectly into wordpress. Browse through your soundcloud tracks from the 'soundcloud is gold' tab with the post's 'upload media' popup window. Select, set and add track to your post using the soundcloud player. Live Preview, easy, smart and straightforward. You can set default settings in the option page, choose your defaut soundcloud player (Mini, Standard, Artwork), its width, extra classes for you CSS lovers and your favorite colors. You'll still be able to set players to different settings before adding to your post if you fancy a one off change.
-Version: 1.0.3.2
+Version: 1.0.3.3
 Author: Thomas Michalak at Mighty Mess
 Author URI: http://www.mightymess.com/thomas-michalak
 License: GPL2 or Later
@@ -61,44 +61,6 @@ $plugin = plugin_basename(__FILE__);
 add_filter("plugin_action_links_$plugin", 'soundcloud_is_gold_settings_link', 10, 2 );
 
 /*** Options and Utilities***/
-function get_soundcloud_is_gold_player_types(){
-    $m = array('Mini', 'Standard', 'Artwork');
-    return $m;
-}
-
-function get_soundcloud_is_gold_wordpress_sizes(){
-    $px = "px";
-    $soundcloudIsGoldWordpressSizes = array(
-                                                "thumbnail" => array(
-                                                                    get_option( 'thumbnail_size_w' ).$px,
-                                                                    get_option( 'thumbnail_size_h' ).$px
-                                                                    ),
-                                                "medium" => array(
-                                                                get_option( 'medium_size_w' ).$px,
-                                                                get_option( 'medium_size_w' ).$px
-                                                                ),
-                                                "large" => array(
-                                                                get_option( 'large_size_w' ).$px,
-                                                                get_option( 'large_size_w' ).$px
-                                                                )
-                                              );
-    return $soundcloudIsGoldWordpressSizes;
-}
-
-function get_soundcloud_is_gold_default_width($settings){
-    return $settings[$settings['type']];
-}
-function get_soundcloud_is_gold_default_settings_for_js(){
-	echo 'soundcloudIsGoldUser_default = "'.get_option('soundcloud_is_gold_user').'"; ';
-	echo 'soundcloudIsGoldPlayerType_default = "'.get_option('soundcloud_is_gold_playerType').'"; ';
-        $soundcloudIsGoldSettings = get_option('soundcloud_is_gold_settings');
-	echo 'soundcloudIsGoldAutoPlay_default = '.((!isset($soundcloudIsGoldSettings[0]) || $soundcloudIsGoldSettings[0] == '') ? 'false' : 'true') .'; ';
-	echo 'soundcloudIsGoldComments_default = '.((!isset($soundcloudIsGoldSettings[1]) || $soundcloudIsGoldSettings[1] == '') ? 'false' : 'true') .'; ';
-	echo 'soundcloudIsGoldWidth_default = "'.get_soundcloud_is_gold_default_width(get_option('soundcloud_is_gold_width_settings')).'"; ';
-	echo 'soundcloudIsGoldClasses_default = "'.get_option('soundcloud_is_gold_classes').'"; ';
-	echo 'soundcloudIsGoldColor_default = "'.get_option('soundcloud_is_gold_color').'"; ';	
-}
-
 add_option('soundcloud_is_gold_user', 't-m');
 $soundcloudIsGoldDefaultSettings = array(
                                         false,
@@ -129,38 +91,14 @@ function soundcloud_is_gold_options(){
     $soundcloudIsGoldColor = get_option('soundcloud_is_gold_color');
     $soundcloudIsGoldApiCall = 'http://api.soundcloud.com/users/'.$soundcloudIsGoldUser.'/tracks.xml?limit=1&client_id=9rD2GrGrajkmkw5eYFDp2g';
     
-    //Set Error default message && default XML state
-	
-    $soundcloudIsGoldRespError = false;
-    $soundcloudIsGoldResp = false;
-    //Check is cURL extension is loaded
-    if(extension_loaded("curl")){
-		// create a new cURL resource
-		$soundcloudIsGoldCURL = curl_init();
-		//Set cURL Options
-		curl_setopt($soundcloudIsGoldCURL, CURLOPT_URL, $soundcloudIsGoldApiCall);
-		curl_setopt($soundcloudIsGoldCURL, CURLOPT_RETURNTRANSFER, true);//return a string
-		curl_setopt($soundcloudIsGoldCURL, CURLOPT_USERAGENT, "user_agent : FOOBAR");
-		// Get XML as a string
-		$soundcloudIsGoldXmlString = curl_exec($soundcloudIsGoldCURL);
-		//Check for cURL errors
-		if($soundcloudIsGoldXmlString === false) $soundcloudIsGoldRespError = 'Curl error: ' . curl_error($soundcloudIsGoldCURL);
-		//No cURL Errors: Load the call and captured xml returned by the API
-		else $soundcloudIsGoldResp = simplexml_load_string($soundcloudIsGoldXmlString);
-		// close cURL resource, and free up system resources
-		curl_close($soundcloudIsGoldCURL);
-	}
-	//No cURL: Try loading the XML directly with simple_xml_load_file
-	else $soundcloudIsGoldResp = simplexml_load_file($soundcloudIsGoldApiCall);
-	
-    //$soundcouldMMapiCall = PLUGIN_DIR.'tracks.xml';
-    //$soundcloudIsGoldResp = simplexml_load_file($soundcloudIsGoldApiCall);
-    if($soundcloudIsGoldResp){
-        foreach($soundcloudIsGoldResp as $soundcloudMMLatestTrack){
+    $soundcloudIsGoldApiResponse = get_soundcloud_is_gold_api_response($soundcloudIsGoldApiCall);
+    if(isset($soundcloudIsGoldApiResponse['response']) && $soundcloudIsGoldApiResponse['response']){
+        foreach($soundcloudIsGoldApiResponse['response'] as $soundcloudMMLatestTrack){
             $soundcouldMMId = (string)$soundcloudMMLatestTrack->id;
             $soundcouldMMShortcode = '[soundcloud id='.$soundcouldMMId.']';
         }
     }
+    
 ?>
     
     <script type="text/javascript">
@@ -233,14 +171,14 @@ function soundcloud_is_gold_options(){
                         </ul>
                     </li>
                     <li class="soundcloudMMBox"><label>Live Preview <small>(your latest track)</small></label>
-                        <?php if($soundcloudIsGoldResp) :?>
+                        <?php if($soundcloudIsGoldApiResponse['response']) :?>
                         <p class="soundcloudMMEmbed soundcloudMMEmbedOptions" style="text-align:center;">
 			    <!-- Soundcloud Preview here -->
 			</p>
                         <p class="soundcloudMMLoading" style="display:none"></p>
                         <?php else : ?>
                         <!-- Error getting XML -->
-                        <div class="soundcloudMMXmlError"><p>Oups! There's been a error while getting the tracks from soundcloud. Please reload the page.</p></div>
+                        <div class="soundcloudMMXmlError"><p><?php echo $soundcloudIsGoldApiResponse['error'] ? $soundcloudIsGoldApiResponse['error'] : "Oups! There's been a error while getting the tracks from soundcloud. Please reload the page."?></p></div>
                         <?php endif; ?>
                     </li>
                 </ul>

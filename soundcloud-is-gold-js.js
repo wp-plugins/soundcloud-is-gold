@@ -18,11 +18,9 @@ jQuery(document).ready(function($){
     /******************************************/
     /**              SOUNDCLOUD              **/
     /******************************************/
-    //Update Video Preview and Shortcode
+    //Attach Events for Player Preview and Shortcode
     $('.soundcloudMMWrapper').each(function(){
 	var mySelf = $(this);
-	//First Time
-	updateMe(mySelf, true);
 	//On changing settings
 	$('input[type=checkbox], input[type=radio], .soundcloudMMWPSelectedWidth, .soundcloudMMColorPickerClose', this).click(function(){
 	    updateMe(mySelf, true);
@@ -30,9 +28,18 @@ jQuery(document).ready(function($){
 	$('.soundcloudMMCustomSelectedWidth, .soundcloudMMClasses', this).focusout(function(){
 	    updateMe(mySelf, true);
 	});
+	//Initialize color Picker
 	initColorPicker(mySelf);
+	//(Tab View) Event: Load First Time preview when show clicked
+	if(!mySelf.hasClass('soundcloudMMOptions')){
+	    $(".describe-toggle-on", mySelf.parent()).click(function(){
+		updateMe(mySelf, true);
+	    });
+	}
     });
     
+    //First Time On Option Page
+    if($(".soundcloudMMOptions").length) updateMe($(this), true);
     
     function updateMe(parent, refresh){
 	//Collect Settings

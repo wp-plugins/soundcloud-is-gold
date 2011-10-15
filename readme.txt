@@ -126,8 +126,11 @@ When upgrading from 1.0.1 and earlier: All shortcode attributes are now lowercas
 
 == Changelog ==
 
-= 1.0.3.2 =
+= 1.0.4 =
+* Faster loading of the tab (only load player's preview when click on 'show')
+* Pagination as people with more than 50 tracks couldn't access the rest of their tracks
 
+= 1.0.3.2 =
 * Emergency fix linked to soundcloud server been attacked (DDoS): Added user-agent header to request.
 
 = 1.0.3 and 1.0.3.1 =
