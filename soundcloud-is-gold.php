@@ -3,7 +3,7 @@
 Plugin Name: Soundcloud is Gold
 Plugin URI: http://www.mightymess.com/soundcloud-is-gold-wordpress-plugin
 Description: <strong><a href="http://www.mightymess.com/soundcloud-is-gold-wordpress-plugin">Soundcloud is gold</a></strong> integrates perfectly into wordpress. Browse through your soundcloud tracks from the 'soundcloud is gold' tab with the post's 'upload media' popup window. Select, set and add track to your post using the soundcloud player. Live Preview, easy, smart and straightforward. You can set default settings in the option page, choose your defaut soundcloud player (Mini, Standard, Artwork), its width, extra classes for you CSS lovers and your favorite colors. You'll still be able to set players to different settings before adding to your post if you fancy a one off change.
-Version: 1.0.3.3
+Version: 1.0.4
 Author: Thomas Michalak at Mighty Mess
 Author URI: http://www.mightymess.com/thomas-michalak
 License: GPL2 or Later
@@ -50,7 +50,6 @@ function soundcloud_is_gold_menu() {
     add_action( "admin_print_styles-$soundcloudIsGoldPage", 'soundcloud_is_gold_option_styles' ); // Add Style
     add_action( "admin_print_styles-$soundcloudIsGoldPage", 'soundcloud_is_gold_option_fonts' ); // Add Fonts
 }
-
 /*** Link to Settings from the plugin Page ***/
 function soundcloud_is_gold_settings_link($links) { 
   $settings_link = '<a href="admin.php?page=soundcloud-is-gold.php">Settings</a>'; 
@@ -59,7 +58,10 @@ function soundcloud_is_gold_settings_link($links) {
 }
 $plugin = plugin_basename(__FILE__); 
 add_filter("plugin_action_links_$plugin", 'soundcloud_is_gold_settings_link', 10, 2 );
-
+/*** Add tint Mce Soundcloud is Gold Plugin ***/
+add_filter("mce_external_plugins", 'soundcloud_is_gold_mce_plugin');
+//add_filter( 'mce_buttons', 'soundcloud_is_gold_mce_button' );
+add_filter('mce_css', 'soundcloud_is_gold_mce_css');
 /*** Options and Utilities***/
 add_option('soundcloud_is_gold_user', 't-m');
 $soundcloudIsGoldDefaultSettings = array(

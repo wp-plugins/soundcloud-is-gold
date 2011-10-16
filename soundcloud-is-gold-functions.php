@@ -104,6 +104,23 @@ function soundcloud_is_gold_pagination($totalItems, $currentPage, $perPage, $pos
 	
 	return $output;
 }
+/*Add Soundcloud is Gold Plugin to TinyMce*/
+function soundcloud_is_gold_mce_plugin($plugin_array) {
+    $plugin_array['soundcloudIsGold']  =  PLUGIN_DIR.'tinymce-plugin/soundcloud-is-gold-editor_plugin.js';
+    return $plugin_array;
+}
+function soundcloud_is_gold_mce_button( $buttons ) {
+	// add a separation before our button, here our button's id is "mygallery_button"
+	array_push( $buttons, '|', 'soundcloudisgoldbtns' );
+	return $buttons;
+}
+function soundcloud_is_gold_mce_css($mce_css) {
+  if (! empty($mce_css)) $mce_css .= ',';
+  $mce_css .= PLUGIN_DIR.'/tinymce-plugin/soundcloud-is-gold-editor_plugin.css';
+  return $mce_css; 
+}
+
+/* Debug */
 function printl($val){
 	printf("<pre>%s</pre>", print_r($val, true));
 }

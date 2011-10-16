@@ -75,9 +75,10 @@ jQuery(document).ready(function($){
 	//Insert Content at the end of the editor content
 	//parent.tinyMCE.activeEditor.setContent(parent.tinyMCE.activeEditor.getContent() + sh);
 	
-	//Insert Content where the cursor is in the editor
-	parent.tinyMCE.activeEditor.execCommand('mceInsertContent', false, sh);
-	
+	//Insert Content where the cursor is in the editor (plus refresh)
+	parent.tinyMCE.activeEditor.execCommand('mceInsertRawHTML', false, sh);
+	//Insert Content where the cursor is in the editor (no refresh)
+	//parent.tinyMCE.activeEditor.execCommand('mceInsertContent', false, sh);
 	//Close window
 	parent.jQuery("#TB_closeWindowButton").click();
     }
