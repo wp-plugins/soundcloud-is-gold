@@ -121,8 +121,10 @@ function soundcloud_is_gold_mce_css($mce_css) {
 }
 
 /* Debug */
-function printl($val){
-	printf("<pre>%s</pre>", print_r($val, true));
+if(!function_exists('printl')){
+	function printl($val){
+		printf("<pre>%s</pre>", print_r($val, true));
+	}
 }
 
 /*********************************************************************/
