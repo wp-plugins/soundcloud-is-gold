@@ -45,7 +45,7 @@ That's just my opinion of course...
 
 = To Do List =
 
-* V1.1: Advance Settings (change background color and comments color, playcounts, buy link, font, wmode, etc…)
+* V1.1: Advance Settings (change background color and comments color, playcounts, buy link, font, wmode, etc, show/hide styled shortcode, number of tracks per page)
 * Add Widget
 * if no id is specified in the shortcode (e.g [soundcloud]), display the latest track.
 * Posibility to access and add 'favorites' to post (thanks Bernd for the idea).
@@ -128,7 +128,7 @@ When upgrading from 1.0.1 and earlier: All shortcode attributes are now lowercas
 
 = 1.0.4 =
 * Faster loading of the tab (only load player's preview when click on 'show')
-* Pagination as people with more than 50 tracks couldn't access the rest of their tracks
+* Pagination as people with more than 50 tracks couldn't access the rest of their tracks (25 tracks per page)
 * Styled shortcode in tinymce editor with delete and edit buttons
 
 = 1.0.3.2 =
