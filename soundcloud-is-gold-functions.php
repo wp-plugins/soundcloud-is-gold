@@ -120,13 +120,6 @@ function soundcloud_is_gold_mce_css($mce_css) {
   return $mce_css; 
 }
 
-/* Debug */
-if(!function_exists('printl')){
-	function printl($val){
-		printf("<pre>%s</pre>", print_r($val, true));
-	}
-}
-
 /*********************************************************************/
 /***                                                               ***/
 /***                   SOUNDCLOUD MEDIA UPLOAD TAB                 ***/
