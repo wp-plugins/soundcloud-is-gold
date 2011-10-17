@@ -1,34 +1,9 @@
 img.soundcloudIsGold{
-    background: url("../soundcloud-logo-sc.png") no-repeat scroll center center #FF6100;
-    border: 1px solid #DA0700;
+    background: url("../soundcloud-logo-sc.png") no-repeat scroll center center #DAE8F6;
+    border: 1px solid #7B9DA2;
     height: 100px;
     width: 99%;
     box-shadow:0 0 5px #666;
     -moz-box-shadow:0 0 5px #666;
     -webkit-box-shadow: 0 0 5px #666;
-}
-#soundcloudisgoldbtns #soundcloudisgold_editgallery, #soundcloudisgoldbtns #soundcloudisgold_delgallery{
-    padding:5px;
-    margin:5px;
-    border: 1px solid #7B9DA2;
-    color:#21759B;
-    text-decoration:underline;
-    background:#DAE8F6;
-    border-radius:5px;
-    -moz-border-radius:5px;
-    -webkit-border-radius:5px;
-    box-shadow:0 0 10px #333333;
-    -moz-box-shadow:0 0 10px #333333;
-    -webkit-box-shadow: 0 0 10px #333333;
-}
-#soundcloudisgoldbtns #soundcloudisgold_editgallery:hover, #soundcloudisgoldbtns #soundcloudisgold_delgallery:hover{
-    background:#8FB6BC;
-    border: 1px solid #344346;
-    color:#344346;
-}
-#soundcloudisgold_editgallery{
-    
-}
-#soundcloudisgold_delgallery{
-    
 }

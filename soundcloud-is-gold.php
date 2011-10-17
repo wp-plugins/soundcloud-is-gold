@@ -26,6 +26,7 @@ function soundcloud_is_gold_admin_init() {
     wp_register_style('soundcloud-is-gold-css', PLUGIN_DIR.'soundcloud-is-gold-css.css');
     wp_register_style('ChunkFive', PLUGIN_DIR.'ChunkFive-fontfacekit/stylesheet.css');
     wp_register_style('Quicksand', PLUGIN_DIR.'Quicksand-fontfacekit/stylesheet.css');
+    wp_register_style('soundcloud-is-gold-editor-css', PLUGIN_DIR.'tinymce-plugin/soundcloud-is-gold-editor_plugin.css');
 }
 //Plugin option scripts
 function soundcloud_is_gold_option_scripts() {
@@ -58,10 +59,13 @@ function soundcloud_is_gold_settings_link($links) {
 }
 $plugin = plugin_basename(__FILE__); 
 add_filter("plugin_action_links_$plugin", 'soundcloud_is_gold_settings_link', 10, 2 );
+
 /*** Add tint Mce Soundcloud is Gold Plugin ***/
 add_filter("mce_external_plugins", 'soundcloud_is_gold_mce_plugin');
 //add_filter( 'mce_buttons', 'soundcloud_is_gold_mce_button' );
 add_filter('mce_css', 'soundcloud_is_gold_mce_css');
+
+
 /*** Options and Utilities***/
 add_option('soundcloud_is_gold_user', 't-m');
 $soundcloudIsGoldDefaultSettings = array(

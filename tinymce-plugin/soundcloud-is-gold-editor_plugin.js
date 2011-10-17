@@ -111,13 +111,14 @@
 				id : 'soundcloudisgoldbtns',
 				style : 'display:none;'
 			});
-
+			
+			//Create Edit Button: Keep wp_editgallery as id to herite style for gallery edit button
 			soundcloudIGold_editButton = DOM.add('soundcloudisgoldbtns', 'img', {
 				src : '../wp-content/plugins/soundcloud-is-gold/tinymce-plugin/img/edit.png',
-				id : 'soundcloudisgold_editgallery',
+				id : 'wp_editgallery',
 				width : '24',
 				height : '24',
-				title : 'soundcloudisgold_edit_shortcode'
+				title : 'Replace or edit Player'
 			});
 
 			tinymce.dom.Event.add(soundcloudIGold_editButton, 'mousedown', function(e) {
@@ -125,13 +126,14 @@
 				ed.windowManager.bookmark = ed.selection.getBookmark('simple');
 				ed.execCommand("soundcloud_Is_Gold");
 			});
-
+			
+			//Create Delite Button: Keep wp_editgallery as id to herite style for gallery edit button
 			soundcloudIGold_dellButton = DOM.add('soundcloudisgoldbtns', 'img', {
 				src : '../wp-content/plugins/soundcloud-is-gold/tinymce-plugin/img/delete.png',
-				id : 'soundcloudisgold_delgallery',
+				id : 'wp_delgallery',
 				width : '24',
 				height : '24',
-				title : 'soundcloudisgold_delete_shortcode'
+				title : 'Remove Player'
 			});
 
 			tinymce.dom.Event.add(soundcloudIGold_dellButton, 'mousedown', function(e) {
