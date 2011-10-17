@@ -67,7 +67,9 @@ add_filter('mce_css', 'soundcloud_is_gold_mce_css');
 
 
 /*** Options and Utilities***/
-add_option('soundcloud_is_gold_user', 't-m');
+$soundcloudIsGoldDefaultUsers = array('t-m', 'anna-chocola');
+add_option('soundcloud_is_gold_user', $soundcloudIsGoldDefaultUsers[array_rand($soundcloudIsGoldDefaultUsers, 1)]);
+
 $soundcloudIsGoldDefaultSettings = array(
                                         false,
                                         true
