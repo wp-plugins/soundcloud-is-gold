@@ -59,7 +59,7 @@ That's just my opinion of course...
 * Trigger live preview when changing Soundcloud user name
 * Live search while typing a name in the user name field. So if you're looking for someone it's kind of easier.
 * Add 'activities' to a widget
-* Fall Back for smartphone to html5 player when using flash player
+* Fall Back for smartphone to html5 player when using flash player.
 
 
 == Installation ==
