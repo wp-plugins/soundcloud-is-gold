@@ -2,8 +2,8 @@
 /*
 Plugin Name: Soundcloud is Gold
 Plugin URI: http://www.mightymess.com/soundcloud-is-gold-wordpress-plugin
-Description: <strong><a href="http://www.mightymess.com/soundcloud-is-gold-wordpress-plugin">Soundcloud is gold</a></strong> integrates perfectly into wordpress. Browse through your soundcloud tracks from the 'soundcloud is gold' tab with the post's 'upload media' popup window. Select, set and add track to your post using the soundcloud player. Live Preview, easy, smart and straightforward. You can set default settings in the option page, choose your defaut soundcloud player (Mini, Standard, Artwork), its width, extra classes for you CSS lovers and your favorite colors. You'll still be able to set players to different settings before adding to your post if you fancy a one off change.
-Version: 1.0.4
+Description: <strong><a href="http://www.mightymess.com/soundcloud-is-gold-wordpress-plugin">Soundcloud is gold</a></strong> integrates perfectly into wordpress. Browse through your soundcloud tracks from the 'soundcloud is gold' tab with the post's 'upload media' popup window. Select, set and add track to your post using the soundcloud player. Live Preview, easy, smart and straightforward. You can set default settings in the option page, choose your defaut soundcloud player (Mini, Standard, Artwork, html5), its width, extra classes for you CSS lovers and your favorite colors. You'll still be able to set players to different settings before adding to your post if you fancy a one off change. Now with Html5 player!
+Version: 1.0.5
 Author: Thomas Michalak at Mighty Mess
 Author URI: http://www.mightymess.com/thomas-michalak
 License: GPL2 or Later
@@ -14,19 +14,27 @@ License: GPL2 or Later
  mini: h = 18, w = 100%
  standard: h = 81, w = 100%
  artwork: h = 300, w = 300
+ html5: h=166, w=100%
 */
 
-define ('PLUGIN_DIR', WP_PLUGIN_URL.'/'.str_replace(basename( __FILE__),"",plugin_basename(__FILE__)) );
+define ('SIG_PLUGIN_DIR', WP_PLUGIN_URL.'/'.str_replace(basename( __FILE__),"",plugin_basename(__FILE__)) );
 require_once('soundcloud-is-gold-functions.php');
+
+/** Get Plugin Version **/
+function get_soundcloud_is_gold_version() {
+	$plugin_data = get_plugin_data( __FILE__ );
+	$plugin_version = $plugin_data['Version'];
+	return $plugin_version;
+}
 
 /*** Plugin Init ***/
 add_action( 'admin_init', 'soundcloud_is_gold_admin_init' );
 function soundcloud_is_gold_admin_init() {
-    wp_register_script('soundcloud-is-gold-js', PLUGIN_DIR.'soundcloud-is-gold-js.js', array('jquery', 'farbtastic'));
-    wp_register_style('soundcloud-is-gold-css', PLUGIN_DIR.'soundcloud-is-gold-css.css');
-    wp_register_style('ChunkFive', PLUGIN_DIR.'ChunkFive-fontfacekit/stylesheet.css');
-    wp_register_style('Quicksand', PLUGIN_DIR.'Quicksand-fontfacekit/stylesheet.css');
-    wp_register_style('soundcloud-is-gold-editor-css', PLUGIN_DIR.'tinymce-plugin/soundcloud-is-gold-editor_plugin.css');
+    wp_register_script('soundcloud-is-gold-js', SIG_PLUGIN_DIR.'soundcloud-is-gold-js.js', array('jquery', 'farbtastic'));
+    wp_register_style('soundcloud-is-gold-css', SIG_PLUGIN_DIR.'soundcloud-is-gold-css.css');
+    wp_register_style('ChunkFive', SIG_PLUGIN_DIR.'ChunkFive-fontfacekit/stylesheet.css');
+    wp_register_style('Quicksand', SIG_PLUGIN_DIR.'Quicksand-fontfacekit/stylesheet.css');
+    wp_register_style('soundcloud-is-gold-editor-css', SIG_PLUGIN_DIR.'tinymce-plugin/soundcloud-is-gold-editor_plugin.css');
 }
 //Plugin option scripts
 function soundcloud_is_gold_option_scripts() {
@@ -46,7 +54,7 @@ function soundcloud_is_gold_option_fonts() {
 /*** Add Admin Menu ***/
 add_action('admin_menu', 'soundcloud_is_gold_menu');
 function soundcloud_is_gold_menu() {
-    $soundcloudIsGoldPage = add_menu_page('Soundcloud is Gold: Options', 'Soundcloud is Gold', 'activate_plugins', 'soundcloud-is-gold.php', 'soundcloud_is_gold_options', PLUGIN_DIR.'soundcloud-is-gold-icon.png');
+    $soundcloudIsGoldPage = add_menu_page('Soundcloud is Gold: Options', 'Soundcloud is Gold', 'activate_plugins', 'soundcloud-is-gold.php', 'soundcloud_is_gold_options', SIG_PLUGIN_DIR.'soundcloud-is-gold-icon.png');
     add_action( "admin_print_scripts-$soundcloudIsGoldPage", 'soundcloud_is_gold_option_scripts' ); // Add script
     add_action( "admin_print_styles-$soundcloudIsGoldPage", 'soundcloud_is_gold_option_styles' ); // Add Style
     add_action( "admin_print_styles-$soundcloudIsGoldPage", 'soundcloud_is_gold_option_fonts' ); // Add Fonts
@@ -72,7 +80,8 @@ add_option('soundcloud_is_gold_user', $soundcloudIsGoldDefaultUsers[array_rand($
 
 $soundcloudIsGoldDefaultSettings = array(
                                         false,
-                                        true
+                                        true,
+					true
 );
 add_option('soundcloud_is_gold_settings', $soundcloudIsGoldDefaultSettings);
 add_option('soundcloud_is_gold_playerType', 'Standard');
@@ -117,11 +126,12 @@ function soundcloud_is_gold_options(){
     <div class="soundcloudMMWrapper soundcloudMMOptions">
     
         <div id="soundcloudMMTop" class="darkGreyGradient">
-            <a id="soundcloudMMLogo" class="orangeGradient" href="http://www.soundcloud.com" title="visit SoundCloud website"><img src="<?php echo PLUGIN_DIR ?>/soundcloud-logo-sc.png" width="107" height="71" alt="Soundcloud Logo"/></a>
+            <a id="soundcloudMMLogo" class="orangeGradient" href="http://www.soundcloud.com" title="visit SoundCloud website"><img src="<?php echo SIG_PLUGIN_DIR ?>/soundcloud-logo-sc.png" width="107" height="71" alt="Soundcloud Logo"/></a>
             <a id="soundcloudMMHeader" class="mediumGreyGradient textShadow" href="http://www.mightymess.com/soundcloud-is-gold-wordpress-plugin" alt="Visit Mighty Mess for more cool stuff">
                 <span class="soundcloudMMTitle">SoundCloud is gold <small>by Thomas Michalak</small></span>
                 <span class="soundcloudMMUrl">www.mightymess.com/soundcloud-is-gold-wordpress-plugin</span>
             </a>
+	    <p id="soundcloudMMVersion">version <?php echo get_soundcloud_is_gold_version() ?></p>
         </div>
         
         <div id="soundcloudMMMain" class="lightBlueGradient">
@@ -133,14 +143,15 @@ function soundcloud_is_gold_options(){
                     <li class="soundcloudMMBox"><label>Default Settings</label>
                         <ul class="subSettings checkboxes">
                             <li><input type="checkbox" <?php echo (isset($soundcloudIsGoldSettings[0]) && $soundcloudIsGoldSettings[0]) ? 'checked="checked"' : ''?> name="soundcloud_is_gold_settings[0]" value="true" class="soundcloudMMAutoPlay" id="soundcloudMMAutoPlay"/><label for="soundcloudMMAutoPlay">Play Automatically</label></li>
-                            <li><input type="checkbox" <?php echo (isset($soundcloudIsGoldSettings[1]) && $soundcloudIsGoldSettings[1]) ? 'checked="checked"' : ''?> name="soundcloud_is_gold_settings[1]" value="true" class="soundcloudMMShowComments" id="soundcloudMMShowComments"/><label for="soundcloudMMShowComments">Show track's comments <small>(only for Default and Artwork versions)</small></label></li>
+                            <li><input type="checkbox" <?php echo (isset($soundcloudIsGoldSettings[1]) && $soundcloudIsGoldSettings[1]) ? 'checked="checked"' : ''?> name="soundcloud_is_gold_settings[1]" value="true" class="soundcloudMMShowComments" id="soundcloudMMShowComments"/><label for="soundcloudMMShowComments">Show comments <small>(Standard and Artwork player)</small></label></li>
+			    <li><input type="checkbox" <?php echo (isset($soundcloudIsGoldSettings[2]) && $soundcloudIsGoldSettings[2]) ? 'checked="checked"' : ''?> name="soundcloud_is_gold_settings[2]" value="true" class="soundcloudMMShowArtwork" id="soundcloudMMShowArtwork"/><label for="soundcloudMMShowArtwork">Show Artwork <small>(html5 player)</small></label></li>
                         </ul>
                     </li>
                     <li class="soundcloudMMBox"><label>Default Player Type</label>
                         <ul class="subSettings radios">
                             <?php
                             foreach(get_soundcloud_is_gold_player_types() as $type) : ?>
-                                <li><input name="soundcloud_is_gold_playerType" id="<?php echo $type ?>" class="soundcloudMMPlayerType" type="radio" value="<?php echo $type ?>" <?php if($soundcloudIsGoldPlayerTypeDefault && $type == 'Standard') echo 'checked="checked"'; else echo ($soundcloudIsGoldPlayerType === $type) ? 'checked="checked"' : '' ?> /><label for="<?php echo $type ?>"><?php echo $type; if($type == 'Artwork') echo ' <small>(not available on free soundcloud account)</small>' ?></label></li>
+                                <li><input name="soundcloud_is_gold_playerType" id="<?php echo $type ?>" class="soundcloudMMPlayerType" type="radio" value="<?php echo $type ?>" <?php if($soundcloudIsGoldPlayerTypeDefault && $type == 'Standard') echo 'checked="checked"'; else echo ($soundcloudIsGoldPlayerType === $type) ? 'checked="checked"' : '' ?> /><label for="<?php echo $type ?>"><?php echo $type; if($type == 'Artwork') echo ' <small>(not available on free soundcloud account)</small>'; if($type == 'html5') echo ' <small>new! (beta)</small>' ?></label></li>
                             <?php endforeach; ?>
                         </ul>
                     </li>

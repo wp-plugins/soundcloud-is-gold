@@ -1,7 +1,7 @@
 === SoundCloud Is Gold ===
 Contributors: Thomas Michalak
 Donate link: http://www.mightymess.com/soundcloud-is-gold-wordpress-plugin
-Tags: soundcloud, integrated, media, shortcode, browse, design, easy, simple, music, sound, js, live preview
+Tags: soundcloud, integrated, media, shortcode, browse, design, easy, simple, music, sound, js, live preview, flash, html5
 Requires at least: 3.2
 Tested up to: 3.2.1
 Stable tag: 1.0.4
@@ -10,8 +10,10 @@ Browse through your soundcloud tracks from a tab in the post's 'upload media'. S
 
 == Description ==
 
+**Now with soundcloud's official html5 player!**
+
 **Soundcloud is Gold** integrates perfectly into wordpress. Browse through your soundcloud tracks from the 'Soundcloud is gold' tab in the post's 'upload media' popup window. Select, set and add track to your post using the soundcloud player. Live Preview, easy, smart and straightforward.
-You can set default settings in the option page, choose your defaut soundcloud player (Mini, Standard, Artwork), it's width, add extra classes for you CSS lovers, show comments, autoplay and your favorite color.
+You can set default settings in the option page, choose your defaut soundcloud player (Mini, Standard, Artwork, Html5), it's width, add extra classes for you CSS lovers, show comments, autoplay and your favorite color.
 You'll also be able to set players to different settings before adding to your post if you fancy a one off change.
 
 **Soundcloud is Gold** use a shortcode but the "Soundcloud is Gold" tab will write it for you dynamicly as you select parameters, and on top of this it will provide a nice live preview of your player so you know what does what. When done just press the 'insert soundcloud player' and it will added to your post just like when you're adding a photo or gallery.
@@ -25,7 +27,7 @@ Check out my [TM soundcloud profile](http://www.soundcloud.com/t-m), more [might
 * Integrates perfectly with wordpress media upload by using the same listing style that you get with the images (see screenshot).
 * See track's info directly in the tab (description, url, cover, etc...).
 * Set default settings from the option page (see screenshot):
-    * Default player type (Mini, Standard, Artwork)
+    * Default player type (Mini, Standard, Artwork, Html5)
     * Width
     * Extra Classes for the div that wraps around the player
     * Auto Play
@@ -33,6 +35,7 @@ Check out my [TM soundcloud profile](http://www.soundcloud.com/t-m), more [might
     * Player's Colors
 * Use shortcode
 * Plugin construct shortode for you, no need to remember any syntax.
+* Implement Soundcloud Html5 player (beta)
 * Follow WP developpers guidelines (enqueue scripts and styles just for the plugin, clean code, commented, secure and leave no trace when uninstall )
 
 = Advantages against pasting embed code from soundcloud =
@@ -56,7 +59,7 @@ That's just my opinion of course...
 * Trigger live preview when changing Soundcloud user name
 * Live search while typing a name in the user name field. So if you're looking for someone it's kind of easier.
 * Add 'activities' to a widget
-* Iphone fall back with default browser html5 player.
+* Fall Back for smartphone to html5 player when using flash player
 
 
 == Installation ==
@@ -86,7 +89,7 @@ Remenber that even if a plugin is popular, most of the plugins are badly coded o
 
 = Can't play my tracks on my iphone, ipad or ipod? =
 
-Soundcloud doesn't currently give the possibility to developers to fall back to soundcloud html5 player if flash isn't installed or supported by the device. There are solutions but they are lengthy to implement and still  not very user friendly. But as soon as it's possible it will be implemented.
+Soundcloud has just released a html5 player. It's currently in it's beta version, which means that there might be bugs. Soundcloud is gold give you the option to use the html5 player but it's either flash all flash or all html5 for now.
 
 = How can I use the shortcode manually? =
 
@@ -125,6 +128,10 @@ When upgrading from 1.0.1 and earlier: All shortcode attributes are now lowercas
 
 
 == Changelog ==
+
+= 1.0.5 =
+* New Soundcloud official Html5 player! Woop Woop!
+
 
 = 1.0.4 =
 * Faster loading of the tab (only load player's preview when click on 'show')

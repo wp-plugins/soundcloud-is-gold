@@ -5,7 +5,7 @@
 /***                                                               ***/
 /*********************************************************************/
 function get_soundcloud_is_gold_player_types(){
-    $m = array('Mini', 'Standard', 'Artwork');
+    $m = array('Mini', 'Standard', 'Artwork', 'html5');
     return $m;
 }
 function get_soundcloud_is_gold_wordpress_sizes(){
@@ -35,6 +35,7 @@ function get_soundcloud_is_gold_default_settings_for_js(){
         $soundcloudIsGoldSettings = get_option('soundcloud_is_gold_settings');
 	echo 'soundcloudIsGoldAutoPlay_default = '.((!isset($soundcloudIsGoldSettings[0]) || $soundcloudIsGoldSettings[0] == '') ? 'false' : 'true') .'; ';
 	echo 'soundcloudIsGoldComments_default = '.((!isset($soundcloudIsGoldSettings[1]) || $soundcloudIsGoldSettings[1] == '') ? 'false' : 'true') .'; ';
+	echo 'soundcloudIsGoldArtwork_default = '.((!isset($soundcloudIsGoldSettings[2]) || $soundcloudIsGoldSettings[2] == '') ? 'false' : 'true') .'; ';
 	echo 'soundcloudIsGoldWidth_default = "'.get_soundcloud_is_gold_default_width(get_option('soundcloud_is_gold_width_settings')).'"; ';
 	echo 'soundcloudIsGoldClasses_default = "'.get_option('soundcloud_is_gold_classes').'"; ';
 	echo 'soundcloudIsGoldColor_default = "'.get_option('soundcloud_is_gold_color').'"; ';
@@ -106,7 +107,7 @@ function soundcloud_is_gold_pagination($totalItems, $currentPage, $perPage, $pos
 }
 /*Add Soundcloud is Gold Plugin to TinyMce*/
 function soundcloud_is_gold_mce_plugin($plugin_array) {
-    $plugin_array['soundcloudIsGold']  =  PLUGIN_DIR.'tinymce-plugin/soundcloud-is-gold-editor_plugin.js';
+    $plugin_array['soundcloudIsGold']  =  SIG_PLUGIN_DIR.'tinymce-plugin/soundcloud-is-gold-editor_plugin.js';
     return $plugin_array;
 }
 function soundcloud_is_gold_mce_button( $buttons ) {
@@ -116,7 +117,7 @@ function soundcloud_is_gold_mce_button( $buttons ) {
 }
 function soundcloud_is_gold_mce_css($mce_css) {
   if (! empty($mce_css)) $mce_css .= ',';
-  $mce_css .= PLUGIN_DIR.'/tinymce-plugin/soundcloud-is-gold-editor_plugin.css';
+  $mce_css .= SIG_PLUGIN_DIR.'/tinymce-plugin/soundcloud-is-gold-editor_plugin.css';
   return $mce_css; 
 }
 
@@ -159,7 +160,7 @@ add_action('media_upload_soundcloud_is_gold', 'soundcloud_is_gold_media_menu_han
 /*Add Soundcloud Button to Upload/Insert*/
 function plugin_media_button($context) {
 	global $post_ID;
-	$plugin_media_button = ' %s' . '<a id="add_soundcloud_is_gold" title="Insert Soundcloud Player" href="media-upload.php?post_id='.$post_ID.'&tab=soundcloud_is_gold&paged=1&TB_iframe=1&width=640&height=584" class="thickbox"><img alt="Insert Soundcloud Player" src="'.PLUGIN_DIR.'soundcloud-is-gold-icon.png"></a>';
+	$plugin_media_button = ' %s' . '<a id="add_soundcloud_is_gold" title="Insert Soundcloud Player" href="media-upload.php?post_id='.$post_ID.'&tab=soundcloud_is_gold&paged=1&TB_iframe=1&width=640&height=584" class="thickbox"><img alt="Insert Soundcloud Player" src="'.SIG_PLUGIN_DIR.'soundcloud-is-gold-icon.png"></a>';
 	return sprintf($context, $plugin_media_button);
   }
 add_filter('media_buttons_context', 'plugin_media_button');
@@ -222,7 +223,7 @@ function get_soundcloud_is_gold_user_tracks(){
 						<thead id="media-head-<?php echo $soundcloudIsGoldtrack->id ?>" class="media-item-info">
 							<tr valign="top">
 								<td id="thumbnail-head-<?php echo $soundcloudIsGoldtrack->id ?>" class="A1B1">
-									<p><a href="<?php echo $soundcloudIsGoldtrack->{'permalink-url'}?>" title="Go to the Soundcloud page" target="_blank"><img id="soundcloudMMThumb-<?php echo $soundcloudIsGoldtrack->id ?>" style="margin-top: 3px;" alt="" src="<?php echo ($soundcloudIsGoldtrack->{'artwork-url'} != '') ? $soundcloudIsGoldtrack->{'artwork-url'} : PLUGIN_DIR."/noThumbnail.gif" ?>" class="thumbnail"></a></p>
+									<p><a href="<?php echo $soundcloudIsGoldtrack->{'permalink-url'}?>" title="Go to the Soundcloud page" target="_blank"><img id="soundcloudMMThumb-<?php echo $soundcloudIsGoldtrack->id ?>" style="margin-top: 3px;" alt="" src="<?php echo ($soundcloudIsGoldtrack->{'artwork-url'} != '') ? $soundcloudIsGoldtrack->{'artwork-url'} : SIG_PLUGIN_DIR."/noThumbnail.gif" ?>" class="thumbnail"></a></p>
 								</td>
 								<td>
 								<p><strong>Title:</strong> <?php echo $soundcloudIsGoldtrack->title ?></p>
@@ -245,7 +246,9 @@ function get_soundcloud_is_gold_user_tracks(){
 											<input type="checkbox" <?php echo ($soundcloudIsGoldSettings[0]) ? 'checked="checked"' : '' ?> id="soundcloudMMAutoPlay-<?php echo $soundcloudIsGoldtrack->id ?>" class="text soundcloudMMAutoPlay">
 											<label >Play Automaticly</label>
 											<input type="checkbox" <?php echo ($soundcloudIsGoldSettings[1]) ? 'checked="checked"' : '' ?> id="soundcloudMMShowComments-<?php echo $soundcloudIsGoldtrack->id ?>" class="text soundcloudMMShowComments">
-											<label >Show track's comments <small>(only for standard version)</small></label>
+											<label >Show comments <small>(standard and artwork player)</small></label>
+											<input type="checkbox" <?php echo ($soundcloudIsGoldSettings[2]) ? 'checked="checked"' : '' ?> id="soundcloudMMShowArtwork-<?php echo $soundcloudIsGoldtrack->id ?>" class="text soundcloudMMShowArtwork">
+											<label >Show artwork <small>(html5 player)</small></label>
 											<!-- <input type="text" class="soundcloudPlayercolor" value""/> -->
 											
 										</td>
@@ -355,13 +358,14 @@ function soundcloud_is_gold_shortcode($atts){
 					'id' => '1',
 					'autoplay' => ((!isset($soundcloudIsGoldSettings[0]) || $soundcloudIsGoldSettings[0] == '') ? 'false' : 'true'),
 					'comments' => ((!isset($soundcloudIsGoldSettings[1]) || $soundcloudIsGoldSettings[1] == '') ? 'false' : 'true'),
+					'artwork' => ((!isset($soundcloudIsGoldSettings[2]) || $soundcloudIsGoldSettings[2] == '') ? 'false' : 'true'),
 					'width' => get_soundcloud_is_gold_default_width(get_option('soundcloud_is_gold_width_settings')),
 					'classes' => get_option('soundcloud_is_gold_classes'),
 					'playertype' => get_option('soundcloud_is_gold_playerType'),
 					'color' => get_option('soundcloud_is_gold_color')
 				), $atts )
 		);
-	return soundcloud_is_gold_player($id, $autoplay, $comments, $width, $classes, $playertype, $color);
+	return soundcloud_is_gold_player($id, $autoplay, $comments, $width, $classes, $playertype, $color, $artwork);
 }
 
 
@@ -376,22 +380,24 @@ function soundcloud_is_gold_shortcode($atts){
 /** Preview **/
 add_action('wp_ajax_soundcloud_is_gold_player_preview', 'soundcloud_is_gold_player_preview');
 function soundcloud_is_gold_player_preview(){
-	if(isset($_POST['request'])) echo soundcloud_is_gold_player($_POST['ID'], $_POST['autoPlay'], $_POST['comments'], $_POST['width'], $_POST['classes'], $_POST['playerType'], $_POST['color']);
+	if(isset($_POST['request'])) echo soundcloud_is_gold_player($_POST['ID'], $_POST['autoPlay'], $_POST['comments'], $_POST['width'], $_POST['classes'], $_POST['playerType'], $_POST['color'], $_POST['artwork']);
 	die;
 }
 
 
 /** The Player **/
-function soundcloud_is_gold_player($id, $autoPlay, $comments, $width, $classes, $playerTypes, $color){
+function soundcloud_is_gold_player($id, $autoPlay, $comments, $width, $classes, $playerTypes, $color, $artwork){
 	
 	//Default values: Needed when not called trough shortode (like in the ajax preview)
 	$soundcloudIsGoldSettings = get_option('soundcloud_is_gold_settings');
 	if(!isset($autoPlay)) $autoPlay = ((!isset($soundcloudIsGoldSettings[0]) || $soundcloudIsGoldSettings[0] == '') ? 'false' : 'true');
 	if(!isset($comments)) $comments = ((!isset($soundcloudIsGoldSettings[1]) || $soundcloudIsGoldSettings[1] == '') ? 'false' : 'true');
+	if(!isset($artwork)) $artwork = ((!isset($soundcloudIsGoldSettings[2]) || $soundcloudIsGoldSettings[2] == '') ? 'false' : 'true');
 	if(!isset($width)) $width = get_soundcloud_is_gold_default_width(get_option('soundcloud_is_gold_width_settings'));
 	if(!isset($classes)) $classes = get_option('soundcloud_is_gold_classes');
 	if(!isset($playerTypes)) $playerTypes = get_option('soundcloud_is_gold_playerType');
 	if(!isset($color)) $color = get_option('soundcloud_is_gold_color');
+	$html5Player = false;
 	
 	$color = str_replace('#', '', $color);
 	
@@ -408,15 +414,27 @@ function soundcloud_is_gold_player($id, $autoPlay, $comments, $width, $classes, 
 			$playerType = 'tiny';
 			$height = '18px';
 			break;
+		case 'html5':
+			$height = '166px';
+			$html5Player = true;
+			break;
 	}
 
 	$player = '<div class="soundcloudIsGold '.$classes.'" id="soundcloud-'.$id.'">';
-	$player .= '<object height="'.$height.'" width="'.$width.'">';
-	$player .= '<param name="movie" value="http://player.soundcloud.com/player.swf?url=http%3A%2F%2Fapi.soundcloud.com%2Ftracks%2F'.$id.'&amp;auto_play='.$autoPlay.'&amp;player_type='.$playerType.'&amp;show_comments='.$comments.'&amp;color='.$color.'"></param>';
-	$player .= '<param name="allowscriptaccess" value="always"></param>';
-	$player .= '<param name="wmode" value="transparent"></param>';
-	$player .= '<embed wmode="transparent" allowscriptaccess="always" height="'.$height.'" src="http://player.soundcloud.com/player.swf?url=http%3A%2F%2Fapi.soundcloud.com%2Ftracks%2F'.$id.'&amp;auto_play='.$autoPlay.'&amp;player_type='.$playerType.'&amp;show_comments='.$comments.'&amp;color='.$color.'" type="application/x-shockwave-flash" width="'.$width.'"></embed>';
-	$player .= '</object>';
+	
+	//Flash Player
+	if(!$html5Player){
+		$player .= '<object height="'.$height.'" width="'.$width.'">';
+		$player .= '<param name="movie" value="http://player.soundcloud.com/player.swf?url=http%3A%2F%2Fapi.soundcloud.com%2Ftracks%2F'.$id.'&amp;auto_play='.$autoPlay.'&amp;player_type='.$playerType.'&amp;show_comments='.$comments.'&amp;color='.$color.'"></param>';
+		$player .= '<param name="allowscriptaccess" value="always"></param>';
+		$player .= '<param name="wmode" value="transparent"></param>';
+		$player .= '<embed wmode="transparent" allowscriptaccess="always" height="'.$height.'" src="http://player.soundcloud.com/player.swf?url=http%3A%2F%2Fapi.soundcloud.com%2Ftracks%2F'.$id.'&amp;auto_play='.$autoPlay.'&amp;player_type='.$playerType.'&amp;show_comments='.$comments.'&amp;color='.$color.'" type="application/x-shockwave-flash" width="'.$width.'"></embed>';
+		$player .= '</object>';	
+	}
+	//Html5 Player
+	else{
+		$player .= '<iframe width="'.$width.'" height="'.$height.'" scrolling="no" frameborder="no" src="http://w.soundcloud.com/player/?url=http%3A%2F%2Fapi.soundcloud.com%2Ftracks%2F'.$id.'&amp;auto_play='.$autoPlay.'&amp;show_artwork='.$artwork.'&amp;color='.$color.'"></iframe>';
+	}
 	$player .= '</div>';
         
 	

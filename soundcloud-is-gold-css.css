@@ -43,7 +43,12 @@
     display:inline;
     margin:0 0 0 30px;
 }
-
+.soundcloudMMWrapper .soundcloudMMExample{
+   font-size:62%;
+   font-style:italic;
+   color:#666;
+   display:inline;
+}
 /****** WIDTH SETTINGS *******/
 #soundcloudMMWidthSetting{
     
@@ -222,6 +227,7 @@
     font-family: ChunkFiveRegular,Georgia;
     width: 100%;
     background:#333333;
+    position:relative;
 }
 #soundcloudMMTop #soundcloudMMLogo {
     display: block;
@@ -268,7 +274,15 @@
     margin-top: 10px;
     text-decoration:underline !important;
 }
-
+#soundcloudMMTop #soundcloudMMVersion{
+    bottom: 0;
+    color: #333333;
+    font-family: Arial;
+    font-size: 80%;
+    font-weight: normal;
+    position: absolute;
+    right: 1%;
+}
 #soundcloudMMMain{
     float:left;
     width:100%;
