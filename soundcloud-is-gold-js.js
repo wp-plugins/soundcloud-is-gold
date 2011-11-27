@@ -49,20 +49,24 @@ jQuery(document).ready(function($){
 	else comments = true;
 	if($('.soundcloudMMShowArtwork:checked', parent).val() == undefined) artwork = false;
 	else artwork = true;
-	
         //Set width
 	if($(".soundcloudMMWpWidth", parent).is(":checked")) width = $('.soundcloudMMWidth option:selected', parent).val();
 	if($(".soundcloudMMCustomWidth", parent).is(":checked")) width = $('input.soundcloudMMWidth', parent).val();
-
+	//Class
 	classes = $('.soundcloudMMClasses', parent).val();
-        $('.soundcloudMMPlayerType', parent).each(function(){
+        //Player Type
+	$('.soundcloudMMPlayerType', parent).each(function(){
 	    if( $(this).attr('checked') == 'checked' ) playerType = $(this).val();
 	});
+	//Color
 	color = $('.soundcloudMMColor', parent).val();
+	//Format
+	if($('.soundcloudMMWrapper').hasClass('sets')) format = 'sets';
+	else format = 'tracks';
 	//Set Shortocode Attributes
-	if(!parent.hasClass('soundcloudMMOptions')) shortcode(parent, autoPlay, comments, width, classes, playerType, color, artwork);
+	if(!parent.hasClass('soundcloudMMOptions')) shortcode(parent, autoPlay, comments, width, classes, playerType, color, artwork, format);
         //Refresh Preview if reuqested
-	if(refresh) preview(parent, autoPlay, comments, width, classes, playerType, color, artwork);
+	if(refresh) preview(parent, autoPlay, comments, width, classes, playerType, color, artwork, format);
 
    };
     
@@ -88,7 +92,7 @@ jQuery(document).ready(function($){
     /********************************************/
     /**               SHORTCODE                **/
     /********************************************/
-    function shortcode(parent, autoPlay, comments, width, classes, playerType, color, artwork){
+    function shortcode(parent, autoPlay, comments, width, classes, playerType, color, artwork, format){
         var shortcode = "soundcloud id='"+getID($('.soundcloudMMId', parent))+"'";
 	if(comments != soundcloudIsGoldComments_default) shortcode += " comments='"+comments+"'";
 	if(artwork != soundcloudIsGoldArtwork_default) shortcode += " artwork='"+artwork+"'";
@@ -97,6 +101,7 @@ jQuery(document).ready(function($){
         if(width != soundcloudIsGoldWidth_default) shortcode += " width='"+width+"'";
         if(classes != soundcloudIsGoldClasses_default) shortcode += " classes='"+classes+"'";
         if(color != soundcloudIsGoldColor_default) shortcode += " color='"+color+"'";
+	if(format != 'tracks') shortcode += " format='sets'";
 	
         $('.soundcloudMMShortcode', parent).val("["+shortcode+"]");
     }
@@ -104,20 +109,22 @@ jQuery(document).ready(function($){
     /********************************************/
     /**                PREVIEW                 **/
     /********************************************/
-    function preview(parent, autoPlay, comments, width, classes, playerType, color, artwork){
+    function preview(parent, autoPlay, comments, width, classes, playerType, color, artwork, format){
 	//Animate transition
 	switch(playerType){
 	    case 'Mini':
 		newHeight = '18px';
 		break;
 	    case 'Standard':
-		newHeight = '81px';
+		if(format == 'tracks') newHeight = '81px';
+		newHeight = '165px';
 		break;
 	    case 'Artwork':
 		newHeight = width;
 		break;
 	    case 'html5':
-		newHeight = '166px';
+		if(format == 'tracks') newHeight = '166px';
+		newHeight = '450px';
 		break;
 	}
 	//Tell user it's loading
@@ -141,7 +148,8 @@ jQuery(document).ready(function($){
 	    width: width,
 	    classes: classes,
 	    playerType: playerType,
-	    color: color
+	    color: color,
+	    format: format
         };
         jQuery.post(ajaxurl, myData, function(response) {
 	    if(response){

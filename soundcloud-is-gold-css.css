@@ -434,12 +434,14 @@ select.soundcloudMMInput option{
 
 
 /******************** TAB *****************/
-#soundcloudMMPagination{
+#soundcloudMMTabActions{
     margin:1em;
+    width:623px;
 }
-#soundcloudMMPagination .pagination-links a{
+#soundcloudMMTabActions #tablenav #tablenav-pages .pagination-links a, #soundcloudMMTabActions #tablenav #tablenav-pages .pagination-links .paging-input{
     margin-right:5px;
 }
+
 .soundcloudMMColorPicker .soundcloudMMColorPickerClose{
     display: block;
     padding: 6% 2%;
