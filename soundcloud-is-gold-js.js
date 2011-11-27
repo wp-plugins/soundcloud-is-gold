@@ -117,14 +117,14 @@ jQuery(document).ready(function($){
 		break;
 	    case 'Standard':
 		if(format == 'tracks') newHeight = '81px';
-		newHeight = '165px';
+		else newHeight = '165px';
 		break;
 	    case 'Artwork':
 		newHeight = width;
 		break;
 	    case 'html5':
 		if(format == 'tracks') newHeight = '166px';
-		newHeight = '450px';
+		else newHeight = '450px';
 		break;
 	}
 	//Tell user it's loading
