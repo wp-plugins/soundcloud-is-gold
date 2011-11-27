@@ -425,7 +425,7 @@ function soundcloud_is_gold_player($id, $autoPlay, $comments, $width, $classes, 
 	if(!isset($playerTypes)) $playerTypes = get_option('soundcloud_is_gold_playerType');
 	if(!isset($color)) $color = get_option('soundcloud_is_gold_color');
 	if(!isset($format)) $format = 'tracks';
-	elseif($format == 'sets') $format = 'playlists';
+	elseif($format == 'sets' || $format == 'set') $format = 'playlists';
 	$html5Player = false;
 	
 	$color = str_replace('#', '', $color);

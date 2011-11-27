@@ -101,7 +101,7 @@ jQuery(document).ready(function($){
         if(width != soundcloudIsGoldWidth_default) shortcode += " width='"+width+"'";
         if(classes != soundcloudIsGoldClasses_default) shortcode += " classes='"+classes+"'";
         if(color != soundcloudIsGoldColor_default) shortcode += " color='"+color+"'";
-	if(format != 'tracks') shortcode += " format='sets'";
+	if(format != 'tracks') shortcode += " format='set'";
 	
         $('.soundcloudMMShortcode', parent).val("["+shortcode+"]");
     }
