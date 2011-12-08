@@ -120,6 +120,7 @@ jQuery(document).ready(function($){
 		else newHeight = '165px';
 		break;
 	    case 'Artwork':
+		width = '300px';
 		newHeight = width;
 		break;
 	    case 'html5':
@@ -127,16 +128,6 @@ jQuery(document).ready(function($){
 		else newHeight = '450px';
 		break;
 	}
-	//Tell user it's loading
-	$('.soundcloudMMEmbed', parent).fadeOut('fast', function(){
-	    $('.soundcloudMMLoading', parent).fadeIn();
-	    $('.soundcloudMMLoading', parent).animate({
-		height: newHeight
-	    }, 'slow', function(){
-	    
-	    });
-	});
-	
 	//Set request
 	var myData = {
             action: 'soundcloud_is_gold_player_preview',
@@ -151,15 +142,26 @@ jQuery(document).ready(function($){
 	    color: color,
 	    format: format
         };
-        jQuery.post(ajaxurl, myData, function(response) {
-	    if(response){
-                $('.soundcloudMMEmbed', parent).css('height', newHeight).html(response);
-		$('.soundcloudMMLoading', parent).fadeOut(function(){
-		    $(this).css('display', 'none');
-		    $('.soundcloudMMEmbed', parent).fadeIn();  
+	
+	//Tell user it's loading
+	$('.soundcloudMMEmbed', parent).fadeOut('fast', function(){
+	    $('.soundcloudMMLoading', parent).fadeIn();
+	    $('.soundcloudMMLoading', parent).animate({
+		height: newHeight
+	    }, 'slow', function(){
+		//The Ajax request
+		jQuery.post(ajaxurl, myData, function(response) {
+		    if(response){
+			$('.soundcloudMMEmbed', parent).css('height', newHeight).html(response);
+			$('.soundcloudMMLoading', parent).fadeOut('fast', function(){
+			    $(this).css('display', 'none');
+			    $('.soundcloudMMEmbed', parent).fadeIn();  
+			});
+		    }
 		});
-	    }
-        });
+	
+	    });
+	});
         
     }
     
