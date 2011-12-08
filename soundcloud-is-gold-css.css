@@ -57,6 +57,13 @@
     margin-left:5px;
 }
 
+/******* ADVANCED SETTINGS *******/
+#soundcloudMMAdvancedSettingsShowHide{
+    display: block;
+    float: right;
+    text-align: left;
+    width: 80%;
+}
 /*** USEFULL ***/
 .soundcloudMMWrapper .left{
     float:left;
@@ -73,7 +80,9 @@
 .soundcloudMMWrapper .clear{
     clear:both;
 }
-
+.soundcloudMMfullWidth {
+    width:100%;
+}
 
 /*** COLORS ***/
 .shadow{
