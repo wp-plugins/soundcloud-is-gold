@@ -190,11 +190,25 @@ jQuery(document).ready(function($){
 	    $('.soundcloudMMResetColor', this).click(function(e){
 		e.preventDefault();
 		soundcloudMMColorPicker.setColor(soundcloudIsGoldColor_default);
-		colorInput.val(soundcloudIsGoldColor_default);
+		colorInput.val(soundcloudIsGoldColor_default).css('background-color', '#'+soundcloudIsGoldColor_default);
 		updateMe(parent, true);
 	    });
 	});
     }
+    
+    
+    /************** ADVANCED SETTINGS **************/
+    $('.soundcloudMMAdvancedSettingsPanels').css('display', 'none');
+    var closedAvancedSettingText = $('.soundcloudMMAdvancedSettingsShowHide').text();
+    var openedAvancedSettingText = "It's too much for me, take it away.";
+    $('.soundcloudMMAdvancedSettingsShowHide').click(function(e) {
+	e.preventDefault();
+	if($(this).text() == closedAvancedSettingText) $(this).text(openedAvancedSettingText);
+	else $(this).text(closedAvancedSettingText);
+	$('~ .soundcloudMMAdvancedSettingsPanels', this).slideToggle('slow', function() {
+	  // Animation complete.
+	});
+    });
     
     function getID(t){
         myID = t.attr('id').match(/[0-9]+./);

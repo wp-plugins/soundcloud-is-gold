@@ -54,17 +54,15 @@ function soundcloud_is_gold_option_fonts() {
 /*** Add Admin Menu ***/
 add_action('admin_menu', 'soundcloud_is_gold_menu');
 function soundcloud_is_gold_menu() {
-    //Main
-    $soundcloudIsGoldPage = add_menu_page('Soundcloud is Gold: Options', 'Soundcloud is Gold', 'activate_plugins', 'soundcloud-is-gold', 'soundcloud_is_gold_options', SIG_PLUGIN_DIR.'soundcloud-is-gold-icon.png');
-    add_action( "admin_print_scripts-$soundcloudIsGoldPage", 'soundcloud_is_gold_option_scripts' ); // Add script
-    add_action( "admin_print_styles-$soundcloudIsGoldPage", 'soundcloud_is_gold_option_styles' ); // Add Style
-    add_action( "admin_print_styles-$soundcloudIsGoldPage", 'soundcloud_is_gold_option_fonts' ); // Add Fonts
-   
+	//Main
+	$soundcloudIsGoldPage = add_menu_page('Soundcloud is Gold: Options', 'Soundcloud is Gold', 'activate_plugins', 'soundcloud-is-gold', 'soundcloud_is_gold_options', SIG_PLUGIN_DIR.'soundcloud-is-gold-icon.png');
+	add_action( "admin_print_scripts-$soundcloudIsGoldPage", 'soundcloud_is_gold_option_scripts' ); // Add script
+	add_action( "admin_print_styles-$soundcloudIsGoldPage", 'soundcloud_is_gold_option_styles' ); // Add Style
+	add_action( "admin_print_styles-$soundcloudIsGoldPage", 'soundcloud_is_gold_option_fonts' ); // Add Fonts
 }
 function soundcloud_is_gold_advanced_options() {
 	include('soundcloud-is-gold-advanced.php');
 }
-
 /*** Link to Settings from the plugin Page ***/
 function soundcloud_is_gold_settings_link($links) { 
   $settings_link = '<a href="admin.php?page=soundcloud-is-gold.php">Settings</a>'; 
@@ -142,18 +140,18 @@ function soundcloud_is_gold_options(){
         
         <div id="soundcloudMMMain" class="lightBlueGradient">
             <form method="post" action="options.php" id="soundcloudMMMainForm" name="soundcloudMMMainForm" class="">
-            <p class="hidden soundcloudMMId" id="soundcloudMMId-<?php echo $soundcouldMMId ?>"><?php echo $soundcouldMMId ?></p>
+	    <p class="hidden soundcloudMMId" id="soundcloudMMId-<?php echo $soundcouldMMId ?>"><?php echo $soundcouldMMId ?></p>
             <?php wp_nonce_field('update-options'); ?>
                 <ul id="soundcloudMMSettings">
-                    <li class="soundcloudMMBox"><label>User Name</label><input class="soundcloudMMInput <?php echo empty($soundcloudIsGoldUser) ? 'soundcloudMMInputInfo' : '' ?>" type="text" name="soundcloud_is_gold_user" id="soundcloudIsGoldUser" value="<?php echo $soundcloudIsGoldUser ?>"></li>
-                    <li class="soundcloudMMBox"><label>Default Settings</label>
+                    <li class="soundcloudMMBox"><label class="optionLabel">User Name</label><input class="soundcloudMMInput <?php echo empty($soundcloudIsGoldUser) ? 'soundcloudMMInputInfo' : '' ?>" type="text" name="soundcloud_is_gold_user" id="soundcloudIsGoldUser" value="<?php echo $soundcloudIsGoldUser ?>"></li>
+                    <li class="soundcloudMMBox"><label class="optionLabel">Default Settings</label>
                         <ul class="subSettings checkboxes">
                             <li><input type="checkbox" <?php echo (isset($soundcloudIsGoldSettings[0]) && $soundcloudIsGoldSettings[0]) ? 'checked="checked"' : ''?> name="soundcloud_is_gold_settings[0]" value="true" class="soundcloudMMAutoPlay" id="soundcloudMMAutoPlay"/><label for="soundcloudMMAutoPlay">Play Automatically</label></li>
                             <li><input type="checkbox" <?php echo (isset($soundcloudIsGoldSettings[1]) && $soundcloudIsGoldSettings[1]) ? 'checked="checked"' : ''?> name="soundcloud_is_gold_settings[1]" value="true" class="soundcloudMMShowComments" id="soundcloudMMShowComments"/><label for="soundcloudMMShowComments">Show comments <small>(Standard and Artwork player)</small></label></li>
 			    <li><input type="checkbox" <?php echo (isset($soundcloudIsGoldSettings[2]) && $soundcloudIsGoldSettings[2]) ? 'checked="checked"' : ''?> name="soundcloud_is_gold_settings[2]" value="true" class="soundcloudMMShowArtwork" id="soundcloudMMShowArtwork"/><label for="soundcloudMMShowArtwork">Show Artwork <small>(html5 player)</small></label></li>
                         </ul>
                     </li>
-                    <li class="soundcloudMMBox"><label>Default Player Type</label>
+                    <li class="soundcloudMMBox"><label class="optionLabel">Default Player Type</label>
                         <ul class="subSettings radios">
                             <?php
                             foreach(get_soundcloud_is_gold_player_types() as $type) : ?>
@@ -161,7 +159,7 @@ function soundcloud_is_gold_options(){
                             <?php endforeach; ?>
                         </ul>
                     </li>
-                    <li class="soundcloudMMBox"><label>Default Width</label>
+                    <li class="soundcloudMMBox"><label class="optionLabel">Default Width</label>
                         <ul id="soundcloudMMWidthSetting" class="subSettings texts">
                             <li>
                                 <input name="soundcloud_is_gold_width_settings[type]" <?php echo ($soundcloudIsGoldWidthSettings['type'] == "wp") ? 'checked="checked"' : ''; ?> id="soundcloudMMWpWidth" value="wp" type="radio" class="soundcloudMMWpWidth soundcloudMMWidthType radio"/><label for="soundcloudMMWpWidth">Media Width</label>
@@ -181,7 +179,7 @@ function soundcloud_is_gold_options(){
                             </li>
                         </ul>
                     </li>
-                    <li class="soundcloudMMBox"><label>Extras</label>
+                    <li class="soundcloudMMBox"><label class="optionLabel">Extras</label>
                         <ul class="subSettings texts">
                             <li>
                                 <label>Color</label>
@@ -195,10 +193,10 @@ function soundcloud_is_gold_options(){
                             </li>
                         </ul>
                     </li>
-		    <li class="soundcloudMMBox"><label>Advanced Options</label>
+		    <li class="soundcloudMMBox"><label class="optionLabel">Advanced Options</label>
 			<?php soundcloud_is_gold_advanced_options() ?>
 		    </li>
-                    <li class="soundcloudMMBox"><label>Live Preview <small>(your latest track)</small></label>
+                    <li class="soundcloudMMBox"><label class="optionLabel previewLabel">Live Preview <small>(your latest track)</small></label>
                         <?php if($soundcloudIsGoldApiResponse['response']) :?>
                         <p class="soundcloudMMEmbed soundcloudMMEmbedOptions" style="text-align:center;">
 			    <!-- Soundcloud Preview here -->
@@ -211,7 +209,7 @@ function soundcloud_is_gold_options(){
                     </li>
                 </ul>
                 <input type="hidden" name="action" value="update" />
-                <input type="hidden" name="page_options" value="soundcloud_is_gold_user, soundcloud_is_gold_settings, soundcloud_is_gold_playerType, soundcloud_is_gold_width_settings, soundcloud_is_gold_classes, soundcloud_is_gold_color" />
+                <input type="hidden" name="page_options" value="soundcloud_is_gold_user, soundcloud_is_gold_settings, soundcloud_is_gold_playerType, soundcloud_is_gold_width_settings, soundcloud_is_gold_classes, soundcloud_is_gold_color, soundcloud_is_gold_advanced_player" />
                 <p id="soundcloudMMSubmit"><input type="submit" name="Submit" value="Save Your SoundCloud Settings" class="soundcloudMMBt orangeGradient"/></p>
             </form>
         </div>

@@ -57,13 +57,7 @@
     margin-left:5px;
 }
 
-/******* ADVANCED SETTINGS *******/
-#soundcloudMMAdvancedSettingsShowHide{
-    display: block;
-    float: right;
-    text-align: left;
-    width: 80%;
-}
+
 /*** USEFULL ***/
 .soundcloudMMWrapper .left{
     float:left;
@@ -313,13 +307,25 @@
     text-shadow:none;
     font-size:120%;
 }
-#soundcloudMMSettings li{
-    margin-bottom:2%;
-    padding:2%;
+#soundcloudMMSettings li.soundcloudMMBox{
+    display: block;
+    float: left;
+    margin-bottom: 2%;
+    padding: 2%;
+    width: 96%;
 }
-#soundcloudMMSettings li label{
-    width:20%;
+#soundcloudMMSettings li.soundcloudMMBox label.optionLabel{
+    width:15%;
+    float:left;
+    display:block;
 }
+#soundcloudMMSettings li.soundcloudMMBox .subSettings, #soundcloudMMAdvancedSettingsOptions{
+    display:block;
+    width:84%;
+    float:right;
+    border-left:1px #EFEFEF solid;
+}
+/** Subsettings **/
 .soundcloudMMInput{
     margin: 0 0 0 2%;
     padding: 10px;
@@ -391,7 +397,7 @@ select.soundcloudMMInput option{
     width:96%;
     margin:1%;
 }
-/*** EXTRAS ***/
+/******* EXTRAS *******/
 #soundcloudMMExtras{
     float: left;
     font-size: 120%;
@@ -411,7 +417,43 @@ select.soundcloudMMInput option{
 .subSettings.texts li .soundcloudMMInput.soundcloudMMClasses{
     width:20%;
 }
-/** Preview **/
+
+/******* ADVANCED SETTINGS *******/
+#soundcloudMMAdvancedSettingsOptions{
+    
+}
+#soundcloudMMAdvancedSettingsOptions #soundcloudMMAdvancedSettingsShowHide{
+    padding:0 0 2% 5%;
+    width:79%;
+    display:block;
+}
+#soundcloudMMMain #soundcloudMMSettings .soundcloudMMBox #soundcloudMMAdvancedSettingsOptions .subSettings{
+    width:49%;
+    min-height:320px;
+    height: auto !important;
+    height: 320px;
+}
+#soundcloudMMMain #soundcloudMMSettings .soundcloudMMBox #soundcloudMMAdvancedSettingsOptions .subSettings.texts{
+    border:none;
+}
+#soundcloudMMMain #soundcloudMMSettings .soundcloudMMBox #soundcloudMMAdvancedSettingsOptions .subSettings li{
+    width:92%;
+    padding:2% 4% !important;
+    margin:0 !important;
+    float:left;
+}
+#soundcloudMMMain #soundcloudMMSettings .soundcloudMMBox #soundcloudMMAdvancedSettingsOptions .subSettings.texts li .soundcloudMMInput{
+    width:50%;
+}
+#soundcloudMMMain #soundcloudMMSettings .soundcloudMMBox #soundcloudMMAdvancedSettingsOptions .subSettings.texts li #soundcloudMMThemeColor{
+    width:30% !important;
+}
+
+/******* PREVIEW *******/
+.previewLabel{
+    width: 100% !important;
+    float: none !important;
+}
 .soundcloudMMEmbed{
     padding: 1% 0% 1.5% 0%;
 }
