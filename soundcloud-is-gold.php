@@ -30,6 +30,13 @@ function get_soundcloud_is_gold_version() {
 /*** Plugin Init ***/
 add_action( 'admin_init', 'soundcloud_is_gold_admin_init' );
 function soundcloud_is_gold_admin_init() {
+    register_setting( 'soundcloud_is_gold_user', 'soundcloud_is_gold_user' );
+    register_setting( 'soundcloud_is_gold_settings', 'soundcloud_is_gold_settings' );
+    register_setting( 'soundcloud_is_gold_playerType', 'soundcloud_is_gold_playerType');
+    register_setting( 'soundcloud_is_gold_width_settings', 'soundcloud_is_gold_width_settings');
+    register_setting( 'soundcloud_is_gold_classes', 'soundcloud_is_gold_classes');
+    register_setting( 'soundcloud_is_gold_color', 'soundcloud_is_gold_color');
+ 
     wp_register_script('soundcloud-is-gold-js', SIG_PLUGIN_DIR.'soundcloud-is-gold-js.js', array('jquery', 'farbtastic'));
     wp_register_style('soundcloud-is-gold-css', SIG_PLUGIN_DIR.'soundcloud-is-gold-css.css');
     wp_register_style('ChunkFive', SIG_PLUGIN_DIR.'ChunkFive-fontfacekit/stylesheet.css');
@@ -61,7 +68,7 @@ function soundcloud_is_gold_menu() {
 	add_action( "admin_print_styles-$soundcloudIsGoldPage", 'soundcloud_is_gold_option_fonts' ); // Add Fonts
 }
 function soundcloud_is_gold_advanced_options() {
-	include('soundcloud-is-gold-advanced.php');
+	//include('soundcloud-is-gold-advanced.php');
 }
 /*** Link to Settings from the plugin Page ***/
 function soundcloud_is_gold_settings_link($links) { 
@@ -79,28 +86,61 @@ add_filter('mce_css', 'soundcloud_is_gold_mce_css');
 
 
 /*** Options and Utilities***/
-$soundcloudIsGoldDefaultUsers = array('t-m', 'anna-chocola');
-add_option('soundcloud_is_gold_user', $soundcloudIsGoldDefaultUsers[array_rand($soundcloudIsGoldDefaultUsers, 1)]);
-
-$soundcloudIsGoldDefaultSettings = array(
+register_activation_hook(__FILE__, 'soundcloud_is_gold_add_defaults');
+function soundcloud_is_gold_add_defaults() {
+    /*Username*/
+    $tmp = get_option('soundcloud_is_gold_user');
+    if(empty($tmp)) {
+	$soundcloudIsGoldDefaultUsers = array('anna-chocola', 'anna-chocola', 'anna-chocola', 't-m');
+	update_option('soundcloud_is_gold_user', $soundcloudIsGoldDefaultUsers[array_rand($soundcloudIsGoldDefaultUsers, 1)]);
+    }
+    /*Default Settings*/
+    $tmp = get_option('soundcloud_is_gold_settings');
+    if(empty($tmp)) {
+	$soundcloudIsGoldDefaultSettings = array(
                                         false,
                                         true,
 					true
-);
-add_option('soundcloud_is_gold_settings', $soundcloudIsGoldDefaultSettings);
-add_option('soundcloud_is_gold_playerType', 'Standard');
-$soundcloudIsGoldWitdhDefaultSettings = array(
+	);
+	update_option('soundcloud_is_gold_settings', $soundcloudIsGoldDefaultSettings);
+    }
+    /*Player type*/
+    $tmp = get_option('soundcloud_is_gold_playerType');
+    if(empty($tmp)) {
+	update_option('soundcloud_is_gold_playerType', 'html5');
+    }
+    /*Width*/
+    $tmp = get_option('soundcloud_is_gold_width_settings');
+    if(empty($tmp)) {
+	$soundcloudIsGoldWitdhDefaultSettings = array(
                                        "type" => "custom",
                                        "wp" => "medium",
                                        "custom" => "100%"
                                     
-);
-add_option('soundcloud_is_gold_width_settings', $soundcloudIsGoldWitdhDefaultSettings);
-add_option('soundcloud_is_gold_classes', '');
-add_option('soundcloud_is_gold_color', 'ff7700');
-
-//delete_option(soundcloud_is_gold_width_settings);
-
+	);
+	update_option('soundcloud_is_gold_width_settings', $soundcloudIsGoldWitdhDefaultSettings);
+    }
+    /*Classes*/
+    $tmp = get_option('soundcloud_is_gold_classes');
+    if(empty($tmp)) {
+	update_option('soundcloud_is_gold_classes', '');
+    }
+    /*Color*/
+    $tmp = get_option('soundcloud_is_gold_color');
+    if(empty($tmp)) {
+	update_option('soundcloud_is_gold_color', 'ff7700');
+    }
+}
+// Delete options table entries ONLY when plugin deactivated AND deleted
+register_uninstall_hook(__FILE__, 'soundcloud_is_gold_delete_plugin_options');
+function soundcloud_is_gold_delete_plugin_options() {
+	delete_option("soundcloud_is_gold_user");
+	delete_option("soundcloud_is_gold_settings");
+	delete_option("soundcloud_is_gold_playerType");
+	delete_option("soundcloud_is_gold_width_settings");
+	delete_option("soundcloud_is_gold_classes");
+	delete_option("soundcloud_is_gold_color");
+}
 /*** Options Output ***/
 function soundcloud_is_gold_options(){
     $soundcloudIsGoldUser = get_option('soundcloud_is_gold_user');
@@ -128,7 +168,6 @@ function soundcloud_is_gold_options(){
     </script>
     
     <div class="soundcloudMMWrapper soundcloudMMOptions">
-    
         <div id="soundcloudMMTop" class="darkGreyGradient">
             <a id="soundcloudMMLogo" class="orangeGradient" href="http://www.soundcloud.com" title="visit SoundCloud website"><img src="<?php echo SIG_PLUGIN_DIR ?>/soundcloud-logo-sc.png" width="107" height="71" alt="Soundcloud Logo"/></a>
             <a id="soundcloudMMHeader" class="mediumGreyGradient textShadow" href="http://www.mightymess.com/soundcloud-is-gold-wordpress-plugin" alt="Visit Mighty Mess for more cool stuff">
