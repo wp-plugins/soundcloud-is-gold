@@ -3,10 +3,10 @@ Contributors: Thomas Michalak
 Donate link: http://www.mightymess.com/soundcloud-is-gold-wordpress-plugin
 Tags: soundcloud, integrated, media, shortcode, browse, design, easy, simple, music, sound, js, live preview, flash, html5
 Requires at least: 3.2
-Tested up to: 3.2.1
+Tested up to: 3.3.1
 Stable tag: 1.0.6
 
-Browse through your soundcloud tracks, sets and favorites from a tab in the post's 'upload media'. Select, add a track to your post. Live preview, easy.
+Browse and add your soundcloud tracks, sets and favorites from a tab in the post's 'upload media'. Live preview, easy.
 
 == Description ==
 
@@ -127,6 +127,10 @@ When upgrading from 1.0.1 and earlier: All shortcode attributes are now lowercas
 
 
 == Changelog ==
+
+= 1.0.7 =
+* Moved to Settings API, which should enable multi-site compatibility (good tutorial at http://www.presscoders.com/2010/05/wordpress-settings-api-explained/ and plugin for reference at http://wordpress.org/extend/plugins/plugin-options-starter-kit/)
+* Fixed bug where pagination would always go back to tracks when browsing sets or favourites. Thanks to givafizz for spotting it.
 
 = 1.0.6 =
 * Now you can browse and add Sets and your favorites ;)
