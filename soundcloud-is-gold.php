@@ -3,7 +3,7 @@
 Plugin Name: Soundcloud is Gold
 Plugin URI: http://www.mightymess.com/soundcloud-is-gold-wordpress-plugin
 Description: <strong><a href="http://www.mightymess.com/soundcloud-is-gold-wordpress-plugin">Soundcloud is gold</a></strong> integrates perfectly into wordpress. Browse through your soundcloud tracks, sets and favorites from the 'soundcloud is gold' tab with the post's 'upload media' popup window. Select, set and add track, sets or favorites to your post using the soundcloud player. Live Preview, easy, smart and straightforward. You can set default settings in the option page, choose your defaut soundcloud player (Mini, Standard, Artwork, html5), its width, extra classes for you CSS lovers and your favorite colors. You'll still be able to set players to different settings before adding to your post if you fancy a one off change. Now with Html5 player!
-Version: 1.0.6
+Version: 1.0.7
 Author: Thomas Michalak at Mighty Mess
 Author URI: http://www.mightymess.com/thomas-michalak
 License: GPL2 or Later
@@ -83,8 +83,10 @@ add_filter('mce_css', 'soundcloud_is_gold_mce_css');
 register_activation_hook(__FILE__, 'soundcloud_is_gold_add_defaults');
 function soundcloud_is_gold_add_defaults() {
     $tmp = get_option('soundcloud_is_gold_options');
+    //First Time install or upgrade from version previous to 1.0.7
     if(empty($tmp)) {
 	$soundcloudIsGoldDefaultUsers = array('anna-chocola', 'anna-chocola', 'anna-chocola', 't-m');
+	$soundcloudIsGoldDefaultUser = $soundcloudIsGoldDefaultUsers[array_rand($soundcloudIsGoldDefaultUsers, 1)];
 	$soundcloudIsGoldDefaultSettings = array(
                                         false,
                                         true,
@@ -93,19 +95,27 @@ function soundcloud_is_gold_add_defaults() {
 	$soundcloudIsGoldWitdhDefaultSettings = array(
                                        "type" => "custom",
                                        "wp" => "medium",
-                                       "custom" => "100%"
-                                    
+                                       "custom" => "100%"                
 	);
+	//Either use previous settings from version prior to 1.0.7 or use defaults is first time install
 	$args = array(
-	    'soundcloud_is_gold_user' => $soundcloudIsGoldDefaultUsers[array_rand($soundcloudIsGoldDefaultUsers, 1)],
-	    'soundcloud_is_gold_settings' => $soundcloudIsGoldDefaultSettings,
-	    'soundcloud_is_gold_playerType' => 'html5',
-	    'soundcloud_is_gold_width_settings' => $soundcloudIsGoldWitdhDefaultSettings,
-	    'soundcloud_is_gold_classes' => '',
-	    'soundcloud_is_gold_color' => 'ff7700'
+	    'soundcloud_is_gold_user' => (get_option('soundcloud_is_gold_user')) ? get_option('soundcloud_is_gold_user') : $soundcloudIsGoldDefaultUser,
+	    'soundcloud_is_gold_settings' => (get_option('soundcloud_is_gold_settings')) ? get_option('soundcloud_is_gold_settings') : $soundcloudIsGoldDefaultSettings,
+	    'soundcloud_is_gold_playerType' => (get_option('soundcloud_is_gold_playerType')) ? get_option('soundcloud_is_gold_playerType') : 'html5',
+	    'soundcloud_is_gold_width_settings' => (get_option('soundcloud_is_gold_width_settings')) ? get_option('soundcloud_is_gold_width_settings') : $soundcloudIsGoldWitdhDefaultSettings,
+	    'soundcloud_is_gold_classes' => (get_option('soundcloud_is_gold_classes')) ? get_option('soundcloud_is_gold_classes') : '',
+	    'soundcloud_is_gold_color' => (get_option('soundcloud_is_gold_color')) ? get_option('soundcloud_is_gold_color') : 'ff7700'
 		      );
+	//Update with old/default values
+	update_option('soundcloud_is_gold_options', $args);
+	//Delete old entries in db
+	delete_option("soundcloud_is_gold_user");
+	delete_option("soundcloud_is_gold_settings");
+	delete_option("soundcloud_is_gold_playerType");
+	delete_option("soundcloud_is_gold_width_settings");
+	delete_option("soundcloud_is_gold_classes");
+	delete_option("soundcloud_is_gold_color");
     }
-    update_option('soundcloud_is_gold_options', $args);
 }
 // Delete options table entries ONLY when plugin deactivated AND deleted
 register_uninstall_hook(__FILE__, 'soundcloud_is_gold_delete_plugin_options');
@@ -115,7 +125,7 @@ function soundcloud_is_gold_delete_plugin_options() {
 /*** Options Output ***/
 function soundcloud_is_gold_options(){
     $options = get_option('soundcloud_is_gold_options');
-    printl($options);
+    //printl($options);
     $soundcloudIsGoldUser = isset($options['soundcloud_is_gold_user']) ? $options['soundcloud_is_gold_user'] : '';
     $soundcloudIsGoldSettings = isset($options['soundcloud_is_gold_settings']) ? $options['soundcloud_is_gold_settings'] : '';
     $soundcloudIsGoldPlayerType = isset($options['soundcloud_is_gold_playerType']) ? $options['soundcloud_is_gold_playerType'] : '';
