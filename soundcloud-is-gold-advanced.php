@@ -20,7 +20,6 @@ $soundcloudIsGoldAdvancedPlayerDefault = array(
         )
 );
 add_option('soundcloud_is_gold_advanced_player', $soundcloudIsGoldAdvancedPlayerDefault);
-//delete_option("soundcloud_is_gold_advanced_player");
 
 /* Default Settings */
 $soundcloudIsGoldAdvancedPlayer = get_option('soundcloud_is_gold_advanced_player');

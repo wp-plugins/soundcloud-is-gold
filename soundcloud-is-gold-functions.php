@@ -32,14 +32,14 @@ function get_soundcloud_is_gold_default_width($settings){
 function get_soundcloud_is_gold_default_settings_for_js(){
 	$options = get_option('soundcloud_is_gold_options');
 	//printl($options);
-	$soundcloudIsGoldUser = isset($options['soundcloud_is_gold_user']) ? $options['soundcloud_is_gold_user'] : '';
+	$soundcloudIsGoldActiveUser = isset($options['soundcloud_is_gold_active_user']) ? $options['soundcloud_is_gold_active_user'] : '';
 	$soundcloudIsGoldSettings = isset($options['soundcloud_is_gold_settings']) ? $options['soundcloud_is_gold_settings'] : '';
 	$soundcloudIsGoldPlayerType = isset($options['soundcloud_is_gold_playerType']) ? $options['soundcloud_is_gold_playerType'] : '';
 	$soundcloudIsGoldWidthSettings = isset($options['soundcloud_is_gold_width_settings']) ? $options['soundcloud_is_gold_width_settings'] : '';
 	$soundcloudIsGoldClasses = isset($options['soundcloud_is_gold_classes']) ? $options['soundcloud_is_gold_classes'] : '';
 	$soundcloudIsGoldColor = isset($options['soundcloud_is_gold_color']) ? $options['soundcloud_is_gold_color'] : ''; 
 	
-	echo 'soundcloudIsGoldUser_default = "'.$soundcloudIsGoldUser.'"; ';
+	echo 'soundcloudIsGoldUser_default = "'.$soundcloudIsGoldActiveUser.'"; ';
 	echo 'soundcloudIsGoldAutoPlay_default = '.((!isset($soundcloudIsGoldSettings[0]) || $soundcloudIsGoldSettings[0] == '') ? 'false' : 'true') .'; ';
 	echo 'soundcloudIsGoldComments_default = '.((!isset($soundcloudIsGoldSettings[1]) || $soundcloudIsGoldSettings[1] == '') ? 'false' : 'true') .'; ';
 	echo 'soundcloudIsGoldArtwork_default = '.((!isset($soundcloudIsGoldSettings[2]) || $soundcloudIsGoldSettings[2] == '') ? 'false' : 'true') .'; ';
@@ -50,15 +50,15 @@ function get_soundcloud_is_gold_default_settings_for_js(){
 }
 function get_soundcloudIsGoldUserNumber(){
 	$options = get_option('soundcloud_is_gold_options');
-	$soundcloudIsGoldUser = isset($options['soundcloud_is_gold_user']) ? $options['soundcloud_is_gold_user'] : '';
+	$soundcloudIsGoldActiveUser = isset($options['soundcloud_is_gold_active_user']) ? $options['soundcloud_is_gold_active_user'] : '';
 	
-	$soundcloudIsGoldApiCall = 'http://api.soundcloud.com/users/'.$soundcloudIsGoldUser.'.xml?client_id=9rD2GrGrajkmkw5eYFDp2g';
+	$soundcloudIsGoldApiCall = 'http://api.soundcloud.com/users/'.$soundcloudIsGoldActiveUser.'.xml?client_id=9rD2GrGrajkmkw5eYFDp2g';
 	$soundcloudIsGoldApiResponse = get_soundcloud_is_gold_api_response($soundcloudIsGoldApiCall);
 	$result['tracks'] = ($soundcloudIsGoldApiResponse['response']->{'track-count'} == 0) ? '0' : $soundcloudIsGoldApiResponse['response']->{'track-count'};
 	$result['sets'] = ($soundcloudIsGoldApiResponse['response']->{'playlist-count'} == 0) ? '0' : $soundcloudIsGoldApiResponse['response']->{'playlist-count'};
 	$result['favorites'] = ($soundcloudIsGoldApiResponse['response']->{'public-favorites-count'} == 0) ? '0' : $soundcloudIsGoldApiResponse['response']->{'public-favorites-count'};
 	return $result;
-	}
+}
 function get_soundcloud_is_gold_api_response($soundcloudIsGoldApiCall){
 	//Set Error default message && default XML state
 	$soundcloudIsGoldRespError = false;
@@ -186,7 +186,7 @@ add_action('media_upload_soundcloud_is_gold', 'soundcloud_is_gold_media_menu_han
 /*Add Soundcloud Button to Upload/Insert*/
 function plugin_media_button($context) {
 	global $post_ID;
-	$plugin_media_button = ' %s' . '<a id="add_soundcloud_is_gold" title="Insert Soundcloud Player" href="media-upload.php?post_id='.$post_ID.'&tab=soundcloud_is_gold&selectFormat=tracks&paged=1&TB_iframe=1&width=640&height=584" class="thickbox"><img alt="Insert Soundcloud Player" src="'.SIG_PLUGIN_DIR.'soundcloud-is-gold-icon.png"></a>';
+	$plugin_media_button = ' %s' . '<a id="add_soundcloud_is_gold" title="Insert Soundcloud Player" href="media-upload.php?post_id='.$post_ID.'&tab=soundcloud_is_gold&selectFormat=tracks&paged=1&TB_iframe=1&width=640&height=584" class="thickbox"><img alt="Insert Soundcloud Player" src="'.SIG_PLUGIN_DIR.'images/soundcloud-is-gold-icon.png"></a>';
 	return sprintf($context, $plugin_media_button);
   }
 add_filter('media_buttons_context', 'plugin_media_button');
@@ -196,7 +196,7 @@ function get_soundcloud_is_gold_user_tracks(){
 	//Default Settings
 	$options = get_option('soundcloud_is_gold_options');
 	//printl($options);
-	$soundcloudIsGoldUser = isset($options['soundcloud_is_gold_user']) ? $options['soundcloud_is_gold_user'] : '';
+	$soundcloudIsGoldActiveUser = isset($options['soundcloud_is_gold_active_user']) ? $options['soundcloud_is_gold_active_user'] : '';
 	$soundcloudIsGoldSettings = isset($options['soundcloud_is_gold_settings']) ? $options['soundcloud_is_gold_settings'] : '';
 	$soundcloudIsGoldPlayerType = isset($options['soundcloud_is_gold_playerType']) ? $options['soundcloud_is_gold_playerType'] : '';
 	$soundcloudIsGoldPlayerTypeDefault = empty($soundcloudIsGoldPlayerType) ? TRUE : FALSE;
@@ -213,9 +213,9 @@ function get_soundcloud_is_gold_user_tracks(){
 	
 	//API Call
 	$soundcloudIsGoldSelectedFormat = isset($_REQUEST['selectFormat']) ? $_REQUEST['selectFormat'] : 'tracks';
-	if($soundcloudIsGoldSelectedFormat == 'tracks') $soundcloudIsGoldApiCall = 'http://api.soundcloud.com/users/'.$soundcloudIsGoldUser.'/tracks.xml?limit='.$soundcloudIsGoldTracksPerPage.'&offset='.$soundcloudIsGoldApiOffset.'&client_id=9rD2GrGrajkmkw5eYFDp2g';
-	if($soundcloudIsGoldSelectedFormat == 'sets') $soundcloudIsGoldApiCall = 'http://api.soundcloud.com/users/'.$soundcloudIsGoldUser.'/playlists.xml?limit='.$soundcloudIsGoldTracksPerPage.'&offset='.$soundcloudIsGoldApiOffset.'&client_id=9rD2GrGrajkmkw5eYFDp2g';
-	if($soundcloudIsGoldSelectedFormat == 'favorites') $soundcloudIsGoldApiCall = 'http://api.soundcloud.com/users/'.$soundcloudIsGoldUser.'/favorites.xml?limit='.$soundcloudIsGoldTracksPerPage.'&offset='.$soundcloudIsGoldApiOffset.'&client_id=9rD2GrGrajkmkw5eYFDp2g';
+	if($soundcloudIsGoldSelectedFormat == 'tracks') $soundcloudIsGoldApiCall = 'http://api.soundcloud.com/users/'.$soundcloudIsGoldActiveUser.'/tracks.xml?limit='.$soundcloudIsGoldTracksPerPage.'&offset='.$soundcloudIsGoldApiOffset.'&client_id=9rD2GrGrajkmkw5eYFDp2g';
+	if($soundcloudIsGoldSelectedFormat == 'sets') $soundcloudIsGoldApiCall = 'http://api.soundcloud.com/users/'.$soundcloudIsGoldActiveUser.'/playlists.xml?limit='.$soundcloudIsGoldTracksPerPage.'&offset='.$soundcloudIsGoldApiOffset.'&client_id=9rD2GrGrajkmkw5eYFDp2g';
+	if($soundcloudIsGoldSelectedFormat == 'favorites') $soundcloudIsGoldApiCall = 'http://api.soundcloud.com/users/'.$soundcloudIsGoldActiveUser.'/favorites.xml?limit='.$soundcloudIsGoldTracksPerPage.'&offset='.$soundcloudIsGoldApiOffset.'&client_id=9rD2GrGrajkmkw5eYFDp2g';
 	$soundcloudIsGoldApiResponse = get_soundcloud_is_gold_api_response($soundcloudIsGoldApiCall);
 	
 	//Pagination and Actions
@@ -264,7 +264,7 @@ function get_soundcloud_is_gold_user_tracks(){
 						<thead id="media-head-<?php echo $soundcloudIsGoldtrack->id ?>" class="media-item-info">
 							<tr valign="top">
 								<td id="thumbnail-head-<?php echo $soundcloudIsGoldtrack->id ?>" class="A1B1">
-									<p><a href="<?php echo $soundcloudIsGoldtrack->{'permalink-url'}?>" title="Go to the Soundcloud page" target="_blank"><img id="soundcloudMMThumb-<?php echo $soundcloudIsGoldtrack->id ?>" style="margin-top: 3px;" alt="" src="<?php echo ($soundcloudIsGoldtrack->{'artwork-url'} != '') ? $soundcloudIsGoldtrack->{'artwork-url'} : SIG_PLUGIN_DIR."/noThumbnail.gif" ?>" class="thumbnail"></a></p>
+									<p><a href="<?php echo $soundcloudIsGoldtrack->{'permalink-url'}?>" title="Go to the Soundcloud page" target="_blank"><img id="soundcloudMMThumb-<?php echo $soundcloudIsGoldtrack->id ?>" style="margin-top: 3px;" alt="" src="<?php echo ($soundcloudIsGoldtrack->{'artwork-url'} != '') ? $soundcloudIsGoldtrack->{'artwork-url'} : SIG_PLUGIN_DIR."images/noThumbnail.gif" ?>" class="thumbnail"></a></p>
 								</td>
 								<td>
 								<p><strong>Title:</strong> <?php echo $soundcloudIsGoldtrack->title ?></p>
@@ -425,14 +425,6 @@ function soundcloud_is_gold_shortcode($atts){
 /******************************************************/
 
 
-/** Preview **/
-add_action('wp_ajax_soundcloud_is_gold_player_preview', 'soundcloud_is_gold_player_preview');
-function soundcloud_is_gold_player_preview(){
-	if(isset($_POST['request'])) echo soundcloud_is_gold_player($_POST['ID'], $_POST['autoPlay'], $_POST['comments'], $_POST['width'], $_POST['classes'], $_POST['playerType'], $_POST['color'], $_POST['artwork'], $_POST['format']);
-	die;
-}
-
-
 /** The Player **/
 function soundcloud_is_gold_player($id, $autoPlay, $comments, $width, $classes, $playerTypes, $color, $artwork, $format){
 	$options = get_option('soundcloud_is_gold_options');
@@ -497,13 +489,50 @@ function soundcloud_is_gold_player($id, $autoPlay, $comments, $width, $classes, 
 
 }
 
-
+/*******************************************/
+/**                                       **/
+/**                  AJAX                 **/
+/**                                       **/
+/*******************************************/
+/** Preview **/
+add_action('wp_ajax_soundcloud_is_gold_player_preview', 'soundcloud_is_gold_player_preview');
+function soundcloud_is_gold_player_preview(){
+	if(isset($_POST['request'])) echo soundcloud_is_gold_player($_POST['ID'], $_POST['autoPlay'], $_POST['comments'], $_POST['width'], $_POST['classes'], $_POST['playerType'], $_POST['color'], $_POST['artwork'], $_POST['format']);
+	die;
+}
 /** viewer Ajax **/
 add_action('wp_ajax_get_soundcloud_player', 'get_soundcloud_player');
 add_action('wp_ajax_nopriv_get_soundcloud_player', 'get_soundcloud_player');
 function get_soundcloud_player(){
 	echo soundcloud_is_gold_player($_POST['id'], $_POST['width'], $_POST['comments'], $_POST['autoPlay'], $_POST['type'], $_POST['color'], $_POST['format']);
 	die();
-	
+}
+/** Add username **/
+add_action('wp_ajax_soundcloud_is_gold_add_user', 'soundcloud_is_gold_add_user');
+function soundcloud_is_gold_add_user(){
+	if(isset($_POST['request'])){
+		$options = get_option('soundcloud_is_gold_options');
+		if(isset($options['soundcloud_is_gold_users'])){
+			//Check if username doesn't exist or is blank
+			if(!empty($_POST['username']) && !in_array($_POST['username'], $options['soundcloud_is_gold_users'])){
+				//Get user info
+				$userInfo = get_soundcloud_is_gold_api_response("http://api.soundcloud.com/users/".$_POST['username'].".xml?client_id=9rD2GrGrajkmkw5eYFDp2g");
+				if(isset($userInfo) && isset($userInfo['response']->permalink)){
+					$return = '<li class="soundcloudIsGoldUserContainer" style="background-image:URL('.$userInfo['response']->{'avatar-url'}[0].')">';
+					$return .= '<span class="soundcloudIsGoldRemoveUser" />&nbsp;</span>';
+					$return .= '<div>';
+					$return .= '<input type="hidden" value="'.$userInfo['response']->permalink.'" name="soundcloud_is_gold_options[soundcloud_is_gold_users]['.$userInfo['response']->permalink.'][0]" />';
+					$return .= '<input type="hidden" value="'.$userInfo['response']->{'avatar-url'}[0].'" name="soundcloud_is_gold_options[soundcloud_is_gold_users]['.$userInfo['response']->permalink.'][1]" />';
+					$return .= '<p>'.$userInfo['response']->permalink.'</p>';
+					$return .= '</div>';
+					$return .= '</li>';
+				}else{
+					$return = 'error';
+				}
+			}
+			echo $return;
+		}
+	}
+	die;
 }
 ?>

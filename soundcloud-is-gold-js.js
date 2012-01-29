@@ -14,6 +14,118 @@ jQuery(document).ready(function($){
 	});
     });*/
     
+    /*	CarouFredSel: an infinite, circular jQuery carousel.
+	    Configuration created by the "Configuration Robot"
+	    at caroufredsel.frebsite.nl
+    */
+    $("#soundcloudIsGoldUserError a").click(function(e){
+	e.preventDefault();
+	$(this).parent().fadeOut();
+    }).parent().css("display", "none");
+
+    carousel();
+    function carousel(){
+	$("#soundcloudIsGoldUsernameCarousel").carouFredSel({
+	    circular: false,
+	    infinite: false,
+	    width: 354,
+	    height: 118,
+	    align: "left",
+	    padding: [0, 0, 0, 0],
+	    items: {
+		    visible: 3,
+		    width: 118,
+		    height: 118
+	    },
+	    scroll: {
+		    items:2,
+		    duration: 500
+	    },
+	    auto: false,
+	    pagination: "#soundcloudIsGoldUsernameCarouselNav"
+    }).find("li .soundcloudIsGoldRemoveUser").click(function() {
+	    removeUser($(this).parent());
+	}).css("cursor", "pointer");
+	makeUserActive();
+    }
+    
+    /** Remove User **/
+    function removeUser(that){
+	that.animate({
+	    opacity 	: 0
+	    }, 500).animate({
+		    width		: 0,
+		    margin		: 0,
+		    borderWidth	: 0
+	    }, 400, function() {
+		    $("#soundcloudIsGoldUsernameCarousel").trigger("removeItem", that);
+	});
+    }
+    
+    /** Add new User **/
+    $("#soundcloudIsGoldAddUser").click(function(e){
+	e.preventDefault();
+	//Set request
+	var myData = {
+            action: 'soundcloud_is_gold_add_user',
+            request: 'soundcloudIsGoldAddUser',
+            username: $("#soundcloudIsGoldNewUser").val()
+        };
+	jQuery.post(ajaxurl, myData, function(response) {
+	    if(response != "error"){
+		var args = [response, "#soundcloudIsGoldUsernameCarousel li:first", true, 0];
+		$("#soundcloudIsGoldUsernameCarousel").trigger("insertItem", args);
+		carousel();
+	    }else{
+		$("#soundcloudIsGoldUserError p").html("wrong username").parent().fadeIn();
+	    }
+	});
+    });
+    
+    /** Make User Active **/
+    function makeUserActive(){
+	$("#soundcloudIsGoldUsernameCarousel .soundcloudIsGoldUserContainer div").click(function(){
+	    previousActiveUser = $("#soundcloudIsGoldActiveUserContainer .soundcloudIsGoldUserContainer");
+	    newActiveUser = $(this).parent();
+	    //Remove from Carousel
+	    $(this).parent().fadeOut(function(){
+		//Copy new Active User to the Active User container and move active user label
+		newActiveUser.clone().css("margin", "5px 4px").appendTo("#soundcloudIsGoldActiveUserContainer").prepend($("#soundcloudIsGoldActiveLabel")).fadeIn();
+		//Update hidden field for active user
+		$("#soundcloudIsGoldActiveUser").val($('p', newActiveUser).html());
+		//Remove it from carousel
+		$("#soundcloudIsGoldUsernameCarousel").trigger("removeItem", $(this));
+		//Move old active user to carousel
+		var args = [previousActiveUser, "#soundcloudIsGoldUsernameCarousel li:first", true, 0];
+		$("#soundcloudIsGoldUsernameCarousel").trigger("insertItem", args);
+		//Init Carousel
+		carousel();
+		removeActiveUser();
+	    });
+	    
+	});
+    }
+    
+    /** Remove Active user **/
+    removeActiveUser();
+    function removeActiveUser(){
+	$("#soundcloudIsGoldActiveUserContainer .soundcloudIsGoldUserContainer div .soundcloudIsGoldRemoveUser").click(function(){
+	    activeUserToRemove = $(this).parent().parent();
+	    activeUserToRemove.fadeOut(function(){
+		//Copy new Active User to the Active User container and move active user label
+		$("#soundcloudIsGoldUsernameCarousel .soundcloudIsGoldUserContainer:first").clone().css("margin", "5px 4px").appendTo("#soundcloudIsGoldActiveUserContainer").prepend($("#soundcloudIsGoldActiveLabel")).fadeIn();
+		//Delete Active User
+		$(this).remove();
+		//Move First User from Carousel to Active
+		$("#soundcloudIsGoldUsernameCarousel .soundcloudIsGoldUserContainer:first").fadeOut(function(){
+		    //Remove it from carousel
+		    removeUser($(this));
+		    //Update hidden field for active user
+		    $("#soundcloudIsGoldActiveUser").val($('#soundcloudIsGoldActiveUserContainer .soundcloudIsGoldUserContainer div p').html());
+		});
+	    });
+	});
+    }
     
     /******************************************/
     /**              SOUNDCLOUD              **/
