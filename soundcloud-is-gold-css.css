@@ -328,7 +328,7 @@
     float:left;
 }
 #soundcloudIsGoldActiveLabel{
-    background: url("./active.png") no-repeat left top;
+    background: url("./images/active.png") no-repeat left top;
     width:49px;
     height:50px;
     position:absolute;
