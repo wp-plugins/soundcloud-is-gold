@@ -3,17 +3,20 @@ jQuery(document).ready(function($){
     /**INIT **/
     $(".soundcloudMMLoading").css('display', 'none');
 
+    $("#soundcloudMMShowUsernames").click(function(e){
+	e.preventDefault();
+	$("#soundcloudMMUsermameTab").slideDown('fast');
+	$("#soundcloudMMHideUsernames").removeClass('hidden');
+	$(this).addClass('hidden');
+    });
+    $("#soundcloudMMHideUsernames").click(function(e){
+	e.preventDefault();
+	$("#soundcloudMMUsermameTab").slideUp('fast');
+	$("#soundcloudMMShowUsernames").removeClass('hidden');
+	$(this).addClass('hidden');
+    });
+
     /*** OPTIONS ***/
-    /*$(".soundcloudMMInput").each(function(){
-	var cleanOnce = false;
-	$(this).focus(function(){
-	    if(!cleanOnce){
-		$(this).val('');
-		cleanOnce = true;
-	    }
-	});
-    });*/
-    
     /*	CarouFredSel: an infinite, circular jQuery carousel.
 	    Configuration created by the "Configuration Robot"
 	    at caroufredsel.frebsite.nl
@@ -32,6 +35,7 @@ jQuery(document).ready(function($){
 	    height: 118,
 	    align: "left",
 	    padding: [0, 0, 0, 0],
+	    margin: [0, 0, 0, 0],
 	    items: {
 		    visible: 3,
 		    width: 118,
@@ -47,6 +51,7 @@ jQuery(document).ready(function($){
 	    removeUser($(this).parent());
 	}).css("cursor", "pointer");
 	makeUserActive();
+	removeActiveUser();
     }
     
     /** Remove User **/
@@ -65,6 +70,7 @@ jQuery(document).ready(function($){
     /** Add new User **/
     $("#soundcloudIsGoldAddUser").click(function(e){
 	e.preventDefault();
+	$(".soundcloudMMLoading").fadeIn('fast');
 	//Set request
 	var myData = {
             action: 'soundcloud_is_gold_add_user',
@@ -72,6 +78,7 @@ jQuery(document).ready(function($){
             username: $("#soundcloudIsGoldNewUser").val()
         };
 	jQuery.post(ajaxurl, myData, function(response) {
+	    $(".soundcloudMMLoading").fadeOut('fast');
 	    if(response != "error"){
 		var args = [response, "#soundcloudIsGoldUsernameCarousel li:first", true, 0];
 		$("#soundcloudIsGoldUsernameCarousel").trigger("insertItem", args);
@@ -100,14 +107,31 @@ jQuery(document).ready(function($){
 		$("#soundcloudIsGoldUsernameCarousel").trigger("insertItem", args);
 		//Init Carousel
 		carousel();
-		removeActiveUser();
+		//Tab: extra actions
+		if($("#soundcloudMMUsermameTab").length) {
+		    $(".soundcloudMMLoading").fadeIn('fast');
+		    //Set request
+		    var myData = {
+			action: 'soundcloud_is_gold_set_active_user',
+			request: 'soundcloudIsGoldSetActiveUser',
+			username: $("#soundcloudIsGoldActiveUser").val()
+		    };
+		    jQuery.post(ajaxurl, myData, function(response) {
+			if(response != "error"){
+			    //Reload Tab
+			    location.reload();
+			}else{
+			    //Error
+			    $("#soundcloudIsGoldUserError p").html("wrong username").parent().fadeIn();
+			}
+		    });
+		}
 	    });
 	    
 	});
     }
     
     /** Remove Active user **/
-    removeActiveUser();
     function removeActiveUser(){
 	$("#soundcloudIsGoldActiveUserContainer .soundcloudIsGoldUserContainer div .soundcloudIsGoldRemoveUser").click(function(){
 	    activeUserToRemove = $(this).parent().parent();

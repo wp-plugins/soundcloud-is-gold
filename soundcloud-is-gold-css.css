@@ -392,6 +392,9 @@
 #soundcloudIsGoldUsernameCarousel{
 
 }
+.caroufredsel_wrapper{
+    margin:0 !important;
+}
 #soundcloudIsGoldUsernameCarousel .soundcloudIsGoldUserContainer{
     cursor: pointer;
 }
@@ -460,7 +463,11 @@
 	cursor: pointer;
 }
 
-/*** Settings ***/
+/************************************/
+/**                                **/
+/**            SETTINGS            **/
+/**                                **/
+/************************************/
 #soundcloudMMSettings{
     float: left;
     list-style: none outside none;
@@ -657,6 +664,39 @@ select.soundcloudMMInput option{
     margin-right:5px;
 }
 
+/** Username **/
+#soundcloudMMUsernameHeader{
+    margin:1em;
+    display:block;
+}
+#soundcloudMMUsernameHeader img{
+    vertical-align:middle;
+    border:solid 1px #ccc;
+    padding:4px;
+    background-color:#efefef;
+}
+#soundcloudMMUsernameHeader span{
+    color:#666;
+    padding:0 5px;
+    border-right: solid 1px #DDD;
+}
+#soundcloudMMShowUsernames, #soundcloudMMHideUsernames{
+    padding:0 5px;
+}
+#soundcloudMMUsermameTab{
+    border-bottom: 1px solid #DDDDDD;
+    float: left;
+    margin: 2%;
+    padding: 0 0 1%;
+    width: 96%;
+    display:none;
+}
+#soundcloudIsGoldAddUserContainer .soundcloudMMLoading{
+    height: 100%;
+    position: absolute;
+    width: 95%;
+}
+/** Color Picher **/
 .soundcloudMMColorPicker .soundcloudMMColorPickerClose{
     display: block;
     padding: 6% 2%;

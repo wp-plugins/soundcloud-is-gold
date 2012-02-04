@@ -167,7 +167,7 @@ function soundcloud_is_gold_options(){
                 <span class="soundcloudMMTitle">SoundCloud is gold <small>by Thomas Michalak</small></span>
                 <span class="soundcloudMMUrl">www.mightymess.com/soundcloud-is-gold-wordpress-plugin</span>
             </a>
-	    <p id="soundcloudMMVersion">version <?php echo get_soundcloud_is_gold_version() ?></p>
+	    <p id="soundcloudMMVersion">version <?php echo get_soundcloud_is_gold_version($options) ?></p>
         </div>
         
         <div id="soundcloudMMMain" class="lightBlueGradient">
@@ -177,49 +177,7 @@ function soundcloud_is_gold_options(){
                 <ul id="soundcloudMMSettings">
                     <!-- Username -->
 		    <li class="soundcloudMMBox"><label class="optionLabel">User Name</label>
-			<!-- Active User -->
-			<ul id="soundcloudIsGoldActiveUserContainer">
-			    <li class="soundcloudIsGoldUserContainer" style="background-image:URL('<?php echo $options['soundcloud_is_gold_users'][$options['soundcloud_is_gold_active_user']][1] ?>')">
-				<span id="soundcloudIsGoldActiveLabel">&nbsp;</span>
-				<div>
-				    <span class="soundcloudIsGoldRemoveUser" />&nbsp;</span>
-				    <input type="hidden" value="<?php echo $options['soundcloud_is_gold_users'][$options['soundcloud_is_gold_active_user']][0]?>" name="soundcloud_is_gold_options[soundcloud_is_gold_users][<?php echo $options['soundcloud_is_gold_active_user'] ?>][0]" />
-				    <input type="hidden" value="<?php echo $options['soundcloud_is_gold_users'][$options['soundcloud_is_gold_active_user']][1]?>" name="soundcloud_is_gold_options[soundcloud_is_gold_users][<?php echo $options['soundcloud_is_gold_active_user'] ?>][1]" />
-				    <p><?php echo $options['soundcloud_is_gold_active_user'] ?></p>
-				</div>
-			    </li>
-			    <li class="hidden">
-				<input type="hidden" id="soundcloudIsGoldActiveUser" value="<?php echo $options['soundcloud_is_gold_active_user'] ?>" name="soundcloud_is_gold_options[soundcloud_is_gold_active_user]" />
-			    </li>
-			</ul>
-			<!-- Add user -->
-			<ul id="soundcloudIsGoldAddUserContainer">
-			    <li id="soundcloudIsGoldUserError" class="orangeGradient soundcloudMMRounder">
-				<p>error message</p>
-				<a href="#" class="soundcloudMMBt soundcloudMMBtSmall blue soundcloudMMRounder ">close</a>
-			    </li>
-			    <li>
-				<input type="text" name="soundcloudIsGoldNewUser" id="soundcloudIsGoldNewUser"/>
-				<a id="soundcloudIsGoldAddUser" href="#" class="soundcloudMMBt blue soundcloudMMRounder soundcloudMMBtSmall" />Add Username</a>
-			    </li>
-			</ul>
-			<!-- All inactive Users -->
-			<div id="soundcloudIsGoldUsernameCarouselWrapper">
-			    <ul id="soundcloudIsGoldUsernameCarousel">
-				<?php foreach($soundcloudIsGoldUsers as $key => $user): ?>
-				    <?php if($user[0] != $options['soundcloud_is_gold_active_user']) :?>
-				    <li class="soundcloudIsGoldUserContainer"  style="background-image:URL('<?php echo $user[1] ?>')">
-					<span class="soundcloudIsGoldRemoveUser" />&nbsp;</span>
-					<div>
-					    <input type="hidden" value="<?php echo $user[0]?>" name="soundcloud_is_gold_options[soundcloud_is_gold_users][<?php echo $key ?>][0]" />
-					    <input type="hidden" value="<?php echo $user[1]?>" name="soundcloud_is_gold_options[soundcloud_is_gold_users][<?php echo $key ?>][1]" />
-					    <p><?php echo $user[0] ?></p>
-					</div>
-				    </li>
-				<?php endif; endforeach; ?>
-			    </ul>
-			    <div id="soundcloudIsGoldUsernameCarouselNav"></div>
-			</div>
+			<?php get_soundcloud_is_gold_username_interface($options, $soundcloudIsGoldUsers) ?>
 		    </li>
 		    <!-- Default Settings -->
                     <li class="soundcloudMMBox"><label class="optionLabel">Default Settings</label>
