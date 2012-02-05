@@ -26,7 +26,9 @@ jQuery(document).ready(function($){
 	$(this).parent().fadeOut();
     }).parent().css("display", "none");
 
-    carousel();
+    carousel()
+    $("#soundcloudMMUsermameTab").slideUp('fast');
+    
     function carousel(){
 	$("#soundcloudIsGoldUsernameCarousel").carouFredSel({
 	    circular: false,
@@ -41,14 +43,11 @@ jQuery(document).ready(function($){
 		    width: 118,
 		    height: 118
 	    },
-	    scroll: {
-		    items:2,
-		    duration: 500
-	    },
 	    auto: false,
 	    pagination: "#soundcloudIsGoldUsernameCarouselNav"
     }).find("li .soundcloudIsGoldRemoveUser").click(function() {
 	    removeUser($(this).parent());
+	    removeUserFromOptions($("div input:first", $(this).parent()).val(), false);
 	}).css("cursor", "pointer");
 	makeUserActive();
 	removeActiveUser();
@@ -63,10 +62,24 @@ jQuery(document).ready(function($){
 		    margin		: 0,
 		    borderWidth	: 0
 	    }, 400, function() {
-		    $("#soundcloudIsGoldUsernameCarousel").trigger("removeItem", that);
+		$("#soundcloudIsGoldUsernameCarousel").trigger("removeItem", that); 
 	});
     }
-    
+    /** Remove User From Options (Tab only) **/
+    function removeUserFromOptions(usernameToRemove, reload){
+	if($("#soundcloudMMUsermameTab").length){
+	    console.log(usernameToRemove);
+	    //Set request
+	    var myData = {
+		action: 'soundcloud_is_gold_delete_user',
+		request: 'soundcloudIsGoldDeleteUser',
+		username: usernameToRemove
+	    };
+	    jQuery.post(ajaxurl, myData, function(response) {
+		if(response == 'done' && reload) location.reload();
+	    });
+	}
+    }
     /** Add new User **/
     $("#soundcloudIsGoldAddUser").click(function(e){
 	e.preventDefault();
@@ -75,7 +88,8 @@ jQuery(document).ready(function($){
 	var myData = {
             action: 'soundcloud_is_gold_add_user',
             request: 'soundcloudIsGoldAddUser',
-            username: $("#soundcloudIsGoldNewUser").val()
+            username: $("#soundcloudIsGoldNewUser").val(),
+	    updateOption : $("#soundcloudMMUsermameTab").length
         };
 	jQuery.post(ajaxurl, myData, function(response) {
 	    $(".soundcloudMMLoading").fadeOut('fast');
@@ -133,7 +147,8 @@ jQuery(document).ready(function($){
     
     /** Remove Active user **/
     function removeActiveUser(){
-	$("#soundcloudIsGoldActiveUserContainer .soundcloudIsGoldUserContainer div .soundcloudIsGoldRemoveUser").click(function(){
+	$("#soundcloudIsGoldActiveUserContainer .soundcloudIsGoldUserContainer .soundcloudIsGoldRemoveUser").click(function(){
+	    removeUserFromOptions($("input:first", $(this).parent()).val(), true);
 	    activeUserToRemove = $(this).parent().parent();
 	    activeUserToRemove.fadeOut(function(){
 		//Copy new Active User to the Active User container and move active user label

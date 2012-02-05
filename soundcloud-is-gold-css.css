@@ -689,7 +689,7 @@ select.soundcloudMMInput option{
     margin: 2%;
     padding: 0 0 1%;
     width: 96%;
-    display:none;
+    display:block;
 }
 #soundcloudIsGoldAddUserContainer .soundcloudMMLoading{
     height: 100%;

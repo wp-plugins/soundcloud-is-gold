@@ -570,22 +570,31 @@ function soundcloud_is_gold_add_user(){
 	if(isset($_POST['request'])){
 		$options = get_option('soundcloud_is_gold_options');
 		if(isset($options['soundcloud_is_gold_users'])){
-			//Check if username doesn't exist or is blank
-			if(!empty($_POST['username']) && !in_array($_POST['username'], $options['soundcloud_is_gold_users'])){
-				$newUsername = str_replace(" ", "-", $_POST['username']);
+			$return = 'error';
+			//Check if username doesn't exist already and is not blank
+			if(!empty($_POST['username']) && !array_key_exists($_POST['username'], $options['soundcloud_is_gold_users'])){
+				$newUsername = str_replace(" ", "-", trim($_POST['username']));
 				//Get user info
 				$userInfo = get_soundcloud_is_gold_api_response("http://api.soundcloud.com/users/".$newUsername.".xml?client_id=9rD2GrGrajkmkw5eYFDp2g");
 				if(isset($userInfo) && isset($userInfo['response']->permalink)){
-					$return = '<li class="soundcloudIsGoldUserContainer" style="background-image:URL('.$userInfo['response']->{'avatar-url'}[0].')">';
+					$newUsername = (string)$userInfo['response']->permalink;
+					$newUsernameImg = (string)$userInfo['response']->{'avatar-url'}[0];
+					
+					$return = '<li class="soundcloudIsGoldUserContainer" style="background-image:URL('.$newUsernameImg.')">';
 					$return .= '<span class="soundcloudIsGoldRemoveUser" />&nbsp;</span>';
 					$return .= '<div>';
-					$return .= '<input type="hidden" value="'.$userInfo['response']->permalink.'" name="soundcloud_is_gold_options[soundcloud_is_gold_users]['.$userInfo['response']->permalink.'][0]" />';
-					$return .= '<input type="hidden" value="'.$userInfo['response']->{'avatar-url'}[0].'" name="soundcloud_is_gold_options[soundcloud_is_gold_users]['.$userInfo['response']->permalink.'][1]" />';
-					$return .= '<p>'.$userInfo['response']->permalink.'</p>';
+					$return .= '<input type="hidden" value="'.$newUsername.'" name="soundcloud_is_gold_options[soundcloud_is_gold_users]['.$newUsername.'][0]" />';
+					$return .= '<input type="hidden" value="'.$newUsernameImg.'" name="soundcloud_is_gold_options[soundcloud_is_gold_users]['.$newUsername.'][1]" />';
+					$return .= '<p>'.$newUsername.'</p>';
 					$return .= '</div>';
 					$return .= '</li>';
-				}else{
-					$return = 'error';
+					
+					//Tab: extra actions
+					if($_POST['updateOption'] == '1'){
+						$options['soundcloud_is_gold_users'][$newUsername][0] = $newUsername;
+						$options['soundcloud_is_gold_users'][$newUsername][1] = $newUsernameImg;
+						update_option( 'soundcloud_is_gold_options', $options );
+					}
 				}
 			}
 			echo $return;
@@ -600,14 +609,39 @@ function soundcloud_is_gold_set_active_user(){
 	if(isset($_POST['request'])){
 		$options = get_option('soundcloud_is_gold_options');
 		if(isset($options['soundcloud_is_gold_active_user'])){
-			//Check if username doesn't exist or is blank
-			if(!empty($_POST['username']) && !in_array($_POST['username'], $options['soundcloud_is_gold_users'])){
+			//Check if username exist and is not blank
+			if(!empty($_POST['username']) && array_key_exists($_POST['username'], $options['soundcloud_is_gold_users'])){
 				$options['soundcloud_is_gold_active_user'] = $_POST['username'];
 				update_option( 'soundcloud_is_gold_options', $options );
 				$message = 'done';
 			}
 		}
 	}
+	echo $message;
+	die;
+}
+/** Delete User **/
+add_action('wp_ajax_soundcloud_is_gold_delete_user', 'soundcloud_is_gold_delete_user');
+function soundcloud_is_gold_delete_user(){
+	$message = 'error';
+	if(isset($_POST['request'])){
+		$options = get_option('soundcloud_is_gold_options');
+		if(isset($options['soundcloud_is_gold_active_user'])){
+			//Check username exist and isn't blank
+			if(!empty($_POST['username']) && array_key_exists($_POST['username'], $options['soundcloud_is_gold_users'])){
+				//Remove from users
+				unset($options['soundcloud_is_gold_users'][$_POST['username']]);
+				//If active user, set the first element to be active
+				if($options['soundcloud_is_gold_active_user'] == $_POST['username']){
+					$newActiveUser = array_shift(array_values($options['soundcloud_is_gold_users']));
+					$options['soundcloud_is_gold_active_user'] = $newActiveUser[0];
+				}
+				update_option( 'soundcloud_is_gold_options', $options );
+				$message = 'done';
+			}
+		}
+	}
+	
 	echo $message;
 	die;
 }
