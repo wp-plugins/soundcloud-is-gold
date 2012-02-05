@@ -510,6 +510,7 @@ select.soundcloudMMInput option{
 .subSettings{
     display: inline;
     margin: 0 0 0 0;
+    font-size:80%;
 }
 .subSettings li{
     display: inline;
@@ -649,7 +650,7 @@ select.soundcloudMMInput option{
 /** Disclaimer **/
 #disclaimer{
     color:#666666;
-    font-size:60%;
+    font-size:70%;
     margin:10px 0;
     float:right;
 }

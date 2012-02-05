@@ -246,7 +246,7 @@ function soundcloud_is_gold_options(){
                         <p class="soundcloudMMEmbed soundcloudMMEmbedOptions" style="text-align:center;">
 			    <!-- Soundcloud Preview here -->
 			</p>
-                        <p class="soundcloudMMLoading" style="display:none"></p>
+                        <p class="soundcloudMMLoading soundcloudMMPreviewLoading" style="display:none"></p>
                         <?php else : ?>
                         <!-- Error getting XML -->
                         <div class="soundcloudMMXmlError"><p><?php echo $soundcloudIsGoldApiResponse['error'] ? $soundcloudIsGoldApiResponse['error'] : "Oups! There's been a error while getting the tracks from soundcloud. Please reload the page."?></p></div>

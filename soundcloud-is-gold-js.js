@@ -296,15 +296,15 @@ jQuery(document).ready(function($){
 	
 	//Tell user it's loading
 	$('.soundcloudMMEmbed', parent).fadeOut('fast', function(){
-	    $('.soundcloudMMLoading', parent).fadeIn();
-	    $('.soundcloudMMLoading', parent).animate({
+	    $('.soundcloudMMPreviewLoading', parent).fadeIn();
+	    $('.soundcloudMMPreviewLoading', parent).animate({
 		height: newHeight
 	    }, 'slow', function(){
 		//The Ajax request
 		jQuery.post(ajaxurl, myData, function(response) {
 		    if(response){
 			$('.soundcloudMMEmbed', parent).css('height', newHeight).html(response);
-			$('.soundcloudMMLoading', parent).fadeOut('fast', function(){
+			$('.soundcloudMMPreviewLoading', parent).fadeOut('fast', function(){
 			    $(this).css('display', 'none');
 			    $('.soundcloudMMEmbed', parent).fadeIn();  
 			});
