@@ -16,6 +16,8 @@ Browse through your soundcloud tracks, sets and favourites. Select and add track
 You can set default settings in the option page, choose your defaut soundcloud player (Mini, Standard, Artwork, Html5), it's width, add extra classes for you CSS lovers, show comments, autoplay and your favorite color.
 You'll also be able to set players to different settings before adding to your post if you fancy a one off change.
 
+**Save multiple users, very useful for labels, collectives or artists with many projects.**
+
 **Soundcloud is Gold** use a shortcode but the "Soundcloud is Gold" tab will write it for you dynamicly as you select parameters, and on top of this it will provide a nice live preview of your player so you know what does what. When done just press the 'insert soundcloud player' and it will added to your post just like when you're adding a photo or gallery.
 
 Check out my [TM soundcloud profile](http://www.soundcloud.com/t-m), more [mighty mess](http://www.mightymess.com) and if you love it please rate it on the [Soundcloud is Gold wordpress plugin page](http://wordpress.org/extend/plugins/soundcloud-is-gold/). If you use it and want to help, [donations are always welcomed](http://www.mightymess.com/soundcloud-is-gold-wordpress-plugin) or you could like, tweet or just drop a line on [Soundcloud is Gold](http://www.mightymess.com/soundcloud-is-gold-wordpress-plugin) and show some love :)
@@ -25,6 +27,7 @@ Latest developments updates on twitter: [#soundcloudisgold](https://twitter.com/
 = Features =
 
 * Browse through your soundcloud tracks, sets and favorites from a tab in the media upload window (see screenshot), no need to go back and forth between soundcloud and your website.
+* Save multiple users, very useful for labels, collectives or artists with many projects
 * Live Preview in the Tab, see what does what instantly (see screenshot).
 * Integrates perfectly with wordpress media upload by using the same listing style that you get with the images (see screenshot).
 * See track's info directly in the tab (description, url, cover, etc...).
@@ -51,11 +54,11 @@ That's just my opinion of course...
 
 = To Do List =
 
-* V1.1: Advance Settings (change background color and comments color, playcounts, buy link, font, wmode, etc, show/hide styled shortcode, number of tracks per page)
+* V2.1: Advance Settings (change background color and comments color, playcounts, buy link, font, wmode, etc, show/hide styled shortcode, number of tracks per page)
+* v2.1: url attribute for shortcode: easier for people using the shortcode manually.
+* v2.1: user attribute for shortcode: display the latest track.
+* v2.1: other soundcloud shortcode conflict fix (jetpack)
 * Add Widget
-* if no id is specified in the shortcode (e.g [soundcloud]), display the latest track.
-* Possibility to add multiple users for thoses with multiple soundcloud account.
-* Possibility to set a different user in the 'Soundcloud is Gold tab' to add tracks from different people.
 * Add Soundcloud default Width to the options
 * Trigger live preview when changing Soundcloud user name
 * Live search while typing a name in the user name field. So if you're looking for someone it's kind of easier.
@@ -129,6 +132,11 @@ When upgrading from 1.0.1 and earlier: All shortcode attributes are now lowercas
 
 
 == Changelog ==
+
+= 2.0 =
+* Save multiple users, very useful for labels, collectives or artists with many projects.
+* favourites browsing fix.
+* Settings API (Should fix the multi wp install issues)
 
 = 1.0.7 =
 * Moved to Settings API, which should enable multi-site compatibility (good tutorial at http://www.presscoders.com/2010/05/wordpress-settings-api-explained/ and plugin for reference at http://wordpress.org/extend/plugins/plugin-options-starter-kit/)
