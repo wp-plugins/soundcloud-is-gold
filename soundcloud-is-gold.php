@@ -164,7 +164,7 @@ function soundcloud_is_gold_options(){
         <?php get_soundcloud_is_gold_default_settings_for_js(); ?>
     </script>
     
-    <div class="soundcloudMMWrapper soundcloudMMOptions">
+    <div class="soundcloudMMWrapper soundcloudMMOptions soundcloudMMMainWrapper">
         <div id="soundcloudMMTop" class="darkGreyGradient">
             <a id="soundcloudMMLogo" class="orangeGradient" href="http://www.soundcloud.com" title="visit SoundCloud website"><img src="<?php echo SIG_PLUGIN_DIR ?>/images/soundcloud-logo-sc.png" width="107" height="71" alt="Soundcloud Logo"/></a>
             <a id="soundcloudMMHeader" class="mediumGreyGradient textShadow" href="http://www.mightymess.com/soundcloud-is-gold-wordpress-plugin" alt="Visit Mighty Mess for more cool stuff">

@@ -317,7 +317,7 @@ function get_soundcloud_is_gold_user_tracks(){
 					<a href="#" class="toggle describe-toggle-on soundcloud" id="show-<?php echo $soundcloudIsGoldtrack->id ?>">Show</a>
 					<a href="#" class="toggle describe-toggle-off soundcloudMM">Hide</a>
 					<div class="filename new"><span class="title soundcloudMMTitle" id="soundcloudMMTitle-<?php echo $soundcloudIsGoldtrack->id ?>"><?php echo $soundcloudIsGoldtrack->title ?></span></div>
-					<table class="slidetoggle describe startclosed soundcloudMMWrapper <?php echo $soundcloudIsGoldSelectedFormat ?>">
+					<table class="slidetoggle describe startclosed soundcloudMMWrapper soundcloudMMMainWrapper <?php echo $soundcloudIsGoldSelectedFormat ?>">
 						<thead id="media-head-<?php echo $soundcloudIsGoldtrack->id ?>" class="media-item-info">
 							<tr valign="top">
 								<td id="thumbnail-head-<?php echo $soundcloudIsGoldtrack->id ?>" class="A1B1">
@@ -402,7 +402,7 @@ function get_soundcloud_is_gold_user_tracks(){
 											<p id="soundcloudMMEmbed-<?php echo $soundcloudIsGoldtrack->id ?>" class="field soundcloudMMEmbed" style="text-align:center">
 												<!-- Soundcloud Preview here -->
 											</p>
-											<p class="soundcloudMMLoading" style="display:none"></p>
+											<p class="soundcloudMMLoading soundcloudMMPreviewLoading" style="display:none"></p>
 										</td>
 									</tr>
 									<tr class="soundcloudMM_shortcode">

@@ -170,7 +170,7 @@ jQuery(document).ready(function($){
     /**              SOUNDCLOUD              **/
     /******************************************/
     //Attach Events for Player Preview and Shortcode
-    $('.soundcloudMMWrapper').each(function(){
+    $('.soundcloudMMMainWrapper').each(function(){
 	var mySelf = $(this);
 	//On changing settings
 	$('input[type=checkbox], input[type=radio], .soundcloudMMWPSelectedWidth, .soundcloudMMColorPickerClose', this).click(function(){
