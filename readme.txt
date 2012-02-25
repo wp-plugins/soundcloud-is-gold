@@ -54,6 +54,7 @@ That's just my opinion of course...
 
 = To Do List =
 
+* v2.1: new UI.
 * V2.1: Advance Settings (change background color and comments color, playcounts, buy link, font, wmode, etc, show/hide styled shortcode, number of tracks per page)
 * v2.1: url attribute for shortcode: easier for people using the shortcode manually.
 * v2.1: user attribute for shortcode: display the latest track.
