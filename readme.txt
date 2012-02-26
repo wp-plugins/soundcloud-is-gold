@@ -4,7 +4,7 @@ Donate link: http://www.mightymess.com/soundcloud-is-gold-wordpress-plugin
 Tags: soundcloud, integrated, media, shortcode, browse, design, easy, simple, music, sound, js, live preview, flash, html5
 Requires at least: 3.2
 Tested up to: 3.3.1
-Stable tag: 1.0.6
+Stable tag: 2.0
 
 Browse through your soundcloud tracks, sets and favourites. Select and add tracks, sets or favourites to your posts. Live preview, easy.
 
@@ -69,6 +69,9 @@ That's just my opinion of course...
 
 == Installation ==
 
+= Updating =
+When updating to 2.0, if you're experiencing issues, deactivate and reactivate the plugin from the plugin page. This is due to switching to the Settings API. Sorry for the inconvenient. 
+
 Just follow the usual procedure. Log on to your wordpress, go to plugin -> add new -> search 'Soundcloud is Gold' -> click install
 
 
@@ -115,11 +118,12 @@ Yes, you can. If asked nicely and the requests are sensibles, I almost always in
 
 = Can you help me? =
 
-Sometimes, I generaly keep a eye on my plugin's forums and website's comments. Bear in mind that I've got a full time job and a life, so I can't always help straight away.
+Sometimes, I generally keep a eye on my plugin's forums and website's comments. Bear in mind that I've got a full time job and a life, so I can't always help straight away. I will not reply to people who obviously don't read the faqs or the forum or just say 'it doesn't work'.
 
 == Upgrade Notice ==
 
-When upgrading from 1.0.1 and earlier: All shortcode attributes are now lowercase (autoPlay is now autoplay, playerType is now playertype). Sorry about that but it's needed, so if you have some custom ones in your posts you will have to change those manually. 
+= 2.0 =
+When updating to 2.0, if you're experiencing issues, deactivate and reactivate the plugin from the plugin page. This is due to switching to the Settings API. Sorry for the inconvenient. 
 
 
 
