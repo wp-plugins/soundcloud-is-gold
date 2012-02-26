@@ -69,6 +69,9 @@ That's just my opinion of course...
 
 == Installation ==
 
+= Updating =
+When updating to 2.0, if you're experiencing issues, deactivate and reactivate the plugin from the plugin page. This is due to switching to the Settings API. Sorry for the inconvenient. 
+
 Just follow the usual procedure. Log on to your wordpress, go to plugin -> add new -> search 'Soundcloud is Gold' -> click install
 
 
