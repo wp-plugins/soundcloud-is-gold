@@ -122,6 +122,7 @@ Sometimes, I generally keep a eye on my plugin's forums and website's comments. 
 
 == Upgrade Notice ==
 
+= 2.0 =
 When updating to 2.0, if you're experiencing issues, deactivate and reactivate the plugin from the plugin page. This is due to switching to the Settings API. Sorry for the inconvenient. 
 
 
