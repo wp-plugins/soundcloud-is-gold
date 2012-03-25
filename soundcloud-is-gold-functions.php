@@ -108,6 +108,26 @@ function get_soundcloud_is_gold_username_interface($options, $soundcloudIsGoldUs
 	<?php
 }
 
+/**
+ * Get User's Latest track
+ * $soundcloudIsGoldApiCall: API request (url)
+ **/
+function get_soundcloud_is_gold_latest_track_id($soundcloudIsGoldUser){
+	$soundcouldMMId = "";
+	$soundcloudIsGoldApiCall = 'http://api.soundcloud.com/users/'.$soundcloudIsGoldUser.'/tracks.xml?limit=1&client_id=9rD2GrGrajkmkw5eYFDp2g';
+	$soundcloudIsGoldApiResponse = get_soundcloud_is_gold_api_response($soundcloudIsGoldApiCall);
+	if(isset($soundcloudIsGoldApiResponse['response']) && $soundcloudIsGoldApiResponse['response']){
+	    foreach($soundcloudIsGoldApiResponse['response'] as $soundcloudMMLatestTrack){
+		$soundcouldMMId = (string)$soundcloudMMLatestTrack->id;
+	    }
+	}
+	return $soundcouldMMId;
+}
+
+/**
+ * Get Soundcloud API Response
+ * $soundcloudIsGoldApiCall: API request (url)
+ **/
 function get_soundcloud_is_gold_api_response($soundcloudIsGoldApiCall){
 	//Set Error default message && default XML state
 	$soundcloudIsGoldRespError = false;
@@ -460,6 +480,7 @@ function soundcloud_is_gold_shortcode($atts){
 	//Only use lowercase as atts!
 	extract( shortcode_atts( array(
 					'id' => '1',
+					'user' => 'null',
 					'autoplay' => ((!isset($soundcloudIsGoldSettings[0]) || $soundcloudIsGoldSettings[0] == '') ? 'false' : 'true'),
 					'comments' => ((!isset($soundcloudIsGoldSettings[1]) || $soundcloudIsGoldSettings[1] == '') ? 'false' : 'true'),
 					'artwork' => ((!isset($soundcloudIsGoldSettings[2]) || $soundcloudIsGoldSettings[2] == '') ? 'false' : 'true'),
@@ -470,7 +491,7 @@ function soundcloud_is_gold_shortcode($atts){
 					'format' => 'tracks'
 				), $atts )
 		);
-	return soundcloud_is_gold_player($id, $autoplay, $comments, $width, $classes, $playertype, $color, $artwork, $format);
+	return soundcloud_is_gold_player($id, $user, $autoplay, $comments, $width, $classes, $playertype, $color, $artwork, $format);
 }
 
 
@@ -483,7 +504,7 @@ function soundcloud_is_gold_shortcode($atts){
 
 
 /** The Player **/
-function soundcloud_is_gold_player($id, $autoPlay, $comments, $width, $classes, $playerTypes, $color, $artwork, $format){
+function soundcloud_is_gold_player($id, $user, $autoPlay, $comments, $width, $classes, $playerTypes, $color, $artwork, $format){
 	$options = get_option('soundcloud_is_gold_options');
 	$soundcloudIsGoldSettings = isset($options['soundcloud_is_gold_settings']) ? $options['soundcloud_is_gold_settings'] : '';
 	$soundcloudIsGoldPlayerType = isset($options['soundcloud_is_gold_playerType']) ? $options['soundcloud_is_gold_playerType'] : '';
@@ -505,6 +526,13 @@ function soundcloud_is_gold_player($id, $autoPlay, $comments, $width, $classes, 
 	
 	$color = str_replace('#', '', $color);
 	
+	//In case of requesting latest track
+	if(isset($user) && $user != "null"){
+		$returnedId = get_soundcloud_is_gold_latest_track_id($user);
+		if($returnedId != "") $id = $returnedId;
+	}
+	
+	//Player types sizes
 	switch($playerTypes){
 		case 'Standard':
 			$height = ($format == 'tracks') ? '81px' : '165px';
@@ -524,7 +552,7 @@ function soundcloud_is_gold_player($id, $autoPlay, $comments, $width, $classes, 
 			break;
 	}
 
-	$player = '<div class="soundcloudIsGold '.$classes.'" id="soundcloud-'.$id.'">';
+	$player = '<div class="soundcloudIsGold '.$classes.' '.$user.'" id="soundcloud-'.$id.'">';
 	
 	//Flash Player
 	if(!$html5Player){
@@ -554,7 +582,7 @@ function soundcloud_is_gold_player($id, $autoPlay, $comments, $width, $classes, 
 /** Preview **/
 add_action('wp_ajax_soundcloud_is_gold_player_preview', 'soundcloud_is_gold_player_preview');
 function soundcloud_is_gold_player_preview(){
-	if(isset($_POST['request'])) echo soundcloud_is_gold_player($_POST['ID'], $_POST['autoPlay'], $_POST['comments'], $_POST['width'], $_POST['classes'], $_POST['playerType'], $_POST['color'], $_POST['artwork'], $_POST['format']);
+	if(isset($_POST['request'])) echo soundcloud_is_gold_player($_POST['ID'], $_POST['user'], $_POST['autoPlay'], $_POST['comments'], $_POST['width'], $_POST['classes'], $_POST['playerType'], $_POST['color'], $_POST['artwork'], $_POST['format']);
 	die;
 }
 /** viewer Ajax **/

@@ -211,13 +211,14 @@ jQuery(document).ready(function($){
 	});
 	//Color
 	color = $('.soundcloudMMColor', parent).val();
+	user = $('.soundcloudIsGoldUserContainer div p').text();
 	//Format
 	if($('.soundcloudMMWrapper').hasClass('sets')) format = 'sets';
 	else format = 'tracks';
 	//Set Shortocode Attributes
 	if(!parent.hasClass('soundcloudMMOptions')) shortcode(parent, autoPlay, comments, width, classes, playerType, color, artwork, format);
-        //Refresh Preview if reuqested
-	if(refresh) preview(parent, autoPlay, comments, width, classes, playerType, color, artwork, format);
+        //Refresh Preview if requested
+	if(refresh) preview(parent, user, autoPlay, comments, width, classes, playerType, color, artwork, format);
 
    };
     
@@ -260,7 +261,7 @@ jQuery(document).ready(function($){
     /********************************************/
     /**                PREVIEW                 **/
     /********************************************/
-    function preview(parent, autoPlay, comments, width, classes, playerType, color, artwork, format){
+    function preview(parent, user, autoPlay, comments, width, classes, playerType, color, artwork, format){
 	//Animate transition
 	switch(playerType){
 	    case 'Mini':
@@ -284,7 +285,8 @@ jQuery(document).ready(function($){
             action: 'soundcloud_is_gold_player_preview',
             request: 'getSoundcloudIsGoldPlayerPreview',
             ID: getID($('.soundcloudMMId', parent)),
-            comments: comments,
+            user: user,
+	    comments: comments,
             autoPlay: autoPlay,
 	    artwork: artwork,
 	    width: width,
