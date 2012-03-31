@@ -2,7 +2,7 @@
 /*
 Plugin Name: Soundcloud is Gold
 Plugin URI: http://www.mightymess.com/soundcloud-is-gold-wordpress-plugin
-Description: <strong><a href="http://www.mightymess.com/soundcloud-is-gold-wordpress-plugin">Soundcloud is gold</a></strong> integrates perfectly into wordpress. Browse through your soundcloud tracks, sets and favorites from the 'soundcloud is gold' tab with the post's 'upload media' popup window. Select, set and add track, sets or favorites to your post using the soundcloud player. Live Preview, easy, smart and straightforward. You can set default settings in the option page, choose your defaut soundcloud player (Mini, Standard, Artwork, html5), its width, extra classes for you CSS lovers and your favorite colors. You'll still be able to set players to different settings before adding to your post if you fancy a one off change. Now with Html5 player!
+Description: <strong><a href="http://www.mightymess.com/soundcloud-is-gold-wordpress-plugin">Soundcloud is gold</a></strong> integrates perfectly into wordpress. Browse through your soundcloud tracks, sets and favorites from the 'soundcloud is gold' tab with the post's 'upload media' popup window. Select, set and add track, sets or favorites to your post using the soundcloud player. Live Preview, easy, smart and straightforward. You can set default settings in the option page, choose your defaut soundcloud player (Mini, Standard, Artwork, html5), its width, extra classes for you CSS lovers and your favorite colors. You'll still be able to set players to different settings before adding to your post if you fancy a one off change. Now with Html5 player and Widget!
 Version: 2.0.1
 Author: Thomas Michalak at Mighty Mess
 Author URI: http://www.mightymess.com/thomas-michalak
@@ -90,7 +90,8 @@ function soundcloud_is_gold_add_defaults() {
     if(empty($tmp)) {
 	$soundcloudIsGoldDefaultUsers = array(
 					    'anna-chocola' => array('anna-chocola', 'http://i1.sndcdn.com/avatars-000009470567-spqine-large.jpg?4387aef'),
-					    't-m' => array('t-m', 'http://i1.sndcdn.com/avatars-000002680779-fkvvpj-large.jpg?4387aef')
+					    't-m' => array('t-m', 'http://i1.sndcdn.com/avatars-000002680779-fkvvpj-large.jpg?4387aef'),
+					    'my-disco-nap' => array('my-disco-nap', 'http://i1.sndcdn.com/avatars-000012680897-foqv41-large.jpg?b9f92e9')
 					    );
 	$soundcloudIsGoldDefaultUser = $soundcloudIsGoldDefaultUsers[array_rand($soundcloudIsGoldDefaultUsers, 1)][0];
 	if(get_option('soundcloud_is_gold_user')){

@@ -673,4 +673,166 @@ function soundcloud_is_gold_delete_user(){
 	echo $message;
 	die;
 }
+
+/*******************************************/
+/**                                       **/
+/**                WIDGET                 **/
+/**                                       **/
+/*******************************************/
+// register Soundcloud_Is_Gold_Widget
+add_action( 'widgets_init', create_function( '', 'register_widget( "soundcloud_is_gold_widget" );' ) );
+class Soundcloud_Is_Gold_Widget extends WP_Widget {
+
+	/**
+	 * Register widget with WordPress.
+	 */
+	public function __construct() {
+		parent::__construct(
+	 		'soundcloud_is_gold_widget', // Base ID
+			'Soundcloud is Gold', // Name
+			array( 'description' => __( 'Show your Latest Track', 'text_domain' ), ) // Args
+		);
+	}
+
+	/**
+	 * Front-end display of widget.
+	 *
+	 * @see WP_Widget::widget()
+	 *
+	 * @param array $args     Widget arguments.
+	 * @param array $instance Saved values from database.
+	 */
+	public function widget( $args, $instance ) {
+		extract( $args );
+		$title = apply_filters( 'widget_title', $instance['title'] );
+		$user = $instance['user'];
+		$playertype = $instance['playertype'];
+		$autoplay = $instance['autoplay'] ? 'true' : 'false';
+		$comments = $instance['comments'] ? 'true' : 'false';
+		$artwork = $instance['artwork'] ? 'true' : 'false';
+		$classes = $instance['classes'];
+		$widthType = $instance['type'];
+		$wp = $instance['wp'];
+		$custom = $instance['custom'];
+		$width = ($widthType == 'wp') ? $wp : $custom;
+		
+		echo $before_widget;
+		if ( ! empty( $title ) ) echo $before_title . $title . $after_title;
+		echo soundcloud_is_gold_player(NULL, $user, $autoplay, $comments, $width, $classes, $playertype, NULL, $artwork, NULL);
+		echo $after_widget;
+	}
+
+	/**
+	 * Sanitize widget form values as they are saved.
+	 *
+	 * @see WP_Widget::update()
+	 *
+	 * @param array $new_instance Values just sent to be saved.
+	 * @param array $old_instance Previously saved values from database.
+	 *
+	 * @return array Updated safe values to be saved.
+	 */
+	public function update( $new_instance, $old_instance ) {
+		$instance = array();
+		$instance['title'] = strip_tags( $new_instance['title'] );
+		$instance['user'] = strip_tags( $new_instance['user'] );
+		$instance['playertype'] = strip_tags( $new_instance['playertype'] );
+		$instance['autoplay'] = strip_tags( $new_instance['autoplay'] );
+		$instance['comments'] = strip_tags( $new_instance['comments'] );
+		$instance['artwork'] = strip_tags( $new_instance['artwork'] );
+		$instance['classes'] = strip_tags( $new_instance['classes'] );
+		$instance['type'] = strip_tags( $new_instance['type'] );
+		$instance['wp'] = strip_tags( $new_instance['wp'] );
+		$instance['custom'] = strip_tags( $new_instance['custom'] );
+		
+		return $instance;
+	}
+
+	/**
+	 * Back-end widget form.
+	 *
+	 * @see WP_Widget::form()
+	 *
+	 * @param array $instance Previously saved values from database.
+	 */
+	public function form( $instance ) {
+		if ( isset( $instance[ 'title' ] ) ) {
+			$title = $instance[ 'title' ];
+		}
+		else {
+			$title = __( 'Latest', 'text_domain' );
+		}
+		?>
+		<!-- Title -->
+		<p>
+			<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:' ); ?></label> 
+			<input class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" type="text" value="<?php echo esc_attr( $title ); ?>" />
+		</p>
+		<!-- Users -->
+		<p>
+			<label for="<?php echo $this->get_field_id('user'); ?>"><?php _e( 'Username:' ); ?></label>
+			<select name="<?php echo $this->get_field_name('user'); ?>" id="<?php echo $this->get_field_id('user'); ?>" class="widefat">
+				<?php
+				$options = get_option('soundcloud_is_gold_options');
+				foreach($options['soundcloud_is_gold_users'] as $user) : ?>
+					<option value="<?php echo $user[0] ?>"<?php selected( $instance['user'], $user[0] ); ?>><?php _e($user[0]); ?></option>	
+				<?php endforeach; ?>
+			</select>
+		</p>
+		<!-- Main options -->
+		<?php
+			$autoplay = $instance['autoplay'] ? 'checked="checked"' : '';
+			$comments = $instance['comments'] ? 'checked="checked"' : '';
+			$artwork = $instance['artwork'] ? 'checked="checked"' : '';
+		?>
+		<p>
+			<label for=""><?php _e( 'Settings:' ); ?></label>
+			<br/>
+			<input class="checkbox" type="checkbox" <?php echo $autoplay; ?> id="<?php echo $this->get_field_id('autoplay'); ?>" name="<?php echo $this->get_field_name('autoplay'); ?>" /> <label for="<?php echo $this->get_field_id('autoplay'); ?>"><?php _e('Play Automatically'); ?></label>
+			<br/>
+			<input class="checkbox" type="checkbox" <?php echo $comments; ?> id="<?php echo $this->get_field_id('comments'); ?>" name="<?php echo $this->get_field_name('comments'); ?>" /> <label for="<?php echo $this->get_field_id('comments'); ?>"><?php _e('Show comments <small>(Standard and Artwork player)</small>'); ?></label>
+			<br/>
+			<input class="checkbox" type="checkbox" <?php echo $artwork; ?> id="<?php echo $this->get_field_id('artwork'); ?>" name="<?php echo $this->get_field_name('artwork'); ?>" /> <label for="<?php echo $this->get_field_id('artwork'); ?>"><?php _e('Show Artwork <small>(html5 player)</small>'); ?></label>
+		</p>
+		<!-- Player -->
+		<p>
+			<label for="<?php echo $this->get_field_id('playertype'); ?>"><?php _e( 'Player Type:' ); ?></label>
+			<select name="<?php echo $this->get_field_name('playertype'); ?>" id="<?php echo $this->get_field_id('playertype'); ?>" class="widefat">
+				<?php
+				$playertypes = array("Mini", "Standard", "Artwork", "html5");
+				foreach($playertypes as $playertype) : ?>
+					<option value="<?php echo $playertype ?>"<?php selected( $instance['playertype'], $playertype ); ?>><?php _e($playertype); ?></option>	
+				<?php endforeach; ?>
+			</select>
+		</p>
+		<!-- Width -->
+		<?php
+		
+		?>
+		<p>
+			<label for=""><?php _e( 'Width:' ); ?></label>
+			<p>
+				<input type="radio" <?php checked( $instance['type'], "wp" ); ?> value="wp" id="wp" name="<?php echo $this->get_field_name('type'); ?>" /><label for="wp">Media Width</label>
+				<br/>
+				<select name="<?php echo $this->get_field_name('wp'); ?>" id="<?php echo $this->get_field_id('wp'); ?>" class="widefat">
+				<?php foreach(get_soundcloud_is_gold_wordpress_sizes() as $key => $soundcloudIsGoldMediaSize) : ?>
+					<option value="<?php echo $soundcloudIsGoldMediaSize[0]?>" <?php selected( $instance['wp'], $soundcloudIsGoldMediaSize[0] ); ?>><?php _e($key.': '.$soundcloudIsGoldMediaSize[0]); ?></option>
+				<?php endforeach; ?>
+				</select>
+			</p>
+			<p>
+				<input type="radio" <?php checked( $instance['type'], "custom" ); ?> value="custom" id="custom" name="<?php echo $this->get_field_name('type'); ?>" /><label for="custom">Custom Width</label>
+				<br/>
+				<input type="text" value="<?php echo $instance['custom'] ? $instance['custom'] : "100%" ?>" id="<?php echo $this->get_field_id('custom'); ?>" name="<?php echo $this->get_field_name('custom'); ?>"/>
+			</p>
+		</p>
+		<!-- Classes -->
+		<p>
+			<label for="<?php echo $this->get_field_id('classes'); ?>"><?php _e( 'Classes <small>(no commas)</small>:' ); ?></label>
+			<input type="text" value="<?php echo $instance['classes'] ?>" id="<?php echo $this->get_field_id('classes'); ?>" name="<?php echo $this->get_field_name('classes'); ?>"/>
+		</p>
+		<?php
+	}
+
+} // class Foo_Widget
 ?>
