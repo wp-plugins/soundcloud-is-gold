@@ -42,6 +42,7 @@ Latest developments updates on twitter: [#soundcloudisgold](https://twitter.com/
 * Plugin construct shortode for you, no need to remember any syntax.
 * Style sortcode for neat layout in your editor.
 * Implement Soundcloud Html5 player (beta).
+* Widget for showing your latest track in the sidebar.
 * Follow WP developpers guidelines (enqueue scripts and styles just for the plugin, clean code, commented, secure and leave no trace when uninstall ).
 
 = Advantages against pasting embed code from soundcloud =
@@ -54,12 +55,10 @@ That's just my opinion of course...
 
 = To Do List =
 
-* v2.1: new UI.
-* V2.1: Advance Settings (change background color and comments color, playcounts, buy link, font, wmode, etc, show/hide styled shortcode, number of tracks per page)
-* v2.1: url attribute for shortcode: easier for people using the shortcode manually.
-* v2.1: user attribute for shortcode: display the latest track.
-* v2.1: other soundcloud shortcode conflict fix (jetpack)
-* Add Widget
+* v2.2: new UI.
+* V2.2: Advance Settings (change background color and comments color, playcounts, buy link, font, wmode, etc, show/hide styled shortcode, number of tracks per page)
+* v2.2: url attribute for shortcode: easier for people using the shortcode manually.
+* v2.2: other soundcloud shortcode conflict fix (jetpack)
 * Add Soundcloud default Width to the options
 * Trigger live preview when changing Soundcloud user name
 * Live search while typing a name in the user name field. So if you're looking for someone it's kind of easier.
@@ -104,7 +103,9 @@ Soundcloud has just released a html5 player. It's currently in it's beta version
 If for some reason you wish to use the shortcode manually, like for embeding someone else tracks, you can use:
 
 **[soundcloud id='10450254']**
-
+or
+**[soundcloud user='t-m']** to always display the latest track
+ 
 This will use your default setting of with, classes, colors, autoplay, comments. (Replace *10450254* with the track id you want to show)
 
 If you wish to have more control here is an example:
@@ -122,6 +123,9 @@ Sometimes, I generally keep a eye on my plugin's forums and website's comments. 
 
 == Upgrade Notice ==
 
+= 2.1 =
+New widget to display a user's latest track. New "user" argument for the shortcode to display user's latest track.
+
 = 2.0 =
 When updating to 2.0, if you're experiencing issues, deactivate and reactivate the plugin from the plugin page. This is due to switching to the Settings API. Sorry for the inconvenient. 
 
@@ -137,6 +141,10 @@ When updating to 2.0, if you're experiencing issues, deactivate and reactivate t
 
 
 == Changelog ==
+
+= 2.1 =
+* Widget to display a user's latest track in the sidebar
+* New "user" argument for the shortcode to show latest track of an user
 
 = 2.0 =
 * Save multiple users, very useful for labels, collectives or artists with many projects.
