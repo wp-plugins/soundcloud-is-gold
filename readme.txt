@@ -104,7 +104,7 @@ Soundcloud has just released a html5 player. It's currently in it's beta version
 
 = How can I use the shortcode manually? =
 
-If for some reason you wish to use the shortcode manually, like for embeding someone else tracks, you can use:
+If for some reason you wish to use the shortcode manually, like for a special template with the do_shortcode() function:
 
 **[soundcloud id='10450254']**
 or
