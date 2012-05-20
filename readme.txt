@@ -3,7 +3,7 @@ Contributors: Thomas Michalak
 Donate link: http://www.mightymess.com/soundcloud-is-gold-wordpress-plugin
 Tags: soundcloud, integrated, media, shortcode, browse, design, easy, simple, music, sound, js, live preview, flash, html5
 Requires at least: 3.2
-Tested up to: 3.3.1
+Tested up to: 3.3.2
 Stable tag: 2.1
 
 Browse through your soundcloud tracks, sets and favourites. Select and add tracks, sets or favourites to your posts. Live preview, easy.
@@ -12,7 +12,7 @@ Browse through your soundcloud tracks, sets and favourites. Select and add track
 
 **Now with soundcloud's official html5 player!**
 
-**New Widget to display latest track**
+**New Widget to display latest and random track, favorites or sets for one user, multiple users or random users. **
 
 **Soundcloud is Gold** integrates perfectly into wordpress. Browse through your soundcloud tracks, sets and favorites from the 'Soundcloud is gold' tab in the post's 'upload media' popup window. Select, set and add track, sets, favorites to your post using the soundcloud player. Live Preview, easy, smart and straightforward.
 You can set default settings in the option page, choose your defaut soundcloud player (Mini, Standard, Artwork, Html5), it's width, add extra classes for you CSS lovers, show comments, autoplay and your favorite color.
@@ -46,7 +46,7 @@ Check out my [TM soundcloud profile](http://www.soundcloud.com/t-m), more [might
 * Plugin construct shortode for you, no need to remember any syntax.
 * Style sortcode for neat layout in your editor.
 * Implement Soundcloud Html5 player (beta).
-* Widget for showing your latest track in the sidebar.
+* Widget for showing latest and random track, favorites or sets for one user, multiple users or random users.
 * Follow WP developpers guidelines (enqueue scripts and styles just for the plugin, clean code, commented, secure and leave no trace when uninstall ).
 
 = Advantages against pasting embed code from soundcloud =
@@ -104,7 +104,7 @@ Soundcloud has just released a html5 player. It's currently in it's beta version
 
 = How can I use the shortcode manually? =
 
-If for some reason you wish to use the shortcode manually, like for a special template with the do_shortcode() function:
+If for some reason you wish to use the shortcode manually, like for embeding someone else tracks, you can use:
 
 **[soundcloud id='10450254']**
 or
@@ -127,6 +127,10 @@ Sometimes, I generally keep a eye on my plugin's forums and website's comments. 
 
 == Upgrade Notice ==
 
+= 2.2 =
+Widget Update! Display latest and random track, favorites or sets for one user, multiple users or random users.
+Perfect for labels, collectives, festivals and schizophrenic artists.
+
 = 2.1 =
 New widget to display a user's latest track. New "user" argument for the shortcode to display user's latest track.
 
@@ -145,6 +149,9 @@ When updating to 2.0, if you're experiencing issues, deactivate and reactivate t
 
 
 == Changelog ==
+
+= 2.2 =
+* Widget Update! Display latest and random track, favorites or sets for one user, multiple users or random users.
 
 = 2.1 =
 * Widget to display a user's latest track in the sidebar
