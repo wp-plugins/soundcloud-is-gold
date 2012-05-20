@@ -4,7 +4,7 @@ Donate link: http://www.mightymess.com/soundcloud-is-gold-wordpress-plugin
 Tags: soundcloud, integrated, media, shortcode, browse, design, easy, simple, music, sound, js, live preview, flash, html5
 Requires at least: 3.2
 Tested up to: 3.3.2
-Stable tag: 2.1
+Stable tag: 2.2
 
 Browse through your soundcloud tracks, sets and favourites. Select and add tracks, sets or favourites to your posts. Live preview, easy.
 
@@ -12,7 +12,7 @@ Browse through your soundcloud tracks, sets and favourites. Select and add track
 
 **Now with soundcloud's official html5 player!**
 
-**New Widget to display latest and random track, favorites or sets for one user, multiple users or random users. **
+**New Widget to display latest and random track, favorites or sets for one user, multiple users or random users.**
 
 **Soundcloud is Gold** integrates perfectly into wordpress. Browse through your soundcloud tracks, sets and favorites from the 'Soundcloud is gold' tab in the post's 'upload media' popup window. Select, set and add track, sets, favorites to your post using the soundcloud player. Live Preview, easy, smart and straightforward.
 You can set default settings in the option page, choose your defaut soundcloud player (Mini, Standard, Artwork, Html5), it's width, add extra classes for you CSS lovers, show comments, autoplay and your favorite color.
