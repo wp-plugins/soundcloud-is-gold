@@ -3,8 +3,8 @@
 Plugin Name: Soundcloud is Gold
 Plugin URI: http://www.mightymess.com/soundcloud-is-gold-wordpress-plugin
 Description: <strong><a href="http://www.mightymess.com/soundcloud-is-gold-wordpress-plugin">Soundcloud is gold</a></strong> integrates perfectly into wordpress. Browse through your soundcloud tracks, sets and favorites from the 'soundcloud is gold' tab with the post's 'upload media' popup window. Select, set and add track, sets or favorites to your post using the soundcloud player. Live Preview, easy, smart and straightforward. You can set default settings in the option page, choose your defaut soundcloud player (Mini, Standard, Artwork, html5), its width, extra classes for you CSS lovers and your favorite colors. You'll still be able to set players to different settings before adding to your post if you fancy a one off change. Now with Html5 player and Widget!
-Version: 2.1
-Author: Thomas Michalak at Mighty Mess
+Version: 2.2
+Author: Thomas Michalak
 Author URI: http://www.mightymess.com/thomas-michalak
 License: GPL2 or Later
 */
