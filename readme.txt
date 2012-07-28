@@ -4,7 +4,7 @@ Donate link: http://www.mightymess.com/soundcloud-is-gold-wordpress-plugin
 Tags: soundcloud, integrated, media, shortcode, browse, design, easy, simple, music, sound, js, live preview, flash, html5
 Requires at least: 3.2
 Tested up to: 3.3.2
-Stable tag: 2.2
+Stable tag: 2.2.1
 
 Browse through your soundcloud tracks, sets and favourites. Select and add tracks, sets or favourites to your posts. Live preview, easy.
 
@@ -128,7 +128,7 @@ Sometimes, I generally keep a eye on my plugin's forums and website's comments. 
 == Upgrade Notice ==
 
 = 2.2.1 =
-* Security Update, all users must update. Thanks to Samuel Wood for his help.
+* Security Update. Thanks to Samuel Wood for his help and time.
 
 = 2.2 =
 Widget Update! Display latest and random track, favorites or sets for one user, multiple users or random users.
@@ -154,7 +154,7 @@ When updating to 2.0, if you're experiencing issues, deactivate and reactivate t
 == Changelog ==
 
 = 2.2.1 =
-* Security Update, all users must update. Thanks to Samuel Wood for his help.
+* Security Update. Thanks to Samuel Wood for his help and time.
 
 = 2.2 =
 * Widget Update! Display latest and random track, favorites or sets for one user, multiple users or random users.
