@@ -4,7 +4,7 @@ Donate link: http://www.mightymess.com/soundcloud-is-gold-wordpress-plugin
 Tags: soundcloud, integrated, media, shortcode, browse, design, easy, simple, music, sound, js, live preview, flash, html5
 Requires at least: 3.2
 Tested up to: 3.3.2
-Stable tag: 2.1
+Stable tag: 2.2.1
 
 Browse through your soundcloud tracks, sets and favourites. Select and add tracks, sets or favourites to your posts. Live preview, easy.
 
@@ -12,7 +12,7 @@ Browse through your soundcloud tracks, sets and favourites. Select and add track
 
 **Now with soundcloud's official html5 player!**
 
-**New Widget to display latest and random track, favorites or sets for one user, multiple users or random users. **
+**New Widget to display latest and random track, favorites or sets for one user, multiple users or random users.**
 
 **Soundcloud is Gold** integrates perfectly into wordpress. Browse through your soundcloud tracks, sets and favorites from the 'Soundcloud is gold' tab in the post's 'upload media' popup window. Select, set and add track, sets, favorites to your post using the soundcloud player. Live Preview, easy, smart and straightforward.
 You can set default settings in the option page, choose your defaut soundcloud player (Mini, Standard, Artwork, Html5), it's width, add extra classes for you CSS lovers, show comments, autoplay and your favorite color.
@@ -22,7 +22,7 @@ You'll also be able to set players to different settings before adding to your p
 
 **Soundcloud is Gold** use a shortcode but the "Soundcloud is Gold" tab will write it for you dynamicly as you select parameters, and on top of this it will provide a nice live preview of your player so you know what does what. When done just press the 'insert soundcloud player' and it will added to your post just like when you're adding a photo or gallery.
 
-If you love it please rate it on the [Soundcloud is Gold wordpress plugin page](http://wordpress.org/extend/plugins/soundcloud-is-gold/). If you use it and want to help, [donations are always welcomed](http://www.mightymess.com/soundcloud-is-gold-wordpress-plugin) or you could like, tweet or just drop a line on [Soundcloud is Gold](http://www.mightymess.com/soundcloud-is-gold-wordpress-plugin) and show some love :)
+If you love it please rate it! If you use it and want to help, [donations are always welcomed](http://www.mightymess.com/soundcloud-is-gold-wordpress-plugin) or you could like, tweet or spread the love on your blog ;)
 
 Latest developments updates on twitter: [#soundcloudisgold](https://twitter.com/#!/search/realtime/%23soundcloudisgold) or follow me on [twitter](http://twitter.com/#!/mighty_mess)
 
@@ -127,6 +127,9 @@ Sometimes, I generally keep a eye on my plugin's forums and website's comments. 
 
 == Upgrade Notice ==
 
+= 2.2.1 =
+* Security Update. Thanks to Samuel Wood for his help and time.
+
 = 2.2 =
 Widget Update! Display latest and random track, favorites or sets for one user, multiple users or random users.
 Perfect for labels, collectives, festivals and schizophrenic artists.
@@ -149,6 +152,9 @@ When updating to 2.0, if you're experiencing issues, deactivate and reactivate t
 
 
 == Changelog ==
+
+= 2.2.1 =
+* Security Update. Thanks to Samuel Wood for his help and time.
 
 = 2.2 =
 * Widget Update! Display latest and random track, favorites or sets for one user, multiple users or random users.
