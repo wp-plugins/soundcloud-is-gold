@@ -127,6 +127,9 @@ Sometimes, I generally keep a eye on my plugin's forums and website's comments. 
 
 == Upgrade Notice ==
 
+= 2.2.1 =
+* Security Update, all users must update. Thanks to Samuel Wood for his help.
+
 = 2.2 =
 Widget Update! Display latest and random track, favorites or sets for one user, multiple users or random users.
 Perfect for labels, collectives, festivals and schizophrenic artists.
@@ -149,6 +152,9 @@ When updating to 2.0, if you're experiencing issues, deactivate and reactivate t
 
 
 == Changelog ==
+
+= 2.2.1 =
+* Security Update, all users must update. Thanks to Samuel Wood for his help.
 
 = 2.2 =
 * Widget Update! Display latest and random track, favorites or sets for one user, multiple users or random users.
