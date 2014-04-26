@@ -1,5 +1,5 @@
 jQuery(document).ready(function($){
-
+	
     /**INIT **/
     $(".soundcloudMMLoading").css('display', 'none');
 
@@ -26,7 +26,7 @@ jQuery(document).ready(function($){
 	$(this).parent().fadeOut();
     }).parent().css("display", "none");
 
-    carousel()
+    carousel();
     $("#soundcloudMMUsermameTab").slideUp('fast');
     
     function carousel(){
@@ -68,7 +68,7 @@ jQuery(document).ready(function($){
     /** Remove User From Options (Tab only) **/
     function removeUserFromOptions(usernameToRemove, reload){
 	if($("#soundcloudMMUsermameTab").length){
-	    console.log(usernameToRemove);
+	    //console.log(usernameToRemove);
 	    //Set request
 	    var myData = {
 		action: 'soundcloud_is_gold_delete_user',
@@ -238,7 +238,7 @@ jQuery(document).ready(function($){
 	//Insert Content where the cursor is in the editor (no refresh)
 	//parent.tinyMCE.activeEditor.execCommand('mceInsertContent', false, sh);
 	//Close window
-	parent.jQuery("#TB_closeWindowButton").click();
+	parent.jQuery(".media-modal-close").click();
     }
     
     /********************************************/
