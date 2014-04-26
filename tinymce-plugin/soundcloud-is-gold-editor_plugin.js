@@ -103,7 +103,7 @@
 
 		
 		_createButtons : function() {
-			var t = this, ed = tinyMCE.activeEditor, DOM = tinymce.DOM, soundcloudIGold_editButton, soundcloudIGold_dellButton;
+			/*var t = this, ed = tinyMCE.activeEditor, DOM = tinymce.DOM, soundcloudIGold_editButton, soundcloudIGold_dellButton;
 
 			DOM.remove('soundcloudisgoldbtns');
 
@@ -127,8 +127,8 @@
 				ed.execCommand("soundcloud_Is_Gold");
 			});
 			
-			//Create Delite Button: Keep wp_editgallery as id to herite style for gallery edit button
-			soundcloudIGold_dellButton = DOM.add('soundcloudisgoldbtns', 'img', {
+			//Create Delete Button: Keep wp_editgallery as id to herite style for gallery edit button
+			/*soundcloudIGold_dellButton = DOM.add('soundcloudisgoldbtns', 'img', {
 				src : '../wp-content/plugins/soundcloud-is-gold/tinymce-plugin/img/delete.png',
 				id : 'wp_delgallery',
 				width : '24',
@@ -145,7 +145,7 @@
 					ed.execCommand('mceRepaint');
 					return false;
 				}
-			});
+			});*/
 		},
 
 		getInfo : function() {
