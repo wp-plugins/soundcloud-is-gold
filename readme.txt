@@ -3,12 +3,14 @@ Contributors: Thomas Michalak
 Donate link: http://www.mightymess.com/soundcloud-is-gold-wordpress-plugin
 Tags: soundcloud, integrated, media, shortcode, browse, design, easy, simple, music, sound, js, live preview, flash, html5
 Requires at least: 3.2
-Tested up to: 3.5.1
+Tested up to: 3.9
 Stable tag: 2.2.1
 
 Browse through your soundcloud tracks, sets and favourites. Select and add tracks, sets or favourites to your posts. Live preview, easy.
 
 == Description ==
+
+** Compatible with new WP 3.9 **
 
 **Now with soundcloud's official html5 player!**
 
@@ -59,10 +61,10 @@ That's just my opinion of course...
 
 = To Do List =
 
-* v2.2: new UI.
-* V2.2: Advance Settings (change background color and comments color, playcounts, buy link, font, wmode, etc, show/hide styled shortcode, number of tracks per page)
-* v2.2: url attribute for shortcode: easier for people using the shortcode manually.
-* v2.2: other soundcloud shortcode conflict fix (jetpack)
+* v3: So much to do I can't list it.
+* V3: Advance Settings (change background color and comments color, playcounts, buy link, font, wmode, etc, show/hide styled shortcode, number of tracks per page)
+* v3: url attribute for shortcode: easier for people using the shortcode manually.
+* v3: other soundcloud shortcode conflict fix (jetpack)
 * Add Soundcloud default Width to the options
 * Trigger live preview when changing Soundcloud user name
 * Live search while typing a name in the user name field. So if you're looking for someone it's kind of easier.
@@ -152,6 +154,11 @@ When updating to 2.0, if you're experiencing issues, deactivate and reactivate t
 
 
 == Changelog ==
+
+= 2.2.1 =
+* Fix bug with tinymce plugin that prevented user from using editot
+* Fixing bug mean that the delete and edit button on the soundcloud-is-gold image in the editor have been removed
+* Fixed the insert-shortcode button, now close the modal window once shortcode inserted
 
 = 2.2.1 =
 * Security Update. Thanks to Samuel Wood for his help and time.
