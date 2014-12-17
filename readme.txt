@@ -159,7 +159,7 @@ When updating to 2.0, if you're experiencing issues, deactivate and reactivate t
 = 2.3 =
 * Updated plugin to new Soundcloud API (Json only)
 * Small styling fix
-* Https support (thanks to hiddentao for the fix! https://wordpress.org/support/profile/randomaniac)
+
 
 = 2.2.2 =
 * Bug fix and improvements
