@@ -17,7 +17,12 @@ License: GPL2 or Later
  html5: h=166, w=100%
 */
 
-define ('SIG_PLUGIN_DIR', WP_PLUGIN_URL.'/'.str_replace(basename( __FILE__),"",plugin_basename(__FILE__)) );
+//define ('SIG_PLUGIN_DIR', WP_PLUGIN_URL.'/'.str_replace(basename( __FILE__),"",plugin_basename(__FILE__)) );
+define( 'SIG_PLUGIN_DIR_HTTP', WP_PLUGIN_URL.'/'.str_replace(basename( __FILE__),"",plugin_basename(__FILE__)) );
+define( 'SIG_PLUGIN_DIR', (is_ssl() ? str_replace('http:', 'https:', SIG_PLUGIN_DIR_HTTP) : SIG_PLUGIN_DIR_HTTP) );
+
+$httpPrefix = (is_ssl() ? 'https' : 'http');
+
 require_once('soundcloud-is-gold-functions.php');
 
 /** Get Plugin Version **/

@@ -648,15 +648,15 @@ function soundcloud_is_gold_player($id, $user, $autoPlay, $comments, $width, $cl
 	//Flash Player
 	if(!$html5Player){
 		$player .= '<object height="'.esc_attr($height).'" width="'.esc_attr($width).'">';
-		$player .= '<param name="movie" value="http://player.soundcloud.com/player.swf?url=http%3A%2F%2Fapi.soundcloud.com%2F'.esc_attr($format).'%2F'.$id.'&amp;auto_play='.esc_attr($autoPlay).'&amp;player_type='.esc_attr($playerType).'&amp;show_comments='.esc_attr($comments).'&amp;color='.esc_attr($color).'"></param>';
+		$player .= '<param name="movie" value="'.$httpPrefix.'://player.soundcloud.com/player.swf?url=http%3A%2F%2Fapi.soundcloud.com%2F'.esc_attr($format).'%2F'.$id.'&amp;auto_play='.esc_attr($autoPlay).'&amp;player_type='.esc_attr($playerType).'&amp;show_comments='.esc_attr($comments).'&amp;color='.esc_attr($color).'"></param>';
 		$player .= '<param name="allowscriptaccess" value="always"></param>';
 		$player .= '<param name="wmode" value="transparent"></param>';
-		$player .= '<embed wmode="transparent" allowscriptaccess="always" height="'.esc_attr($height).'" src="http://player.soundcloud.com/player.swf?url=http%3A%2F%2Fapi.soundcloud.com%2F'.esc_attr($format).'%2F'.esc_attr($id).'&amp;auto_play='.esc_attr($autoPlay).'&amp;player_type='.esc_attr($playerType).'&amp;show_comments='.esc_attr($comments).'&amp;color='.esc_attr($color).'" type="application/x-shockwave-flash" width="'.esc_attr($width).'"></embed>';
+		$player .= '<embed wmode="transparent" allowscriptaccess="always" height="'.esc_attr($height).'" src="'.$httpPrefix.'://player.soundcloud.com/player.swf?url='.$httpPrefix.'%3A%2F%2Fapi.soundcloud.com%2F'.esc_attr($format).'%2F'.esc_attr($id).'&amp;auto_play='.esc_attr($autoPlay).'&amp;player_type='.esc_attr($playerType).'&amp;show_comments='.esc_attr($comments).'&amp;color='.esc_attr($color).'" type="application/x-shockwave-flash" width="'.esc_attr($width).'"></embed>';
 		$player .= '</object>';	
 	}
 	//Html5 Player
 	else{
-		$player .= '<iframe width="'.esc_attr($width).'" height="'.esc_attr($height).'" scrolling="no" frameborder="no" src="http://w.soundcloud.com/player/?url=http%3A%2F%2Fapi.soundcloud.com%2F'.esc_attr($format).'%2F'.esc_attr($id).'&amp;auto_play='.esc_attr($autoPlay).'&amp;show_artwork='.esc_attr($artwork).'&amp;color='.esc_attr($color).'"></iframe>';
+		$player .= '<iframe width="'.esc_attr($width).'" height="'.esc_attr($height).'" scrolling="no" frameborder="no" src="'.$httpPrefix.'://w.soundcloud.com/player/?url='.$httpPrefix.'%3A%2F%2Fapi.soundcloud.com%2F'.esc_attr($format).'%2F'.esc_attr($id).'&amp;auto_play='.esc_attr($autoPlay).'&amp;show_artwork='.esc_attr($artwork).'&amp;color='.esc_attr($color).'"></iframe>';
 	}
 	$player .= '</div>';
         
@@ -915,9 +915,9 @@ class Soundcloud_Is_Gold_Widget extends WP_Widget {
 		</p>
 		<!-- Main options -->
 		<?php
-			$autoplay = $instance['autoplay'] ? 'checked="checked"' : '';
-			$comments = $instance['comments'] ? 'checked="checked"' : '';
-			$artwork = $instance['artwork'] ? 'checked="checked"' : '';
+			$autoplay = (isset($instance['autoplay']) && $instance['autoplay']) ? 'checked="checked"' : '';
+			$comments = (isset($instance['comments']) && $instance['comments']) ? 'checked="checked"' : '';
+			$artwork = (isset($instance['artwork']) && $instance['artwork']) ? 'checked="checked"' : '';
 		?>
 		<p>
 			<label for=""><?php _e( 'Settings:' ); ?></label>
@@ -936,7 +936,7 @@ class Soundcloud_Is_Gold_Widget extends WP_Widget {
 			<br/>
 			<select name="<?php echo $this->get_field_name('number'); ?>" id="<?php echo $this->get_field_id('number'); ?>" class="widefat">
 				<?php
-				for($i=1; $i<=5; $i++) : ?>
+				for($i=1; $i<=10; $i++) : ?>
 					<option value="<?php echo $i ?>"<?php selected( $instance['number'], $i ); ?>><?php _e($i); ?></option>	
 				<?php endfor; ?>
 			</select>
