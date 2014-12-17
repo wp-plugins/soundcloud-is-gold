@@ -96,7 +96,7 @@ function soundcloud_is_gold_add_defaults() {
 	$soundcloudIsGoldDefaultUser = $soundcloudIsGoldDefaultUsers[array_rand($soundcloudIsGoldDefaultUsers, 1)][0];
 	if(get_option('soundcloud_is_gold_user')){
 	    $soundcloudIsGoldDefaultUser = get_option('soundcloud_is_gold_user');
-	    $userInfo = get_soundcloud_is_gold_api_response("http://api.soundcloud.com/users/".$soundcloudIsGoldDefaultUser.".xml?client_id=9rD2GrGrajkmkw5eYFDp2g");
+	    $userInfo = get_soundcloud_is_gold_api_response("http://api.soundcloud.com/users/".$soundcloudIsGoldDefaultUser.".json?client_id=9rD2GrGrajkmkw5eYFDp2g");
 	    $newUsername = (string)$userInfo['response']->permalink;
 	    $newUsernameImg = (string)$userInfo['response']->{'avatar-url'}[0];
 	    $soundcloudIsGoldDefaultUsers[$newUsername][0] = $newUsername;
@@ -151,11 +151,11 @@ function soundcloud_is_gold_options(){
     $soundcloudIsGoldClasses = isset($options['soundcloud_is_gold_classes']) ? $options['soundcloud_is_gold_classes'] : '';
     $soundcloudIsGoldColor = isset($options['soundcloud_is_gold_color']) ? $options['soundcloud_is_gold_color'] : ''; 
     
-    $soundcloudIsGoldApiCall = 'http://api.soundcloud.com/users/'.$soundcloudIsGoldActiveUser.'/tracks.xml?limit=1&client_id=9rD2GrGrajkmkw5eYFDp2g';
+    $soundcloudIsGoldApiCall = 'http://api.soundcloud.com/users/'.$soundcloudIsGoldActiveUser.'/tracks.json?limit=1&client_id=9rD2GrGrajkmkw5eYFDp2g';
     $soundcloudIsGoldApiResponse = get_soundcloud_is_gold_api_response($soundcloudIsGoldApiCall);
     if(isset($soundcloudIsGoldApiResponse['response']) && $soundcloudIsGoldApiResponse['response']){
 	foreach($soundcloudIsGoldApiResponse['response'] as $soundcloudMMLatestTrack){
-	    $soundcouldMMId = (string)$soundcloudMMLatestTrack->id;
+		$soundcouldMMId = (string)$soundcloudMMLatestTrack['id'];
 	}
     }
     $soundcouldMMShortcode = '[soundcloud id='.$soundcouldMMId.']';
@@ -251,8 +251,8 @@ function soundcloud_is_gold_options(){
 			</p>
                         <p class="soundcloudMMLoading soundcloudMMPreviewLoading" style="display:none"></p>
                         <?php else : ?>
-                        <!-- Error getting XML -->
-                        <div class="soundcloudMMXmlError"><p><?php echo $soundcloudIsGoldApiResponse['error'] ? $soundcloudIsGoldApiResponse['error'] : "Oups! There's been a error while getting the tracks from soundcloud. Please reload the page."?></p></div>
+                        <!-- Error getting Json -->
+                        <div class="soundcloudMMJsonError"><p><?php echo $soundcloudIsGoldApiResponse['error'] ? $soundcloudIsGoldApiResponse['error'] : "Oups! There's been a error while getting the tracks from soundcloud. Please reload the page."?></p></div>
                         <?php endif; ?>
                     </li>
                 </ul>
